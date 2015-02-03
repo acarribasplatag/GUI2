@@ -24,4 +24,4 @@ a topic views will pass the information needed to build the page to the template
 the database.
 
 
-"python manage.py startapp polls" creates a new app
+"python manage.py startapp polls" creates a new app.
