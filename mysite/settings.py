@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     
     #my apps
     'polls',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
