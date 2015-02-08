@@ -33,3 +33,10 @@ class Comment(models.Model):
     likes = models.IntegerField(default=0)
     def __str__(self):              # __unicode__ on Python 2
         return self.comment_text
+           
+class CommentOnComment(models.Model):
+    comment = models.ForeignKey(Comment) # belongs to a choice
+    comment_text = models.CharField(max_length=500)
+    likes = models.IntegerField(default=0)
+    def __str__(self):              # __unicode__ on Python 2
+        return self.comment_text
