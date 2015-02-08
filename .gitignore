@@ -38,3 +38,4 @@ bower.json
 
 #compiled python files
 *.pyc
+/polls/templates/polls/nbproject/private/
