@@ -29,6 +29,7 @@
 <!-- https://docs.djangoproject.com/en/1.7/howto/static-files/ -->
 {% load staticfiles %}
 <script src={%static "js/libs/ckeditor/ckeditor.js" %}></script>
+<link rel="stylesheet" href="{% static "css/logo.css" %}">
 
 <!--  Load the pie chart using highcharts -->
 <script>
@@ -138,6 +139,32 @@
 					<ul class="nav navbar-nav">
 						<li><a href="/topic_select/">Categories</a></li>
 						<li><a href="/about/">About</a></li>
+					</ul>
+					<!--  right side of navbar -->
+					<ul class="nav navbar-nav navbar-right">
+						{% if user.is_authenticated %}
+                            <li>
+                                <a href="/myAccount">
+                                    <span class="glyphicon glyphicon-user"></span> {{ user.username }}
+                                </a>
+                            </li>  
+                            <li>
+                                <a href="/logout">
+                                    <span class="glyphicon glyphicon-log-out"></span> Log Out
+                                </a>
+                            </li>  
+                        {% else %}
+                            <li>
+                                <a href="/register">
+                                    <span class="glyphicon glyphicon-user"></span> Sign Up
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/login">
+                                    <span class="glyphicon glyphicon-log-in"></span> Log In
+                                </a>
+                            </li>
+                        {% endif %}
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
