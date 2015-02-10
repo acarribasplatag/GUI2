@@ -17,4 +17,6 @@ urlpatterns = patterns('',
     url(r'^about/$', views.about, name='about'),
     #ex: localhost:8000/contact/
     url(r'^contact/$', views.contactUs, name='contactus'),
+    #ex:localhost:8000/myAccount/
+    url(r'^myAccount/$', views.myAccount, name='dashboard'),
 )
