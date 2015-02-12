@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'contact_form',
     
     #my apps
     'polls',
@@ -89,3 +90,15 @@ SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATICFILES_DIRS = (
   '/Users/balabhv/GUI2/mysite/static/polls/',
 )
+
+EMAIL_USE_TLS = True  
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_PORT = 587  
+EMAIL_HOST_USER = 'virinchi.balabhadrapatruni@gmail.com'  # this is my email address, use yours
+EMAIL_HOST_PASSWORD = 'sa+mast3r9000'   # set environ yourself
+
+ADMINS = (
+    ('Poll Portal Admin', 'virinchi.balabhadrapatruni@gmail.com'),   # email will be sent to your_email
+)
+
+MANAGERS = ADMINS
