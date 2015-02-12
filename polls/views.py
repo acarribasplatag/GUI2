@@ -54,6 +54,11 @@ def about(request):
     context = RequestContext(request)
     return HttpResponse(template.render(context))
 
+def myAccount(request):
+    template = loader.get_template('polls/dashboard.html')
+    context = RequestContext(request)
+    return HttpResponse(template.render(context))
+
 def contactUs(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
