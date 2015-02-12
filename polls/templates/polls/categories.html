@@ -29,6 +29,7 @@
 <!-- https://docs.djangoproject.com/en/1.7/howto/static-files/ -->
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static "css/logo.css" %}">
+<link rel="stylesheet" href="{% static "css/poll.css" %}">
 
 <!-- Carousel Script -->
 <script>
@@ -73,6 +74,7 @@
                             <li><a href="/topic_select/">Categories <span
 								class="sr-only">(current)</span></a></li>
 						<li><a href="/about/">About</a></li>
+						<li><a href="/contact/">Contact Us</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                         {% if user.is_authenticated %}
@@ -126,23 +128,24 @@
 						<div class="row">
 							<div class="col-sm-6 col-md-4">
 								<a href="#" class="thumbnail">
-									<p>Politics</p> <img class="img-rounded"
-									src="images/politics.jpg" alt="Politics">
-									<p class="description">SOMETHING.</p>
+									<img class="img-rounded"
+									src="http://assignmenteditor.com/wp-content/uploads/2012/04/politics.jpg" alt="Politics">
+									<center><p>Politics</p></center>
 								</a>
 							</div>
 							<div class="col-sm-6 col-md-4">
 								<a href="#" class="thumbnail">
-									<p>Fashion</p> <img src="images/fashion.jpg"
+									<img src="http://www.picturesnew.com/media/images/39d4fc9f39.png"
 									class="img-rounded" alt="Fashion">
-									<p class="description">SOMETHING</p>
+									<center><p>Fashion</p></center>
 								</a>
+								
 							</div>
 							<div class="col-sm-6 col-md-4">
 								<a href="#" class="thumbnail">
-									<p>Religion</p> <img src="images/religion.jpg"
+									<img src="http://t2.ftcdn.net/jpg/00/28/81/51/400_F_28815198_PyMFIR4SSZu3JJo0TVrkBCkbv0zuomt4.jpg"
 									class="img-rounded" alt="Religion">
-									<p class="description">SOMETHING.</p>
+									<center><p>Religion</p></center>
 								</a>
 							</div>
 						</div>
@@ -152,23 +155,23 @@
 						<div class="row">
 							<div class="col-sm-6 col-md-4">
 								<a href="#" class="thumbnail">
-									<p>Science</p> <img class="img-rounded"
-									src="images/science.jpg" alt="Science">
-									<p class="description">SOMETHING.</p>
+									<img class="img-rounded"
+									src="https://davidwaldock.files.wordpress.com/2011/05/scc2011.jpg" alt="Science">
+									<center><p>Science</p></center>
 								</a>
 							</div>
 							<div class="col-sm-6 col-md-4">
 								<a href="#" class="thumbnail">
-									<p>Technology</p> <img class="img-rounded"
-									src="images/technology.jpg" alt="Technology">
-									<p class="description">SOMETHIN.</p>
+									<img class="img-rounded"
+									src="http://saepec.mgvz.com/files/images/technology_word_cloud.jpg" alt="Technology">
+									<center><p>Technology</p></center>
 								</a>
 							</div>
 							<div class="col-sm-6 col-md-4">
 								<a href="#" class="thumbnail">
-									<p>Languages</p> <img class="img-rounded"
-									src="images/languages.jpg" alt="Languages">
-									<p class="description">SOMETHING.</p>
+									<img class="img-rounded"
+									src="http://101fundraising.org/wp-content/uploads/2014/05/5484651-535312-welcome-word-in-different-languages.jpg" alt="Languages">
+									<center><p>Languages</p></center>
 								</a>
 							</div>
 						</div>
