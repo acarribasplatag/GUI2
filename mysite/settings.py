@@ -85,12 +85,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL='/static/'
-STATIC_ROOT='/Users/balabhv/Documents/web/GUI2/static/'
+STATIC_URL='/mysite/static/'
+STATIC_ROOT = 'mysite/static/polls'
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'static'),
-)
+
 
 EMAIL_USE_TLS = True  
 EMAIL_HOST = 'smtp.gmail.com'  
