@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from django.conf.global_settings import STATIC_URL, STATIC_ROOT
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -85,8 +84,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL='/mysite/static/'
-STATIC_ROOT = 'mysite/static/polls'
+STATIC_URL='/static/'
+STATIC_ROOT = '/Users/balabhv/Documents/web/GUI2/static/'
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -101,8 +100,3 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
