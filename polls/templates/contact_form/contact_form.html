@@ -47,8 +47,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					{% load staticfiles %} <a class="navbar-brand" href="/"> <img
-						src="http://weblab.cs.uml.edu/~vbalabha/static/img/logo-PP.png"/></a>
+					{% load staticfiles %} <a class="navbar-brand" href="/"> <img src="{% static "img/logo-PP.png" %}"/></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -63,7 +62,7 @@
 					<!--  right side of navbar -->
 					<ul class="nav navbar-nav navbar-right">
 						{% if user.is_authenticated %}
-						<li class="active"><a href="/myAccount"> <span
+						<li><a href="/myAccount"> <span
 								class="glyphicon glyphicon-user"></span> {{ user.username }}
 						</a></li>
 						<li><a href="/logout"> <span

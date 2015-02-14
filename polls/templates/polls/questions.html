@@ -82,7 +82,7 @@
 							class="icon-bar"></span>
 					</button>
 					{% load staticfiles %} <a class="navbar-brand" href="/"> <img
-						src="http://weblab.cs.uml.edu/~vbalabha/static/img/logo-PP.png"/></a>
+						src="{% static "img/logo-PP.png" %}"/></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -97,28 +97,18 @@
 					<!--  right side of navbar -->
 					<ul class="nav navbar-nav navbar-right">
 						{% if user.is_authenticated %}
-                            <li>
-                                <a href="/myAccount">
-                                    <span class="glyphicon glyphicon-user"></span> {{ user.username }}
-                                </a>
-                            </li>  
-                            <li>
-                                <a href="/logout">
-                                    <span class="glyphicon glyphicon-log-out"></span> Log Out
-                                </a>
-                            </li>  
-                        {% else %}
-                            <li>
-                                <a href="/register">
-                                    <span class="glyphicon glyphicon-user"></span> Sign Up
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/login">
-                                    <span class="glyphicon glyphicon-log-in"></span> Log In
-                                </a>
-                            </li>
-                        {% endif %}
+						<li><a href="/myAccount"> <span
+								class="glyphicon glyphicon-user"></span> {{ user.username }}
+						</a></li>
+						<li><a href="/logout"> <span
+								class="glyphicon glyphicon-log-out"></span> Log Out
+						</a></li> {% else %}
+						<li><a href="/register"> <span
+								class="glyphicon glyphicon-user"></span> Sign Up
+						</a></li>
+						<li><a href="/login"> <span
+								class="glyphicon glyphicon-log-in"></span> Log In
+						</a></li> {% endif %}
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -141,8 +131,7 @@
 				</ul>
 
 				<!-- Tab panes -->
-				<div class="tab-content" id="cat_tab_content">
-				</div>
+				<div class="tab-content" id="cat_tab_content"></div>
 
 			</div>
 
