@@ -88,6 +88,10 @@ STATIC_URL='/static/'
 STATIC_ROOT= os.path.join(BASE_DIR, 'staticfiles')
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'static'),
+)
+
 
 EMAIL_USE_TLS = True  
 EMAIL_HOST = 'smtp.gmail.com'  

@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from contact_us_frm import ContactUsForm
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from polls.forms import CreateTopicForm
+from django.shortcuts import render_to_response
 
 from polls.models import Question, Category
 
@@ -17,9 +18,12 @@ def categories(request):
     return HttpResponse(template.render(context))
 
 def get_all_categories(request):
-    latest_category_list = [{'name': 'Politics'}, {'name': 'Fashion'}, {'name': 'Science'}, {'name': 'Technology'}]
-    items = {}
-    items['items'] = latest_category_list
+    latest_category_list = Category.objects.order_by('-pub_date')
+    items = []
+    items2 = {}
+    for bar in latest_category_list:
+        items.append({'name': bar['category_text']},)
+    items2['items'] = items
     return HttpResponse(json.dumps(items), content_type="application/json")
     
     
@@ -59,20 +63,34 @@ def myAccount(request):
     context = RequestContext(request)
     return HttpResponse(template.render(context))
 
-def contactUs(request):
-    # if this is a POST request we need to process the form data
+def createTopic(request):
+    template = loader.get_template('polls/create_topic_form.html')
+    context = RequestContext(request)
+    return HttpResponse(template.render(context))
+
+def create_topic(request):
+    # Get the context from the request.
+    context = RequestContext(request)
+
+    # A HTTP POST?
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = ContactUsForm(request.POST)
-        # check whether it's valid:
+        form = CreateTopicForm(request.POST)
+
+        # Have we been provided with a valid form?
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect('/thanks/')
+            # Save the new topic to the database.
+            form.save(request)
 
-    # if a GET (or any other method) we'll create a blank form
+            # Now call the index() view.
+            # The user will be shown the homepage.
+            return myAccount(request)
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print form.errors
     else:
-        form = ContactUsForm()
+        # If the request was not a POST, display the form to enter details.
+        form = CreateTopicForm()
 
-    return render(request, 'contactus.html', {'form': form})
+    # Bad form (or form details), no form supplied...
+    # Render the form with error messages (if any).
+    return render_to_response('polls/create_topic_form.html', {'form': form}, context)
