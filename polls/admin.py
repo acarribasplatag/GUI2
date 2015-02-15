@@ -23,8 +23,11 @@ admin.site.register(Question, QuestionAdmin)
 
 class ChoiceAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['choice_text']}),
-        ('Date information', {'fields': ['pub_date']}),
+        (None,                  {'fields': ['choice_text']}),
+        ('Date information',    {'fields': ['pub_date']}),
+        ('Votes',               {'fields': ['votes']}),
+        ('Belongs to User',     {'fields': ['user']}),
+        ('Belongs to Question', {'fields': ['question']}),
     ]
 
 admin.site.register(Choice, ChoiceAdmin)
