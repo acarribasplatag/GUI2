@@ -47,6 +47,25 @@
             });
 
         </script>
+        
+        <script>
+        	$(document).ready(function () {
+        		var retina = window.devicePixelRatio > 1;
+        		var img = document.createElement('img');
+        		var img2 = document.createElement('img');
+        		
+        		if (retina) {
+        			img.setAttribute('src', "{% static 'polls/img/logo-PP@2x.png' %}");
+        			img2.setAttribute('src', "{% static 'polls/img/logo-PP@2x.png' %}");
+        		} else {
+        			img.setAttribute('src', "{% static 'polls/img/logo-PP.png' %}");
+        			img2.setAttribute('src', "{% static 'polls/img/logo-PP.png' %}");
+        		}
+        		$('#logo-link').append($(img));
+        		$('#subtitle').before($(img2));
+        		
+        	});
+        </script>
 </head>
 
 
@@ -63,8 +82,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/"><img
-						src="{% static 'polls/img/logo-PP.png' %}" /></a>
+					<a id="logo-link" class="navbar-brand" href="/"></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -101,9 +119,8 @@
 
 
 		<div class="jumbotron">
-			<img src="{% static 'polls/img/logo-PP.png' %}" />
 
-			<p>Select a category</p>
+			<p id="subtitle">Select a category</p>
 
 			<!--  the carousel itself -->
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
