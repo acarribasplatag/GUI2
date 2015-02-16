@@ -28,9 +28,8 @@
 <!-- Loads css files from polls/static/polls folder (It's a django thing)-->
 <!-- https://docs.djangoproject.com/en/1.7/howto/static-files/ -->
 {% load staticfiles %}
-<script src={%static "js/libs/ckeditor/ckeditor.js" %}></script>
-<link rel="stylesheet" href="{%static "css/poll.css" %}">
-<link rel="stylesheet" href="{%static "css/logo.css" %}">
+<link rel="stylesheet" href={%static 'polls/css/poll.css' %}>
+<link rel="stylesheet" href={%static 'polls/css/logo.css' %}>
 
 <!--  Load the pie chart using highcharts -->
 <script>
@@ -131,7 +130,8 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/"><img src="{% static "img/logo-PP.png" %}"/></a>
+					<a class="navbar-brand" href="/"><img
+						src="{% static 'polls/img/logo-PP.png' %}" /></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -145,28 +145,18 @@
 					<!--  right side of navbar -->
 					<ul class="nav navbar-nav navbar-right">
 						{% if user.is_authenticated %}
-                            <li>
-                                <a href="/myAccount">
-                                    <span class="glyphicon glyphicon-user"></span> {{ user.username }}
-                                </a>
-                            </li>  
-                            <li>
-                                <a href="/logout">
-                                    <span class="glyphicon glyphicon-log-out"></span> Log Out
-                                </a>
-                            </li>  
-                        {% else %}
-                            <li>
-                                <a href="/register">
-                                    <span class="glyphicon glyphicon-user"></span> Sign Up
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/login">
-                                    <span class="glyphicon glyphicon-log-in"></span> Log In
-                                </a>
-                            </li>
-                        {% endif %}
+						<li><a href="/myAccount"> <span
+								class="glyphicon glyphicon-user"></span> {{ user.username }}
+						</a></li>
+						<li><a href="/logout"> <span
+								class="glyphicon glyphicon-log-out"></span> Log Out
+						</a></li> {% else %}
+						<li><a href="/register"> <span
+								class="glyphicon glyphicon-user"></span> Sign Up
+						</a></li>
+						<li><a href="/login"> <span
+								class="glyphicon glyphicon-log-in"></span> Log In
+						</a></li> {% endif %}
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
