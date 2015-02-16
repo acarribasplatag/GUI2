@@ -9,8 +9,9 @@ class CreateTopicForm(forms.Form):
     choices = VotingChoicesField
     latest_category_list = Category.objects.order_by('-pub_date')
     list = []
-    for bar in latest_category_list:
-        list.append((latest_category_list.index(bar), bar['category_text']))
+    # commented this out (error was latest_category_list has no atribute 'index'
+#     for bar in latest_category_list:
+        #list.append((latest_category_list.index(bar), bar['category_text']))
     category = forms.ChoiceField(choices=list)
     
     def __init__(self, *args, **kwargs):
