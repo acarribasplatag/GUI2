@@ -116,7 +116,20 @@
                 });
             });
         </script>
+<script>
+	$(document).ready(function() {
+		var retina = window.devicePixelRatio > 1;
+		var img = document.createElement('img');
 
+		if (retina) {
+			img.setAttribute('src', "{% static 'polls/img/logo-PP@2x.png' %}");
+		} else {
+			img.setAttribute('src', "{% static 'polls/img/logo-PP.png' %}");
+		}
+		$('#logo-link').append($(img));
+
+	});
+</script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -130,8 +143,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/"><img
-						src="{% static 'polls/img/logo-PP.png' %}" /></a>
+					<a id='logo-link' class="navbar-brand" href="/"></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->

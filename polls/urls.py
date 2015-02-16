@@ -40,6 +40,11 @@ urlpatterns = patterns('',
     url(r'^myAccount/password_change/done/$',
         'django.contrib.auth.views.password_change_done',
         {'template_name': 'polls/change_password/password_change_done.html'}),
+
+    url(r'^myAccount/freeze_voting/(?P<question_id>\d+)/$',
+        views.question, name='freeze_voting'),
+    url(r'^myAccount/delete_topic/(?P<question_id>\d+)/$',
+        views.question, name='delete_topic'),
         
     # ex:localhost:8000/create_topic
     url(r'^create_topic/$', views.create_topic, name='create_topic'),
