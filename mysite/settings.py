@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contact_form',
-    
+        
     #my apps
     'polls',
     'registration',
