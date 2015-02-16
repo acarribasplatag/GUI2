@@ -1,18 +1,18 @@
 
 from django import forms
-from polls.fields import VotingChoicesField
-from polls.models import Category, Question
+from polls.models import Category, Question, Choice
 import datetime
 
 class CreateTopicForm(forms.Form):
     topic_text = forms.CharField(label='Topic Text', max_length=300)
-    choices = VotingChoicesField
-    latest_category_list = Category.objects.order_by('-pub_date')
-    list = []
-    # commented this out (error was latest_category_list has no atribute 'index'
-#     for bar in latest_category_list:
-        #list.append((latest_category_list.index(bar), bar['category_text']))
-    category = forms.ChoiceField(choices=list)
+    latest_category_list = Category.objects.order_by('category_text')
+    list2 = []
+    i = 1
+    for bar in latest_category_list:
+        list2.append((i, bar.category_text))
+        i = i+1
+    category = forms.ChoiceField(choices=list2)
+    choices = forms.CharField(label= 'Enter choices in the textarea below: (comma-separated)', widget=forms.Textarea)
     
     def __init__(self, *args, **kwargs):
         super(CreateTopicForm, self).__init__(*args, **kwargs)
@@ -21,21 +21,30 @@ class CreateTopicForm(forms.Form):
     def save(self, request):
         data = self.cleaned_data
         cat = self.getCategoryWithName(data['category'])
-        topic = Question(data['topic_text'], cat, request.user, datetime.datetime.now())
+        topic = Question(question_text=data['topic_text'], category = cat, user=request.user, pub_date=datetime.datetime.now())
         topic.save()
+        d = data['choices']
+        choices = [x.strip() for x in d.split(',')]
+        for c in choices:
+            choice = Choice(question=topic, choice_text=c, votes=0, user=request.user)
+            choice.save()
         
     def getCategoryWithName(self, name):
         latest_category_list = Category.objects.order_by('-pub_date')
+        i = 0
         for bar in latest_category_list:
-            if name==bar['category_text']:
-                return latest_category_list[latest_category_list.index(bar)]
+            if int(name)==i:
+                return latest_category_list[i]
+            i = i+1
             
     def getCats(self):
-        latest_category_list = Category.objects.order_by('-pub_date')
-        list = []
+        latest_category_list = Category.objects.order_by('category_text')
+        list2 = []
+        i = 1
         for bar in latest_category_list:
-            list.append((latest_category_list.index(bar), bar['category_text']))
-        return list
+            list2.append((i, bar.category_text))
+            i = i+1
+        return list2
             
     
         

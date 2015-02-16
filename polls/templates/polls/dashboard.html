@@ -27,8 +27,8 @@
 <!-- Loads css files from polls/static/polls folder (It's a django thing)-->
 <!-- https://docs.djangoproject.com/en/1.7/howto/static-files/ -->
 {% load staticfiles %}
-<link rel="stylesheet" href="http://weblab.cs.uml.edu/~vbalabha/static/css/poll.css">
-<link rel="stylesheet" href="http://weblab.cs.uml.edu/~vbalabha/static/css/logo.css">
+<link rel="stylesheet" href="{%static "css/poll.css" %}">
+<link rel="stylesheet" href="{%static "css/logo.css" %}">
 
 
 </head>
@@ -48,7 +48,7 @@
 							class="icon-bar"></span>
 					</button>
 					{% load staticfiles %} <a class="navbar-brand" href="/"> <img
-						src="http://weblab.cs.uml.edu/~vbalabha/static/img/logo-PP.png"/></a>
+						src="{% static "img/logo-PP.png" %}"/></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -102,8 +102,36 @@
 							<tr>
 								<th>Topic</th>
 								<th># of votes</th>
+								<th>Date created</th>
 								<th class="change">Actions</th>
 							</tr>
+							{% for q in questions %}
+							<tr>
+								<td class="change">{{ q.question_text }}</td>
+								<td>{{ q.votes }} votes</td>
+								<td>{{ q.pub_date }}</td>
+								<td>
+									<div class="dropdown">
+										<button class="btn btn-default dropdown-toggle" type="button"
+											id="dropdownMenu1" data-toggle="dropdown"
+											aria-expanded="true">
+											Actions <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu"
+											aria-labelledby="dropdownMenu1">
+											<li role="presentation"><a role="menuitem" tabindex="-1"
+												href="#">Freeze Voting</a></li>
+											<li role="presentation"><a role="menuitem" tabindex="-1"
+												href="#">Delete Topic</a></li>
+											<li role="presentation"><a role="menuitem" tabindex="-1"
+												href="#">View Stats</a></li>
+											<li role="presentation"><a role="menuitem" tabindex="-1"
+												href="#">Generate PDF Summary (IN BETA)</a></li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
 						</table>
 					</div>
 					<div class="tab-pane active" id="b">

@@ -27,8 +27,8 @@
 <!-- Loads css files from polls/static/polls folder (It's a django thing)-->
 <!-- https://docs.djangoproject.com/en/1.7/howto/static-files/ -->
 {% load staticfiles %}
-<link rel="stylesheet" href="http://weblab.cs.uml.edu/~vbalabha/static/css/poll.css">
-<link rel="stylesheet" href="http://weblab.cs.uml.edu/~vbalabha/static/css/logo.css">
+<link rel="stylesheet" href="{%static "css/poll.css" %}">
+<link rel="stylesheet" href="{%static "css/logo.css" %}">
 
 <script>
 	$(document).ready(function() {
@@ -36,10 +36,12 @@
 		req_url = req_url.substring(0, document.location.pathname);
 		req_url = req_url + "categories/"*/
 		var req_url = "http://localhost:8000/categories/";
+		console.log("Hello");
 		$.getJSON(req_url, function(jd) {
 			var list = jd['items'];
 			var tabCont = document.getElementById('cat_tab_outer');
 			var tabContent = document.getElementById('cat_tab_content');
+			
 			$(list).each(function(index, element) {
 				var newTab = document.createElement('li');
 				newTab.setAttribute('role', 'presentation');
@@ -82,7 +84,7 @@
 							class="icon-bar"></span>
 					</button>
 					{% load staticfiles %} <a class="navbar-brand" href="/"> <img
-						src="http://weblab.cs.uml.edu/~vbalabha/static/img/logo-PP.png"/></a>
+						src="{% static "img/logo-PP.png" %}"/></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -97,28 +99,18 @@
 					<!--  right side of navbar -->
 					<ul class="nav navbar-nav navbar-right">
 						{% if user.is_authenticated %}
-                            <li>
-                                <a href="/myAccount">
-                                    <span class="glyphicon glyphicon-user"></span> {{ user.username }}
-                                </a>
-                            </li>  
-                            <li>
-                                <a href="/logout">
-                                    <span class="glyphicon glyphicon-log-out"></span> Log Out
-                                </a>
-                            </li>  
-                        {% else %}
-                            <li>
-                                <a href="/register">
-                                    <span class="glyphicon glyphicon-user"></span> Sign Up
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/login">
-                                    <span class="glyphicon glyphicon-log-in"></span> Log In
-                                </a>
-                            </li>
-                        {% endif %}
+						<li><a href="/myAccount"> <span
+								class="glyphicon glyphicon-user"></span> {{ user.username }}
+						</a></li>
+						<li><a href="/logout"> <span
+								class="glyphicon glyphicon-log-out"></span> Log Out
+						</a></li> {% else %}
+						<li><a href="/register"> <span
+								class="glyphicon glyphicon-user"></span> Sign Up
+						</a></li>
+						<li><a href="/login"> <span
+								class="glyphicon glyphicon-log-in"></span> Log In
+						</a></li> {% endif %}
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -141,8 +133,7 @@
 				</ul>
 
 				<!-- Tab panes -->
-				<div class="tab-content" id="cat_tab_content">
-				</div>
+				<div class="tab-content" id="cat_tab_content"></div>
 
 			</div>
 

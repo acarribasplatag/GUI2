@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Developed By: Ana Arribasplata
+<!-- Developed By: Virinchi Balabhadrapatruni
 	 Date:  2/1/2015
 	 UMass Lowell, GUI II
 -->
@@ -28,8 +28,8 @@
 <!-- Loads css files from polls/static/polls folder (It's a django thing)-->
 <!-- https://docs.djangoproject.com/en/1.7/howto/static-files/ -->
 {% load staticfiles %}
-<link rel="stylesheet" href="http://weblab.cs.uml.edu/~vbalabha/static/css/poll.css">
-<link rel="stylesheet" href="http://weblab.cs.uml.edu/~vbalabha/static/css/logo.css">
+<link rel="stylesheet" href="{%static "css/poll.css" %}">
+<link rel="stylesheet" href="{%static "css/logo.css" %}">
 
 <!-- Carousel Script -->
 <script>
@@ -63,7 +63,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/"><img src="http://weblab.cs.uml.edu/~vbalabha/static/img/logo-PP.png"/></a>
+					<a class="navbar-brand" href="/"><img src="{% static "img/logo-PP.png" %}"/></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -78,28 +78,18 @@
 					<!--  right side of navbar -->
 					<ul class="nav navbar-nav navbar-right">
 						{% if user.is_authenticated %}
-                            <li>
-                                <a href="/myAccount">
-                                    <span class="glyphicon glyphicon-user"></span> {{ user.username }}
-                                </a>
-                            </li>  
-                            <li>
-                                <a href="/logout">
-                                    <span class="glyphicon glyphicon-log-out"></span> Log Out
-                                </a>
-                            </li>  
-                        {% else %}
-                            <li>
-                                <a href="/register">
-                                    <span class="glyphicon glyphicon-user"></span> Sign Up
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/login">
-                                    <span class="glyphicon glyphicon-log-in"></span> Log In
-                                </a>
-                            </li>
-                        {% endif %}
+						<li><a href="/myAccount"> <span
+								class="glyphicon glyphicon-user"></span> {{ user.username }}
+						</a></li>
+						<li><a href="/logout"> <span
+								class="glyphicon glyphicon-log-out"></span> Log Out
+						</a></li> {% else %}
+						<li><a href="/register"> <span
+								class="glyphicon glyphicon-user"></span> Sign Up
+						</a></li>
+						<li><a href="/login"> <span
+								class="glyphicon glyphicon-log-in"></span> Log In
+						</a></li> {% endif %}
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->

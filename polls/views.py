@@ -18,16 +18,14 @@ def categories(request):
     return HttpResponse(template.render(context))
 
 def get_all_categories(request):
-    latest_category_list = Category.objects.order_by('-pub_date')
+    latest_category_list = Category.objects.order_by('category_text')[:5]
     items = []
     items2 = {}
     for bar in latest_category_list:
-        items.append({'name': bar['category_text']},)
+        items.append({'name': bar.category_text},)
     items2['items'] = items
-    return HttpResponse(json.dumps(items), content_type="application/json")
+    return HttpResponse(json.dumps(items2), content_type="application/json")
     
-    
-
 def topic_select(request):
     latest_category_list = Category.objects.order_by('-pub_date')[:5]
     template = loader.get_template('polls/questions.html')
@@ -59,9 +57,12 @@ def about(request):
     return HttpResponse(template.render(context))
 
 def myAccount(request):
-    template = loader.get_template('polls/dashboard.html')
     context = RequestContext(request)
-    return HttpResponse(template.render(context))
+    questionsList = Question.objects.filter(user=request.user)
+    context_dict = {'questions': questionsList}
+
+    # Render the response and send it back!
+    return render_to_response('polls/dashboard.html', context_dict, context)
 
 def createTopic(request):
     template = loader.get_template('polls/create_topic_form.html')
