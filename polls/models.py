@@ -9,8 +9,6 @@ class Category(models.Model):
     pub_date = models.DateTimeField('date published')
     def __unicode__(self):              # __str__ on Python 3
         return self.category_text
-    def __unicode__(self):              # __unicode__ on Python 2
-        return unicode(self.category_text)
     def was_published_recently(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
@@ -22,8 +20,6 @@ class Question(models.Model):
     pub_date = models.DateTimeField('date published')
     def __unicode__(self):               # __str__ on Python 3
         return self.question_text
-    def __unicode__(self):              # __unicode__ on Python 2
-        return unicode(self.question_text)
     def was_published_recently(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
@@ -35,8 +31,7 @@ class Choice(models.Model):
     pub_date = models.DateTimeField('date published')
     def __unicode__(self):               # __str__ on Python 3
         return self.choice_text
-    def __unicode__(self):              # __unicode__ on Python 2
-        return unicode(self.choice_text)
+
         
 class Comment(models.Model):
     comment_text = models.CharField(max_length=500)

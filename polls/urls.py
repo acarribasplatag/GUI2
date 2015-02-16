@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^about/$', views.about, name='about'),
     
     # ex: localhost:8000/contact/
-    # url(r'^contact/', include('polls/contact_form.urls')),
+     url(r'^contact/', include('polls/contact_form.urls')),
     
     # ex:localhost:8000/myAccount/
     url(r'^myAccount/$', views.myAccount, name='dashboard'),
