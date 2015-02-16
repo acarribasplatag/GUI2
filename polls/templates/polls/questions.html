@@ -36,10 +36,12 @@
 		req_url = req_url.substring(0, document.location.pathname);
 		req_url = req_url + "categories/"*/
 		var req_url = "http://localhost:8000/categories/";
+		console.log("Hello");
 		$.getJSON(req_url, function(jd) {
 			var list = jd['items'];
 			var tabCont = document.getElementById('cat_tab_outer');
 			var tabContent = document.getElementById('cat_tab_content');
+			
 			$(list).each(function(index, element) {
 				var newTab = document.createElement('li');
 				newTab.setAttribute('role', 'presentation');

@@ -31,35 +31,9 @@
 <link rel="stylesheet" href="{%static "css/logo.css" %}">
 
 <script>
-	$(document).ready(function() {
-		/*var req_url = document.location.href;
-		req_url = req_url.substring(0, document.location.pathname);
-		req_url = req_url + "categories/"*/
-		var req_url = "http://localhost:8000/categories/";
-		$.getJSON(req_url, function(jd) {
-			var list = jd['items'];
-			var radioList = document.getElementById('radioList');
-			$(list).each(function(index, element) {
-				var newTab = document.createElement('input');
-				newTab.setAttribute('type', 'radio');
-				var link = document.createElement('label');
-				newTab.setAttribute('value', element['name']);
-				newTab.setAttribute('name', 'categories');
-				link.appendChild(newTab);
-				link.appendChild(document.createTextNode(element['name']));
-				var newTabCont = document.createElement('div');
-				newTabCont.setAttribute('class', 'radio');
-				newTabCont.setAttribute('id', element['name']);
-				newTabCont.appendChild(link);
-				radioList.appendChild(newTabCont);
-			});
-
-		});
+	$(document).ready(function () {
+		$("#id_choices").before('<br>');
 	});
-</script>
-
-<script>
-
 </script>
 
 
@@ -117,7 +91,7 @@
 
 		<div class="jumbotron">
 			<h1>Create New Topic</h1>
-			<form method="post" action="/create/">
+			<form method="post" action="/create_topic/">
 				{% csrf_token %}
     			{{ form.as_p }}
 				<p>
