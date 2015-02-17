@@ -3,10 +3,12 @@ from django.template import RequestContext, loader
 from polls.forms import CreateTopicForm
 from django.shortcuts import render_to_response
 
-from polls.models import Question, Category, Choice
+from django.core import serializers
 
+
+from polls.models import Question, Category, Choice
 import json
-from __builtin__ import True
+
 
 def categories(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
@@ -18,12 +20,10 @@ def categories(request):
 
 def get_all_categories(request):
     latest_category_list = Category.objects.order_by('category_text')[:5]
-    items = []
-    items2 = {}
-    for bar in latest_category_list:
-        items.append({'name': bar.category_text},)
-    items2['items'] = items
-    return HttpResponse(json.dumps(items2), content_type="application/json")
+    
+    serialized_obj = serializers.serialize('json', [ latest_category_list, ])
+    
+    return HttpResponse(serialized_obj, content_type="application/json")
     
 def topic_select(request):
     latest_category_list = Category.objects.order_by('-pub_date')[:5]
@@ -44,8 +44,9 @@ def questions(request, category_id):
 
 def question(request, category_id, question_id):
     context = RequestContext(request)
-    question = Question.objects.filter(pk=question_id)
-    context_dict = {'question': question}
+    q = Question.objects.filter(pk=question_id)
+    listL = Choice.objects.filter(question = q)
+    context_dict = {'question': q, 'choices': listL}
 
     # Render the response and send it back!
     return render_to_response('polls/question.html', context_dict, context)
@@ -53,10 +54,12 @@ def question(request, category_id, question_id):
 def get_question_chart(request, question_id):
     q = Question.objects.get(pk=question_id)
     clist = Choice.objects.filter(question = q)
-    jsondata = {'question': q, 'choices': []}
+    choices = {'question': serializers.serialize('json', [ q, ]), 'choices': []}
     for c in clist:
-        jsondata['choices'].append({c.choice_text, c.votes})
-    return HttpResponse(json.dumps(jsondata), content_type="application/json")
+        choices['choices'].append(serializers.serialize('json', [ c, ]))
+
+
+    return HttpResponse(json.dumps(choices), content_type="application/json")
 
 def delete_new(request, question_id):
     # does nothing right now
