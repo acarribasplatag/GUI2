@@ -7,7 +7,6 @@ from polls.models import Question, Category, Choice
 
 import json
 from __builtin__ import True
-from numpy.f2py.crackfortran import endifpattern
 
 def categories(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
