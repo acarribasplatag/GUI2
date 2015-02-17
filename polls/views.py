@@ -8,8 +8,6 @@ from django.core import serializers
 
 from polls.models import Question, Category, Choice
 
-import json
-from __builtin__ import True
 
 def categories(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
@@ -21,15 +19,10 @@ def categories(request):
 
 def get_all_categories(request):
     latest_category_list = Category.objects.order_by('category_text')[:5]
-    items = []
-    items2 = {}
-    for bar in latest_category_list:
-        items.append({'name': bar.category_text},)
-    items2['items'] = items
     
-    serialized_obj = serializers.serialize('json', [ items2, ])
+    serialized_obj = serializers.serialize('json', [ latest_category_list, ])
     
-    return HttpResponse(json.dumps(serialized_obj), content_type="application/json")
+    return HttpResponse(serialized_obj, content_type="application/json")
     
 def topic_select(request):
     latest_category_list = Category.objects.order_by('-pub_date')[:5]
