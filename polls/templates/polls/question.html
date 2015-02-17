@@ -10,12 +10,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--  jQuery JS file -->
 <script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+	src="https://code.jquery.com/jquery-2.1.3.min.js"
 	type="text/javascript"></script>
 
 <!--  Highcharts JS files -->
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.4/highcharts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.4/modules/exporting.js"></script>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -31,91 +31,6 @@
 <link rel="stylesheet" href={%static 'polls/css/poll.css' %}>
 <link rel="stylesheet" href={%static 'polls/css/logo.css' %}>
 
-<!--  Load the pie chart using highcharts -->
-<script>
-            $(function () {
-                $('#myChart').highcharts({
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false
-                    },
-                    title: {
-                        text: 'What is your favorite food?'
-                    },
-                    tooltip: {
-                        pointFormat: '{point.percentage:.1f}%'
-                    },
-                    exporting: {enabled: false},
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: false
-                            }
-                        },
-                        series: {
-                            point: {
-                                events: {
-                                    click: function () {
-                                        // prepare the div for viewing first
-
-                                        if ($(document).find($('#comments')).length == 0)
-                                        {
-                                            var newel = document.createElement('div');
-                                            newel.setAttribute('id', 'comments');
-                                            var list = document.createElement('div');
-                                            list.setAttribute('id', 'comment-list');
-                                            newel.appendChild(list);
-                                            document.getElementById('customcontrol').appendChild(newel);
-
-                                        }
-
-                                        if (this.selected) {
-                                            if ($('#comments').is(":visible")) {
-                                                $('#comments').hide('slow', function () {
-                                                    $('#comments').remove();
-                                                });
-                                            }
-                                        } else {
-                                            if ($('#comments').is(":visible")) {
-                                                $('#comments').hide('slow', function () {
-                                                    $('#comments').remove();
-                                                });
-                                                var newel = document.createElement('div');
-                                                newel.setAttribute('id', 'comments');
-                                                var list = document.createElement('div');
-                                                list.setAttribute('id', 'comment-list');
-                                                newel.appendChild(list);
-                                                document.getElementById('customcontrol').appendChild(newel);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    series: [{
-                            type: 'pie',
-                            name: '',
-                            data: [
-                                ['Pizza', 45.0],
-                                ['Lasagna', 26.8],
-                                {
-                                    name: 'Noodles',
-                                    y: 12.8,
-                                    sliced: true,
-                                    selected: true
-                                },
-                                ['Fried Rice', 8.5],
-                                ['Pasta', 6.2],
-                                ['Others', 0.7]
-                            ]
-                        }]
-                });
-            });
-        </script>
 <script>
 	$(document).ready(function() {
 		var retina = window.devicePixelRatio > 1;
@@ -127,6 +42,105 @@
 			img.setAttribute('src', "{% static 'polls/img/logo-PP.png' %}");
 		}
 		$('#logo-link').append($(img));
+
+	});
+</script>
+<!--  Load the pie chart using highcharts -->
+<script>
+
+	function SecondIndexOf(Val, Str) {
+		var Fst = Str.indexOf(Val);
+		var Snd = Str.indexOf(Val, Fst + 1)
+		return Snd
+	}
+	$(function() {
+		var options = {
+			chart : {
+				plotBackgroundColor : null,
+				plotBorderWidth : null,
+				plotShadow : false
+			},
+			title : {
+				text : null
+			},
+			tooltip : {
+				pointFormat : '{point.percentage:.1f}%'
+			},
+			exporting : {
+				enabled : false
+			},
+			plotOptions : {
+				pie : {
+					allowPointSelect : true,
+					cursor : 'pointer',
+					dataLabels : {
+						enabled : false
+					}
+				},
+				series : {
+					point : {
+						events : {
+							click : function() {
+								// prepare the div for viewing first
+
+								if ($(document).find($('#comments')).length == 0) {
+									var newel = document.createElement('div');
+									newel.setAttribute('id', 'comments');
+									var list = document.createElement('div');
+									list.setAttribute('id', 'comment-list');
+									newel.appendChild(list);
+									document.getElementById('customcontrol')
+											.appendChild(newel);
+
+								}
+
+								if (this.selected) {
+									if ($('#comments').is(":visible")) {
+										$('#comments').hide('slow', function() {
+											$('#comments').remove();
+										});
+									}
+								} else {
+									if ($('#comments').is(":visible")) {
+										$('#comments').hide('slow', function() {
+											$('#comments').remove();
+										});
+										var newel = document
+												.createElement('div');
+										newel.setAttribute('id', 'comments');
+										var list = document
+												.createElement('div');
+										list.setAttribute('id', 'comment-list');
+										newel.appendChild(list);
+										document
+												.getElementById('customcontrol')
+												.appendChild(newel);
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			series : [ {} ]
+		};
+		var req_url = document.location.origin;
+		req_url = req_url + "/get_chart/";
+		var current = document.location.pathname
+		current = current.substring(1);
+		while (current.indexOf('/') != 0) {
+			current = current.substring(1);
+		}
+		current = current.substring(1);
+		current = current.substring(0, current.indexOf('/'));
+		req_url = req_url + current;
+		$.getJSON(req_url, function(data) {
+			console.log('Got data');
+			options.title.text = data['question']['question_text'];
+			options.series[0].type = 'pie';
+			options.series[0].data = data['data'];
+			$('#myChart').highcharts(options);
+		});
 
 	});
 </script>

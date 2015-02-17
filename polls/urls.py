@@ -16,6 +16,8 @@ urlpatterns = patterns('',
     # ex: localhost:8000/1/2 (first category, second question)
     url(r'^(?P<category_id>\d+)/(?P<question_id>\d+)/$',
         views.question, name='question'),
+    url(r'^/get_chart/(?P<question_id>\d+)/$',
+        views.get_question_chart, name='get_chart'),
     
     # ex: localhost:8000/categories/
     url(r'^categories/$', views.get_all_categories, name='get_all_categories'),
@@ -42,9 +44,9 @@ urlpatterns = patterns('',
         {'template_name': 'polls/change_password/password_change_done.html'}),
 
     url(r'^myAccount/freeze_voting/(?P<question_id>\d+)/$',
-        views.question, name='freeze_voting'),
+        views.freezeVoting, name='freeze_voting'),
     url(r'^myAccount/delete_topic/(?P<question_id>\d+)/$',
-        views.question, name='delete_topic'),
+        views.delete_new, name='delete_topic'),
         
     # ex:localhost:8000/create_topic
     url(r'^create_topic/$', views.create_topic, name='create_topic'),
