@@ -61,7 +61,7 @@ def get_question_chart(request, question_id):
         
     serialized_obj = serializers.serialize('json', [ q, ])
 
-    return HttpResponse(json.dumps(serialized_obj), content_type="application/json")
+    return HttpResponse(serialized_obj, content_type="application/json")
 
 def delete_new(request, question_id):
     # does nothing right now
