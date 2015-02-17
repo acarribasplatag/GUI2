@@ -3,6 +3,9 @@ from django.template import RequestContext, loader
 from polls.forms import CreateTopicForm
 from django.shortcuts import render_to_response
 
+from django.core import serializers
+
+
 from polls.models import Question, Category, Choice
 
 import json
@@ -23,7 +26,10 @@ def get_all_categories(request):
     for bar in latest_category_list:
         items.append({'name': bar.category_text},)
     items2['items'] = items
-    return HttpResponse(json.dumps(items2), content_type="application/json")
+    
+    serialized_obj = serializers.serialize('json', [ items2, ])
+    
+    return HttpResponse(json.dumps(serialized_obj), content_type="application/json")
     
 def topic_select(request):
     latest_category_list = Category.objects.order_by('-pub_date')[:5]
@@ -56,7 +62,10 @@ def get_question_chart(request, question_id):
     jsondata = {'question': q, 'choices': []}
     for c in clist:
         jsondata['choices'].append({c.choice_text, c.votes})
-    return HttpResponse(json.dumps(jsondata), content_type="application/json")
+        
+    serialized_obj = serializers.serialize('json', [ q, ])
+
+    return HttpResponse(json.dumps(serialized_obj), content_type="application/json")
 
 def delete_new(request, question_id):
     # does nothing right now

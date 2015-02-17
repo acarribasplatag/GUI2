@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 
+from django.core import serializers
+
 from polls import views
 
 urlpatterns = patterns('',
@@ -16,7 +18,8 @@ urlpatterns = patterns('',
     # ex: localhost:8000/1/2 (first category, second question)
     url(r'^(?P<category_id>\d+)/(?P<question_id>\d+)/$',
         views.question, name='question'),
-    url(r'^/get_chart/(?P<question_id>\d+)/$',
+        
+    url(r'^get_chart/(?P<question_id>\d+)/$',
         views.get_question_chart, name='get_chart'),
     
     # ex: localhost:8000/categories/
