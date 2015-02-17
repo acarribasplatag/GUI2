@@ -58,10 +58,6 @@ def question(request, category_id, question_id):
 
 def get_question_chart(request, question_id):
     q = Question.objects.get(pk=question_id)
-    clist = Choice.objects.filter(question = q)
-    jsondata = {'question': q, 'choices': []}
-    for c in clist:
-        jsondata['choices'].append({c.choice_text, c.votes})
         
     serialized_obj = serializers.serialize('json', [ q, ])
 
