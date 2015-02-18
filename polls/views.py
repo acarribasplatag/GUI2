@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response
 from django.core import serializers
 
 from polls.models import Question, Category, Choice
+import json
 
 
 def categories(request):
@@ -42,18 +43,22 @@ def questions(request, category_id):
 
 def question(request, category_id, question_id):
     context = RequestContext(request)
-    question = Question.objects.filter(pk=question_id)
-    context_dict = {'question': question}
+    q = Question.objects.filter(pk=question_id)
+    listL = Choice.objects.filter(question = q)
+    context_dict = {'question': q, 'choices': listL}
 
     # Render the response and send it back!
     return render_to_response('polls/question.html', context_dict, context)
 
 def get_question_chart(request, question_id):
     q = Question.objects.get(pk=question_id)
-        
-    serialized_obj = serializers.serialize('json', [ q, ])
+    clist = Choice.objects.filter(question = q)
+    choices = {'question': serializers.serialize('json', [ q, ]), 'choices': []}
+    for c in clist:
+        choices['choices'].append(serializers.serialize('json', [ c, ]))
 
-    return HttpResponse(serialized_obj, content_type="application/json")
+
+    return HttpResponse(json.dumps(choices), content_type="application/json")
 
 def delete_new(request, question_id):
     # does nothing right now

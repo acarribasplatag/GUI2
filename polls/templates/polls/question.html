@@ -58,7 +58,8 @@
 			chart : {
 				plotBackgroundColor : null,
 				plotBorderWidth : null,
-				plotShadow : false
+				plotShadow : false,
+				
 			},
 			title : {
 				text : null
@@ -137,9 +138,23 @@
 		req_url = req_url + current;
 		$.getJSON(req_url, function(data) {
 			console.log('Got data');
-			options.title.text = data['question']['question_text'];
+			options.title.text = data['question'][0]['question_text'];
 			options.series[0].type = 'pie';
-			options.series[0].data = data['data'];
+			var choices = data['choices'];
+			var total = 0;
+			var dat = [];
+			
+			for (var i=0; i<choices.length; i++) {
+				console.log('Hello');
+				var r = JSON.parse(choices[i]);
+				var text = r[0]['fields']['choice_text'];
+				var votes = r[0]['fields']['votes'];
+				var row = [text, parseInt(votes)];
+				dat.push(row);
+				total += parseInt(votes);
+			}
+			console.log(dat);
+			options.series[0].data = dat;
 			$('#myChart').highcharts(options);
 		});
 
@@ -219,7 +234,7 @@
 					<h4 class="modal-title" id="myModalLabel">Vote Now!</h4>
 				</div>
 				<div class="modal-body">
-					<form action="" role="form">
+					<form action="" role="form" id="frm">
 						<div class="radio">
 							<label><input type="radio" name="pizza">Pizza</label>
 						</div>
