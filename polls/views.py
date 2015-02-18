@@ -5,7 +5,6 @@ from django.shortcuts import render_to_response
 
 from django.core import serializers
 
-
 from polls.models import Question, Category, Choice
 
 
