@@ -19,11 +19,11 @@ def categories(request):
 
 def get_all_categories(request):
     latest_category_list = Category.objects.order_by('category_text')[:5]
-    
+
     serialized_obj = serializers.serialize('json', [ latest_category_list, ])
-    
+
     return HttpResponse(serialized_obj, content_type="application/json")
-    
+
 def topic_select(request):
     latest_category_list = Category.objects.order_by('-pub_date')[:5]
     template = loader.get_template('polls/questions.html')
@@ -68,14 +68,6 @@ def about(request):
     template = loader.get_template('polls/about.html')
     context = RequestContext(request)
     return HttpResponse(template.render(context))
-
-def myAccount(request):
-    context = RequestContext(request)
-    questionsList = Question.objects.filter(user=request.user)
-    context_dict = {'questions': questionsList}
-
-    # Render the response and send it back!
-    return render_to_response('polls/dashboard.html', context_dict, context)
 
 def freezeVoting(request, question_id):
     q = Question.objects.get(pk=question_id)

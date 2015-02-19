@@ -1,4 +1,4 @@
-{% extends "registration/base.html" %}
+{% extends "polls/base.html" %}
 
 {% block title %}Create an account{% endblock %}
 
@@ -10,7 +10,9 @@
 
   <h1>Create an account</h1>
 
-  <form action="" method="post"> {% csrf_token %}
+  <form method="POST" action="">
+
+  {% csrf_token %}
   <!--     {{ form.as_p }}
       <input type="submit" value="Create the account"> -->
 
@@ -21,17 +23,14 @@
           <input type="text" class="form-control" id="username" name="username"placeholder="Username" required autofocus>
           <input type="password" class="form-control" id="password1" name="password1" placeholder="Password" required>
           <input type="password" class="form-control" id="password2" name="password2" placeholder="Password Confirmation" required>
-          <button class="btn btn-lg btn-primary btn-block" type="submit"> Sign in</button>
+          <button class="btn btn-lg btn-primary btn-block" type="submit"> Create User</button>
 
-          <input type="hidden" name="next" value="/" />
+          <input type="hidden" name="next" value="Register" />
 
-          <label class="checkbox pull-left">
-          <input type="checkbox" value="remember-me">Remember me</label>
           <a href="#" class="pull-right need-help">Need help? </a>
           <span class="clearfix"></span>
         </form>
       </div>
-      <a href="#" class="text-center new-account">Create an account </a>
     </div>
 
   </form>
