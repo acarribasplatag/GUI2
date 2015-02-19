@@ -27,7 +27,7 @@
 	<link rel="stylesheet" href={%static 'polls/css/poll.css' %}>
 	<link rel="stylesheet" href={%static 'polls/css/logo.css' %}>
 
-	<link rel="shortcut icon" href={%static 'polls/img/small-logo.png' %} />
+	<link rel="shortcut icon" href={%static 'polls/img/small' %} />
 
 	<title>{% block title %}Register{% endblock %}</title>
 
@@ -37,13 +37,9 @@
   		var img = document.createElement('img');
   		var img2 = document.createElement('img');
 
-  		if (retina) {
-  			img.setAttribute('src', "{% static 'polls/img/logo-PP@2x.png' %}");
-  			img2.setAttribute('src', "{% static 'polls/img/logo-PP@2x.png' %}");
-  		} else {
-  			img.setAttribute('src', "{% static 'polls/img/logo-PP.png' %}");
-  			img2.setAttribute('src', "{% static 'polls/img/logo-PP.png' %}");
-  		}
+			img.setAttribute('src', "{% static 'polls/img/logo-PP.png' %}");
+			img2.setAttribute('src', "{% static 'polls/img/logo-PP.png' %}");
+
   		img2.setAttribute('id', 'mainLogo');
   		$('#logo-link').append($(img));
   		$('#subtitle').before($(img2));
