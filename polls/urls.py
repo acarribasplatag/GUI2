@@ -7,9 +7,6 @@ urlpatterns = patterns('',
     # ex: localhost:8000/
     url(r'^$', views.categories, name='home'),
 
-    # ex: localhost:8000/index.html
-    url(r'^index.html$', views.categories, name='home'),
-
     # ex: localhost:8000/topic_select/   (category selection screen)
     url(r'^topic_select/$', views.topic_select, name='topic_select'),
 
@@ -29,12 +26,15 @@ urlpatterns = patterns('',
     # ex: localhost:8000/contact/
     url(r'^contact/', include('contact_form.urls')),
 
-    url(r'^myAccount/freeze_voting/(?P<question_id>\d+)/$',
-        views.freezeVoting, name='freeze_voting'),
-    url(r'^myAccount/delete_topic/(?P<question_id>\d+)/$',
-        views.delete_new, name='delete_topic'),
+    # ex: localhost:8000/freeze_voting/(category_id)/(question_id)
+    url(r'^freeze_voting/(?P<category_id>\d+)/(?P<question_id>\d+)/$',
+        views.freeze_voting, name='freeze_voting'),
 
-    # ex:localhost:8000/create_topic
-    url(r'^create_topic/$', views.create_topic, name='create_topic'),
+    # ex: localhost:8000/delete_question/(category_id)/question_id/
+    url(r'^delete_question/(?P<category_id>\d+)/(?P<question_id>\d+)/$',
+        views.delete_question, name='delete_question'),
+
+    # ex:localhost:8000/create_question
+    url(r'^create_question/$', views.create_question, name='create_topic'),
 
 )

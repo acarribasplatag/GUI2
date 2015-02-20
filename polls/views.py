@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from polls.forms import CreateTopicForm
 from django.shortcuts import render_to_response
@@ -56,28 +56,28 @@ def get_question_chart(request, question_id):
     choices = {'question': serializers.serialize('json', [ q, ]), 'choices': []}
     for c in clist:
         choices['choices'].append(serializers.serialize('json', [ c, ]))
-
-
     return HttpResponse(json.dumps(choices), content_type="application/json")
 
-def delete_new(request, question_id):
-    # does nothing right now
-   print 'Herro Worrd!'
+def delete_question(request, question_id):
+    q = Question.objects.get(pk=question_id)
+    q.delete()
+    return HttpResponseRedirect("/")
 
 def about(request):
     template = loader.get_template('polls/about.html')
     context = RequestContext(request)
     return HttpResponse(template.render(context))
 
-def freezeVoting(request, question_id):
+def freeze_voting(request, question_id):
+    print "here"
     q = Question.objects.get(pk=question_id)
-    if q.frozen:
-        q.frozen = False
-    else:
-        q.frozen = True
-    return myAccount(request);
+    print q
+    q.frozen = False if q.frozen else True
+    q.save()
+    print q.frozen
+    return HttpResponseRedirect("/1/1/")
 
-def create_topic(request):
+def create_question(request):
     # Get the context from the request.
     context = RequestContext(request)
 
