@@ -69,12 +69,9 @@ def about(request):
     return HttpResponse(template.render(context))
 
 def freeze_voting(request, question_id):
-    print "here"
     q = Question.objects.get(pk=question_id)
-    print q
     q.frozen = False if q.frozen else True
     q.save()
-    print q.frozen
     return HttpResponseRedirect("/1/1/")
 
 def create_question(request):
