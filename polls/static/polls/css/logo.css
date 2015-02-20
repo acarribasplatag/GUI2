@@ -1,12 +1,9 @@
 .navbar-brand > img {
-    width: 100%;
     max-width: 75px;
 }
 
 img {
     width: 100%;
-    max-width: 800px;
-    
 }
 
 #mainLogo {
