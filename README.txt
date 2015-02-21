@@ -24,9 +24,13 @@ a topic views will pass the information needed to build the page to the template
 the database.
 
 
+<<<<<<< HEAD
+"python manage.py startapp polls" creates a new app.
+=======
 "python manage.py startapp polls" creates a new app
 
 source venv/bin/activate - runs from virtual environment (server uses this environment)
 here you can install stuff that the server will need
 
 pip freeze > requirements.txt - this outputs all the dependancies to requirements.txt 
+>>>>>>> upstream/master
