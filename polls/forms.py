@@ -46,7 +46,6 @@ class CreateTopicForm(forms.Form):
             list2.append((i, bar.category_text))
             i = i+1
         return list2
-            
     
         
 

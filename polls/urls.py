@@ -36,5 +36,8 @@ urlpatterns = patterns('',
 
     # ex:localhost:8000/create_question
     url(r'^create_question/$', views.create_question, name='create_topic'),
+    
+    url(r'^vote/$',
+        views.vote, name='vote'),
 
 )
