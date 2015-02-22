@@ -19,7 +19,7 @@
     	</ul>
     	<div class="tab-content">
     		<div class="tab-pane" id="a">
-    			<form id="createFrm" method="LINK" action="/create_topic/">
+    			<form id="createFrm" method="LINK" action="/create_poll/">
     				<input type="submit" value="Create New Topic">
     			</form>
     			<table>
@@ -28,10 +28,10 @@
     					<th>Date created</th>
     					<th class="change">Actions</th>
     				</tr>
-    				{% for q in questions %}
+    				{% for poll in polls %}
     				<tr>
-    					<td class="change"><a href="/{{ q.category.id }}/{{ q.id }}">{{ q.question_text }}</a></td>
-    					<td>{{ q.pub_date }}</td>
+    					<td class="change"><a href="/{{ q.category.id }}/{{ q.id }}">{{ poll.poll_text }}</a></td>
+    					<td>{{ poll.pub_date }}</td>
     					<td>
     						<div class="dropdown">
     							<button class="btn btn-default dropdown-toggle" type="button"

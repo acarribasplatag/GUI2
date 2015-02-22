@@ -1,65 +1,59 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
-from polls.forms import CreateTopicForm
+from polls.forms import CreatePollForm
 from django.shortcuts import render_to_response
 
 from django.core import serializers
 
-from polls.models import Question, Category, Choice
+from polls.models import Poll, Category, Choice
 import json
 
 
-def categories(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    template = loader.get_template('polls/categories.html')
+def home(request):
+    latest_poll_list = Poll.objects.order_by('-pub_date')[:5]
+    template = loader.get_template('polls/home_page.html')
     context = RequestContext(request, {
-        'latest_question_list': latest_question_list,
+        'latest_poll_list': latest_poll_list,
     })
     return HttpResponse(template.render(context))
 
-def get_all_categories(request):
-    latest_category_list = Category.objects.order_by('category_text')[:5]
-
-    serialized_obj = serializers.serialize('json', [ latest_category_list, ])
-
-    return HttpResponse(serialized_obj, content_type="application/json")
-
-def topic_select(request):
-    latest_category_list = Category.objects.order_by('-pub_date')[:5]
-    template = loader.get_template('polls/questions.html')
+def polls(request):
+    category_list = Category.objects.order_by('-pub_date')
+    poll_list = Poll.objects.order_by('-pub_date')
+    template = loader.get_template('polls/polls.html')
     context = RequestContext(request, {
-        'latest_category_list': latest_category_list,
+        'category_list': category_list,
+        'poll_list': poll_list,
     })
     return HttpResponse(template.render(context))
 
+# def category(request, category_id):
+#     latest_category_list = Category.objects.order_by('-pub_date')[:5]
+#     template = loader.get_template('polls/poll.html')
+#     context = RequestContext(request, {
+#                              'latest_category_list': latest_category_list,
+#                              })
+#     return HttpResponse(template.render(context))
 
-def questions(request, category_id):
-    latest_category_list = Category.objects.order_by('-pub_date')[:5]
-    template = loader.get_template('polls/questions.html')
-    context = RequestContext(request, {
-                             'latest_category_list': latest_category_list,
-                             })
-    return HttpResponse(template.render(context))
-
-def question(request, category_id, question_id):
+def poll(request, category_id, poll_id):
     context = RequestContext(request)
-    q = Question.objects.filter(pk=question_id)
-    listL = Choice.objects.filter(question = q)
-    context_dict = {'question': q, 'choices': listL}
+    q = Poll.objects.filter(pk=poll_id)
+    listL = Choice.objects.filter(poll = q)
+    context_dict = {'poll': q, 'choices': listL}
 
     # Render the response and send it back!
-    return render_to_response('polls/question.html', context_dict, context)
+    return render_to_response('polls/poll.html', context_dict, context)
 
-def get_question_chart(request, question_id):
-    q = Question.objects.get(pk=question_id)
-    clist = Choice.objects.filter(question = q)
-    choices = {'question': serializers.serialize('json', [ q, ]), 'choices': []}
+def get_poll_chart(request, poll_id):
+    q = Poll.objects.get(pk=poll_id)
+    clist = Choice.objects.filter(poll = q)
+    choices = {'poll': serializers.serialize('json', [ q, ]), 'choices': []}
     for c in clist:
         choices['choices'].append(serializers.serialize('json', [ c, ]))
     return HttpResponse(json.dumps(choices), content_type="application/json")
 
-def delete_question(request, question_id):
-    q = Question.objects.get(pk=question_id)
+def delete_poll(request, poll_id):
+    q = Poll.objects.get(pk=poll_id)
     q.delete()
     return HttpResponseRedirect("/")
 
@@ -68,23 +62,23 @@ def about(request):
     context = RequestContext(request)
     return HttpResponse(template.render(context))
 
-def freeze_voting(request, question_id):
-    q = Question.objects.get(pk=question_id)
+def freeze_voting(request, poll_id):
+    q = Poll.objects.get(pk=poll_id)
     q.frozen = False if q.frozen else True
     q.save()
     return HttpResponseRedirect("/1/1/")
 
-def create_question(request):
+def create_poll(request):
     # Get the context from the request.
     context = RequestContext(request)
 
     # A HTTP POST?
     if request.method == 'POST':
-        form = CreateTopicForm(request.POST)
+        form = CreatePollForm(request.POST)
 
         # Have we been provided with a valid form?
         if form.is_valid():
-            # Save the new topic to the database.
+            # Save the new poll to the database.
             form.save(request)
 
             # Now call the index() view.
@@ -95,8 +89,22 @@ def create_question(request):
             print form.errors
     else:
         # If the request was not a POST, display the form to enter details.
-        form = CreateTopicForm()
+        form = CreatePollForm()
 
     # Bad form (or form details), no form supplied...
     # Render the form with error messages (if any).
-    return render_to_response('polls/create_topic_form.html', {'form': form}, context)
+    return render_to_response('polls/create_poll.html', {'form': form}, context)
+
+def get_all_categories(request):
+    latest_category_list = Category.objects.order_by('category_text')[:5]
+
+    serialized_obj = serializers.serialize('json', [ latest_category_list, ])
+
+    return HttpResponse(serialized_obj, content_type="application/json")
+
+def get_all_polls(request):
+    latest_category_list = Category.objects.order_by('category_text')[:5]
+
+    serialized_obj = serializers.serialize('json', [ latest_category_list, ])
+
+    return HttpResponse(serialized_obj, content_type="application/json")
