@@ -60,7 +60,10 @@ def get_question_chart(request, question_id):
     return HttpResponse(json.dumps(choices), content_type="application/json")
 
 def vote(request):
+    print "here"
     c = Choice.objects.filter(pk=request.POST['cid'])
+    print c
+    print "here"
     c.votes = c.votes + 1
     c.save()
     return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
