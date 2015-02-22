@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from polls.forms import CreateTopicForm
 from django.shortcuts import render_to_response
+from registration.views import myAccount
 
 from django.core import serializers
 
@@ -58,6 +59,12 @@ def get_question_chart(request, question_id):
         choices['choices'].append(serializers.serialize('json', [ c, ]))
     return HttpResponse(json.dumps(choices), content_type="application/json")
 
+def vote(request):
+    c = Choice.objects.filter(pk=request.POST['cid'])
+    c.votes = c.votes + 1
+    c.save()
+    return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
+
 def delete_question(request, question_id):
     q = Question.objects.get(pk=question_id)
     q.delete()
@@ -72,7 +79,7 @@ def freeze_voting(request, question_id):
     q = Question.objects.get(pk=question_id)
     q.frozen = False if q.frozen else True
     q.save()
-    return HttpResponseRedirect("/1/1/")
+    return HttpResponseRedirect("/1/"+question_id+"/")
 
 def create_question(request):
     # Get the context from the request.
