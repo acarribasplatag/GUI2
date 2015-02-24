@@ -1,5 +1,5 @@
 from django.contrib import admin
-from polls.models import Question, Category, Choice, Comment, Vote
+from polls.models import Poll, Category, Choice, Comment, Vote
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -46,7 +46,7 @@ admin.site.register(Comment, CommentAdmin)
 class VoteAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Date information', {'fields': ['pub_date']}),
-        ('Belongs to Question',  {'fields': ['question']}),
+        ('Belongs to Poll',  {'fields': ['poll']}),
         ('Belongs to Choice',  {'fields': ['choice']}),
         ('Belongs to User',  {'fields': ['user']}),
     ]

@@ -7,8 +7,7 @@ import datetime
 
 from django.core import serializers
 
-from polls.models import Poll, Category, Choice
-from polls.models import Question, Category, Choice, Comment, Vote
+from polls.models import Poll, Category, Choice, Comment, Vote
 import json
 
 
@@ -56,7 +55,7 @@ def poll(request, category_id, poll_id):
     for l in listL:
         listC = Comment.objects.filter(choice = l)
         choicelists.append({'choice': l, 'comments': listC})
-    
+
     context_dict = {'question': q[0], 'choices': choicelists}
 
     # Render the response and send it back!
@@ -88,9 +87,9 @@ def writecomment(request):
     c.save()
     return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
 
-def delete_question(request, question_id):
-    q = Question.objects.get(pk=question_id)
-    q.delete()
+def delete_poll(request, poll_id):
+    p = Poll.objects.get(pk=poll_id)
+    p.delete()
     return HttpResponseRedirect("/")
 
 def about(request):

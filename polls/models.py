@@ -43,7 +43,7 @@ class Comment(models.Model):
         return self.comment_text
 
 class Vote(models.Model):
-    question = models.ForeignKey(Question)
+    poll = models.ForeignKey(Poll)
     choice = models.ForeignKey(Choice)
     user = models.ForeignKey(User)
     pub_date = models.DateTimeField('date published')
