@@ -41,3 +41,12 @@ class Comment(models.Model):
     pub_date = models.DateTimeField('date published')
     def __unicode__(self):               # __str__ on Python 3
         return self.comment_text
+    
+class Vote(models.Model):
+    question = models.ForeignKey(Question)
+    choice = models.ForeignKey(Choice)
+    user = models.ForeignKey(User)
+    pub_date = models.DateTimeField('date published')
+    def __unicode__(self):               # __str__ on Python 3
+        return self.choice.votes
+    

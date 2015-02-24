@@ -47,40 +47,8 @@
   							click : function() {
   								// prepare the div for viewing first
 
-  								if ($(document).find($('#comments')).length == 0) {
-  									var newel = document.createElement('div');
-  									newel.setAttribute('id', 'comments');
-  									var list = document.createElement('div');
-  									list.setAttribute('id', 'comment-list');
-  									newel.appendChild(list);
-  									document.getElementById('customcontrol')
-  											.appendChild(newel);
+  									$("#comments").toggle();
 
-  								}
-
-  								if (this.selected) {
-  									if ($('#comments').is(":visible")) {
-  										$('#comments').hide('slow', function() {
-  											$('#comments').remove();
-  										});
-  									}
-  								} else {
-  									if ($('#comments').is(":visible")) {
-  										$('#comments').hide('slow', function() {
-  											$('#comments').remove();
-  										});
-  										var newel = document
-  												.createElement('div');
-  										newel.setAttribute('id', 'comments');
-  										var list = document
-  												.createElement('div');
-  										list.setAttribute('id', 'comment-list');
-  										newel.appendChild(list);
-  										document
-  												.getElementById('customcontrol')
-  												.appendChild(newel);
-  									}
-  								}
   							}
   						}
   					}
@@ -133,7 +101,6 @@
 {% block content %}
 <!-- /.container-fluid -->
 <div>
-	<center>
 		<div id="customcontrol">
 			<div id="control">
 				<div id="form">
@@ -144,10 +111,46 @@
 
 			</div>
 			<div id="comments">
-				<div id="comment-list"></div>
+				<div id="comments-inner" style="width: 100%; display: table;">
+					<div id="comment-list" style="display: table-row">
+						{% for c in choices %}
+						<div id="panel-{{ c.choice.id }}" class="panel panel-default"
+							style="width: 600px; display: table-cell;">
+							<!-- Default panel contents -->
+							<div class="panel-heading">{{ c.choice.choice_text }}</div>
+							<div class="panel-body">
+								{% for co in c.comments %}
+								<div class="well">
+									<p>{{ co.user.username }}</p>
+									<p>{{ co.comment_text }}</p>
+									<p>Likes: {{ co.likes }}</p>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				<form action="/new_comment/" method="POST">
+					<input id="qid" type="hidden" name="qid" value="{{ question.id }}">
+					<div id="textarea">
+						<label for="mycomment">New Comment:</label>
+						<textarea name="mycomment" id="editor1" rows="10" cols="80">
+                This is my comment.
+            </textarea>
+						<script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor1' );
+            </script>
+					</div>
+					<div id="submit">
+						<input type="submit" value="Post comment"
+							class="btn btn-primary" style="float:right; margin-top: 10px;"/>
+					</div>
+				</form>
 			</div>
 		</div>
-	</center>
 </div>
 
 <!-- Modal Dialog for voting-->
@@ -163,19 +166,16 @@
 				<h4 class="modal-title" id="myModalLabel">Vote Now!</h4>
 			</div>
 			<div class="modal-body">
-				<form action="/vote/" method="POST">{% csrf_token %}
-          {{ form.as_p }}
-					<input id="qid" type="hidden" name="qid">
-					{% for c in choices %}
-						<input type="radio" name="cid" id="{{ c.id }}"
-							value="{{ c.id }}">
-            <label for="{{ c.id }}">{{ c.choice_text }}</label>
-            <br>
+				<form action="/vote/" method="POST">
+					{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ question.id }}">
+					{% for c in choices %} <input type="radio" name="cid"
+						id="{{ c.choice.id }}" value="{{ c.choice.id }}"> <label
+						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
 					{% endfor %}
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
-						value="Close">
-            <input type="submit" value="Vote" />
+							value="Close"> <input type="submit" value="Vote"
+							class="btn btn-primary" />
 					</div>
 				</form>
 			</div>

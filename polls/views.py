@@ -3,10 +3,11 @@ from django.template import RequestContext, loader
 from polls.forms import CreateTopicForm
 from django.shortcuts import render_to_response
 from registration.views import myAccount
+import datetime
 
 from django.core import serializers
 
-from polls.models import Question, Category, Choice
+from polls.models import Question, Category, Choice, Comment, Vote
 import json
 
 
@@ -46,7 +47,12 @@ def question(request, category_id, question_id):
     context = RequestContext(request)
     q = Question.objects.filter(pk=question_id)
     listL = Choice.objects.filter(question = q)
-    context_dict = {'question': q, 'choices': listL}
+    choicelists = []
+    for l in listL:
+        listC = Comment.objects.filter(choice = l)
+        choicelists.append({'choice': l, 'comments': listC})
+    
+    context_dict = {'question': q[0], 'choices': choicelists}
 
     # Render the response and send it back!
     return render_to_response('polls/question.html', context_dict, context)
@@ -60,11 +66,20 @@ def get_question_chart(request, question_id):
     return HttpResponse(json.dumps(choices), content_type="application/json")
 
 def vote(request):
-    print "here"
     c = Choice.objects.filter(pk=request.POST['cid'])
-    print c
-    print "here"
+    c = c[0]
     c.votes = c.votes + 1
+    c.save()
+    q = Question.objects.filter(pk=request.POST['qid'])
+    q = q[0]
+    v = Vote(question=q, choice=c, user=request.user, pub_date=datetime.datetime.now())
+    v.save()
+    return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
+
+def writecomment(request):
+    cp = request.POST['mycomment']
+    v = Vote.objects.filter(user=request.user)
+    c = Comment(comment_text=cp, choice=v.choice, user=request.user, pub_date=datetime.datetime.now())
     c.save()
     return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
 
