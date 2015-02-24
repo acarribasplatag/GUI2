@@ -19,11 +19,21 @@ def home(request):
 
 def polls(request):
     category_list = Category.objects.order_by('-pub_date')
-    poll_list = Poll.objects.order_by('-pub_date')
     template = loader.get_template('polls/polls.html')
+
+    politics_list = Poll.objects.select_related().filter(category=1)
+    fashion_list = Poll.objects.select_related().filter(category=2)
+    science_list = Poll.objects.select_related().filter(category=3)
+    technology_list = Poll.objects.select_related().filter(category=4)
+    literature_list = Poll.objects.select_related().filter(category=5)
+
     context = RequestContext(request, {
         'category_list': category_list,
-        'poll_list': poll_list,
+        'politics_list': politics_list,
+        'fashion_list': fashion_list,
+        'science_list': science_list,
+        'technology_list': technology_list,
+        'literature_list': literature_list,
     })
     return HttpResponse(template.render(context))
 

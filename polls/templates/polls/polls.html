@@ -24,10 +24,9 @@
       </ul>
     </div>
     <div class="col-lg-9 col-lg-9">
-	 <div class="tab-content">
-    <!-- fill each category with questions that are in that category -->
-	 	{% for category in category_list %}
-	   <div class="tab-pane fade active" id="{{ category.category_text }}">
+	  <div class="tab-content">
+      <!-- fill each category with questions that are in that category -->
+	   <div class="tab-pane fade active" id="Politics">
       <ul>
         {% for poll in politics_list %}
   	      <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
@@ -35,8 +34,52 @@
           </li>
         {% endfor %}
       </ul>
-	   </div>
-		{% endfor %}
+	  </div>
+    <div class="tab-pane fade active" id="Politics">
+      <ul>
+        {% for poll in politics_list %}
+          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+              <a>User: {{ poll.user }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="tab-pane fade active" id="Fashion">
+      <ul>
+        {% for poll in fashion_list %}
+          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+              <a>User: {{ poll.user }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="tab-pane fade active" id="Science">
+      <ul>
+        {% for poll in science_list %}
+          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+              <a>User: {{ poll.user }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="tab-pane fade active" id="Technology">
+      <ul>
+        {% for poll in technology_list %}
+          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+              <a>User: {{ poll.user }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="tab-pane fade active" id="Literature">
+      <ul>
+        {% for poll in literature_list %}
+          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+              <a>User: {{ poll.user }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
 	 </div>
   </div>
 </div>
