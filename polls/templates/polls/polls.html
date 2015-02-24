@@ -29,7 +29,7 @@
 	   <div class="tab-pane fade active" id="Politics">
       <ul>
         {% for poll in politics_list %}
-  	      <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+  	      <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
               <a>User: {{ poll.user }}</a>
           </li>
         {% endfor %}
@@ -38,7 +38,7 @@
     <div class="tab-pane fade active" id="Politics">
       <ul>
         {% for poll in politics_list %}
-          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
               <a>User: {{ poll.user }}</a>
           </li>
         {% endfor %}
@@ -47,7 +47,7 @@
     <div class="tab-pane fade active" id="Fashion">
       <ul>
         {% for poll in fashion_list %}
-          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
               <a>User: {{ poll.user }}</a>
           </li>
         {% endfor %}
@@ -56,7 +56,7 @@
     <div class="tab-pane fade active" id="Science">
       <ul>
         {% for poll in science_list %}
-          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
               <a>User: {{ poll.user }}</a>
           </li>
         {% endfor %}
@@ -65,7 +65,7 @@
     <div class="tab-pane fade active" id="Technology">
       <ul>
         {% for poll in technology_list %}
-          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
               <a>User: {{ poll.user }}</a>
           </li>
         {% endfor %}
@@ -74,7 +74,7 @@
     <div class="tab-pane fade active" id="Literature">
       <ul>
         {% for poll in literature_list %}
-          <li><a href="/{{category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
               <a>User: {{ poll.user }}</a>
           </li>
         {% endfor %}
