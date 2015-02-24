@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     url(r'^$', views.home, name='home'),
 
     # ex: localhost:8000/topic_select/   (category selection screen)
-    url(r'^polls/$', views.polls, name='polls'),
+    url(r'^polls/$', views.polls, name='categories'),
 
     # ex: localhost:8000/1/2 (first category, second poll)
     url(r'^(?P<category_id>\d+)/(?P<poll_id>\d+)/$',
