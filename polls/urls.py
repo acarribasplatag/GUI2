@@ -39,5 +39,8 @@ urlpatterns = patterns('',
     
     url(r'^vote/$',
         views.vote, name='vote'),
+                       
+    url(r'^new_comment/$',
+        views.writecomment, name='writecomment'),
 
 )

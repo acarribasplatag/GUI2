@@ -1,10 +1,30 @@
+#form #btnVote {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
 
+body {
+    padding-bottom: 10px;
+}
+#myChart {
+    margin-left: auto;
+    margin-right: auto;
+}
 #a, #topics {
     width: 300px;
 }
 
+#comments {
+    margin-top: 10px;
+}
+
 label {
   margin-left: 10px;
+}
+
+label[for=mycomment] {
+    margin-top: 10px;
 }
 
 .carousel-indicators li {
