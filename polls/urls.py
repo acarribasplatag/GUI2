@@ -34,7 +34,13 @@ urlpatterns = patterns('',
     url(r'^delete_poll/(?P<category_id>\d+)/(?P<poll_id>\d+)/$',
         views.delete_poll, name='delete_poll'),
 
-    # ex:localhost:8000/create_poll
-    url(r'^create_poll/$', views.create_poll, name='create_poll'),
+    # ex:localhost:8000/create_question
+    url(r'^create_question/$', views.create_question, name='create_topic'),
+    
+    url(r'^vote/$',
+        views.vote, name='vote'),
+                       
+    url(r'^new_comment/$',
+        views.writecomment, name='writecomment'),
 
 )
