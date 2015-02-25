@@ -1,4 +1,7 @@
 https://www.djangoproject.com/download/ - install django python
+"sudo apt-get install python-dev" - install python dev tools
+"sudo apt-get install python-pip" - install pip (manages python packages)
+
 
 start server : "python manage.py runserver" from GUI2 directory
 localhost:8000 - mainpage, once server is running type this url into browser
