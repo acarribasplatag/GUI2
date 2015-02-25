@@ -49,22 +49,22 @@ def polls(request):
 
 def poll(request, category_id, poll_id):
     context = RequestContext(request)
-    p = Poll.objects.get(pk=poll_id)
-    # listL = Choice.objects.filter(poll = p)
+    p = Poll.objects.filter(pk=poll_id)
+    listL = Choice.objects.filter(poll = p)
     choicelists = []
-    # for l in listL:
-    #     listC = Comment.objects.filter(choice = l)
-    #     choicelists.append({'choice': l, 'comments': listC})
+    for l in listL:
+        listC = Comment.objects.filter(choice = l)
+        choicelists.append({'choice': l, 'comments': listC})
 
-    context_dict = {'poll': p, 'choices': choicelists}
+    context_dict = {'poll': p[0], 'choices': choicelists}
 
     # Render the response and send it back!
     return render_to_response('polls/poll.html', context_dict, context)
 
 def get_poll_chart(request, poll_id):
-    q = Poll.objects.get(pk=poll_id)
-    clist = Choice.objects.filter(poll = q)
-    choices = {'poll': serializers.serialize('json', [ q, ]), 'choices': []}
+    p = Poll.objects.get(pk=poll_id)
+    clist = Choice.objects.filter(poll = p)
+    choices = {'poll': serializers.serialize('json', [ p, ]), 'choices': []}
     for c in clist:
         choices['choices'].append(serializers.serialize('json', [ c, ]))
     return HttpResponse(json.dumps(choices), content_type="application/json")
@@ -83,9 +83,15 @@ def vote(request):
 def writecomment(request):
     cp = request.POST['mycomment']
     v = Vote.objects.filter(user=request.user)
+    v = v[0]
     c = Comment(comment_text=cp, choice=v.choice, user=request.user, pub_date=datetime.datetime.now())
     c.save()
     return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
+
+def delete_comment(request, category_id, poll_id, comment_id):
+    c = Comment.objects.get(pk=comment_id)
+    c.delete()
+    return HttpResponseRedirect("/"+category_id+'/'+poll_id+'/')
 
 def delete_poll(request, poll_id):
     p = Poll.objects.get(pk=poll_id)

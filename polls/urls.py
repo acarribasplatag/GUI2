@@ -7,8 +7,12 @@ urlpatterns = patterns('',
     # ex: localhost:8000/
     url(r'^$', views.home, name='home'),
 
-    # ex: localhost:8000/topic_select/   (category selection screen)
-    url(r'^polls/$', views.polls, name='categories'),
+    # ex: localhost:8000/polls/   (category selection screen)
+    url(r'^polls/$', views.polls, name='polls'),
+    
+    #ex: localhost:8000/create_poll/
+    url(r'^create_poll/$', views.create_poll, name='create_poll'),
+    
 
     # ex: localhost:8000/1/2 (first category, second poll)
     url(r'^(?P<category_id>\d+)/(?P<poll_id>\d+)/$',
@@ -27,11 +31,11 @@ urlpatterns = patterns('',
     url(r'^contact/', include('contact_form.urls')),
 
     # ex: localhost:8000/freeze_voting/(category_id)/(poll_id)
-    url(r'^freeze_voting/(?P<category_id>\d+)/(?P<poll_id>\d+)/$',
+    url(r'^freeze_voting/(?P<poll_id>\d+)/$',
         views.freeze_voting, name='freeze_voting'),
 
     # ex: localhost:8000/delete_poll/(category_id)/poll_id/
-    url(r'^delete_poll/(?P<category_id>\d+)/(?P<poll_id>\d+)/$',
+    url(r'^delete_poll/(?P<poll_id>\d+)/$',
         views.delete_poll, name='delete_poll'),
 
     url(r'^vote/$',
@@ -39,5 +43,8 @@ urlpatterns = patterns('',
 
     url(r'^new_comment/$',
         views.writecomment, name='writecomment'),
+                       
+    url(r'^delete_comment/(?P<category_id>\d+)/(?P<poll_id>\d+)/(?P<comment_id>\d+)$',
+        views.delete_comment, name='deletecomment'),
 
 )

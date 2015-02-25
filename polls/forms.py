@@ -4,7 +4,7 @@ from polls.models import Category, Poll, Choice
 import datetime
 
 class CreatePollForm(forms.Form):
-    poll_text = forms.CharField(label='Topic Text', max_length=300, error_messages={'required': 'This field is required.'})
+    poll_text = forms.CharField(label='Poll Text', max_length=300, error_messages={'required': 'This field is required.'})
     latest_category_list = Category.objects.order_by('category_text')
     list2 = []
     i = 1
@@ -21,7 +21,7 @@ class CreatePollForm(forms.Form):
     def save(self, request):
         data = self.cleaned_data
         cat = self.getCategoryWithName(data['category'])
-        topic = Poll(poll_text=data['topic_text'], category = cat, user=request.user, pub_date=datetime.datetime.now())
+        topic = Poll(poll_text=data['poll_text'], category = cat, user=request.user, pub_date=datetime.datetime.now())
         topic.save()
         d = data['choices']
         choices = [x.strip() for x in d.split(',')]
@@ -31,10 +31,10 @@ class CreatePollForm(forms.Form):
             choice.save()
 
     def getCategoryWithName(self, name):
-        latest_category_list = Category.objects.order_by('-pub_date')
+        latest_category_list = Category.objects.order_by('category_text')
         i = 0
         for bar in latest_category_list:
-            if int(name)==i:
+            if int(name)-1==i:
                 return latest_category_list[i]
             i = i+1
 

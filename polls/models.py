@@ -48,4 +48,4 @@ class Vote(models.Model):
     user = models.ForeignKey(User)
     pub_date = models.DateTimeField('date published')
     def __unicode__(self):               # __str__ on Python 3
-        return self.choice
+        return self.choice.choice_text
