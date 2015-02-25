@@ -49,22 +49,22 @@ def polls(request):
 
 def poll(request, category_id, poll_id):
     context = RequestContext(request)
-    q = Poll.objects.filter(pk=poll_id)
-    listL = Choice.objects.filter(poll = q)
+    p = Poll.objects.filter(pk=poll_id)
+    listL = Choice.objects.filter(poll = p)
     choicelists = []
     for l in listL:
         listC = Comment.objects.filter(choice = l)
         choicelists.append({'choice': l, 'comments': listC})
 
-    context_dict = {'poll': q[0], 'choices': choicelists}
+    context_dict = {'poll': p[0], 'choices': choicelists}
 
     # Render the response and send it back!
     return render_to_response('polls/poll.html', context_dict, context)
 
 def get_poll_chart(request, poll_id):
-    q = Poll.objects.get(pk=poll_id)
-    clist = Choice.objects.filter(poll = q)
-    choices = {'poll': serializers.serialize('json', [ q, ]), 'choices': []}
+    p = Poll.objects.get(pk=poll_id)
+    clist = Choice.objects.filter(poll = p)
+    choices = {'poll': serializers.serialize('json', [ p, ]), 'choices': []}
     for c in clist:
         choices['choices'].append(serializers.serialize('json', [ c, ]))
     return HttpResponse(json.dumps(choices), content_type="application/json")
@@ -74,9 +74,9 @@ def vote(request):
     c = c[0]
     c.votes = c.votes + 1
     c.save()
-    q = Poll.objects.filter(pk=request.POST['qid'])
-    q = q[0]
-    v = Vote(poll=q, choice=c, user=request.user, pub_date=datetime.datetime.now())
+    p = Poll.objects.filter(pk=request.POST['qid'])
+    p = p[0]
+    v = Vote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
     v.save()
     return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
 
@@ -104,9 +104,9 @@ def about(request):
     return HttpResponse(template.render(context))
 
 def freeze_voting(request, poll_id):
-    q = Poll.objects.get(pk=poll_id)
-    q.frozen = False if q.frozen else True
-    q.save()
+    p = Poll.objects.get(pk=poll_id)
+    p.frozen = False if p.frozen else True
+    p.save()
     return HttpResponseRedirect("/1/"+poll_id+"/")
 
 def create_poll(request):
