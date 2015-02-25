@@ -71,7 +71,7 @@
   		req_url = req_url + current;
   		$.getJSON(req_url, function(data) {
   			console.log('Got data');
-  			options.title.text = data['question'][0]['question_text'];
+  			options.title.text = data['poll'][0]['question_text'];
   			options.series[0].type = 'pie';
   			var choices = data['choices'];
   			var total = 0;
@@ -110,29 +110,43 @@
 				<div id="myChart" style="width: 500px; height: 500px;"></div>
 
 			</div>
+
 			<div id="comments">
-				<div id="comments-inner" style="width: 100%; display: table;">
-					<div id="comment-list" style="display: table-row">
-						{% for c in choices %}
-						<div id="panel-{{ c.choice.id }}" class="panel panel-default"
-							style="width: 600px; display: table-cell;">
-							<!-- Default panel contents -->
-							<div class="panel-heading">{{ c.choice.choice_text }}</div>
-							<div class="panel-body">
-								{% for co in c.comments %}
-								<div class="well">
-									<p>{{ co.user.username }}</p>
-									<p>{{ co.comment_text }}</p>
-									<p>Likes: {{ co.likes }}</p>
-								</div>
-								{% endfor %}
-							</div>
-						</div>
-						{% endfor %}
+							<div role="tabpanel">
+
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				{% for c in choices %}
+				<li role="presentation"><a href="#{{ c.choice.choice_text }}"
+					aria-controls="{{ c.choice.choice_text }}" role="tab"
+					data-toggle="tab">{{ c.choice.choice_text }}</a></li> {% endfor %}
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content" id="comment-tabs">
+				{% for c in choices %}
+				<div role="tabpanel" class="tab-pane"
+					id="{{ c.choice.choice_text }}">
+					{% for co in c.comments %}
+					<div class="well comment">
+						<form id="#delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.id }}">
+							<button type="submit" class="close"
+							aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</form>
+						<p>{{ co.user.username }}</p>
+						{% autoescape off %}{{ co.comment_text }}{% endautoescape %}
+						<p>{{ co.likes }} people liked this comment.</p>
 					</div>
+					{% endfor %}
 				</div>
-				<form action="/new_comment/" method="POST">
-					<input id="qid" type="hidden" name="qid" value="{{ question.id }}">
+				{% endfor %}
+			</div>
+
+		</div>
+				<form id="commentform" action="/new_comment/" method="POST">
+					{% csrf_token %}<input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
 					<div id="textarea">
 						<label for="mycomment">New Comment:</label>
 						<textarea name="mycomment" id="editor1" rows="10" cols="80">
@@ -167,7 +181,7 @@
 			</div>
 			<div class="modal-body">
 				<form action="/vote/" method="POST">
-					{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ question.id }}">
+					{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
 					{% for c in choices %} <input type="radio" name="cid"
 						id="{{ c.choice.id }}" value="{{ c.choice.id }}"> <label
 						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>

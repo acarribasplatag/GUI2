@@ -49,14 +49,14 @@ def polls(request):
 
 def poll(request, category_id, poll_id):
     context = RequestContext(request)
-    q = Question.objects.filter(pk=question_id)
-    listL = Choice.objects.filter(question = q)
+    q = Poll.objects.filter(pk=poll_id)
+    listL = Choice.objects.filter(poll = q)
     choicelists = []
     for l in listL:
         listC = Comment.objects.filter(choice = l)
         choicelists.append({'choice': l, 'comments': listC})
 
-    context_dict = {'question': q[0], 'choices': choicelists}
+    context_dict = {'poll': q[0], 'choices': choicelists}
 
     # Render the response and send it back!
     return render_to_response('polls/poll.html', context_dict, context)
@@ -74,18 +74,24 @@ def vote(request):
     c = c[0]
     c.votes = c.votes + 1
     c.save()
-    q = Question.objects.filter(pk=request.POST['qid'])
+    q = Poll.objects.filter(pk=request.POST['qid'])
     q = q[0]
-    v = Vote(question=q, choice=c, user=request.user, pub_date=datetime.datetime.now())
+    v = Vote(poll=q, choice=c, user=request.user, pub_date=datetime.datetime.now())
     v.save()
     return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
 
 def writecomment(request):
     cp = request.POST['mycomment']
     v = Vote.objects.filter(user=request.user)
+    v = v[0]
     c = Comment(comment_text=cp, choice=v.choice, user=request.user, pub_date=datetime.datetime.now())
     c.save()
     return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
+
+def delete_comment(request, category_id, poll_id, comment_id):
+    c = Comment.objects.get(pk=comment_id)
+    c.delete()
+    return HttpResponseRedirect("/"+category_id+'/'+poll_id+'/')
 
 def delete_poll(request, poll_id):
     p = Poll.objects.get(pk=poll_id)
@@ -101,7 +107,7 @@ def freeze_voting(request, poll_id):
     q = Poll.objects.get(pk=poll_id)
     q.frozen = False if q.frozen else True
     q.save()
-    return HttpResponseRedirect("/1/"+question_id+"/")
+    return HttpResponseRedirect("/1/"+poll_id+"/")
 
 def create_poll(request):
     # Get the context from the request.
