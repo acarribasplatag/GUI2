@@ -28,4 +28,5 @@ the database.
 source venv/bin/activate - runs from virtual environment (server uses this environment)
 here you can install stuff that the server will need
 
-pip freeze > requirements.txt - this outputs all the dependancies to requirements.txt 
+sudo pip freeze > requirements.txt - this outputs all the dependancies to requirements.txt 
+sudo pip install -r requirements.txt - installs required dependancies needed
