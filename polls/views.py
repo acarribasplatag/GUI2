@@ -51,8 +51,12 @@ def poll(request, category_id, poll_id):
     context = RequestContext(request)
     p = Poll.objects.filter(pk=poll_id)
     listL = Choice.objects.filter(poll = p)
-    v = Vote.objects.filter(poll=p, user=request.user)
-    voted = False if len(v) == 0 else True
+    voted = 0
+    if request.user.is_authenticated():
+        v = Vote.objects.filter(poll=p, user=request.user)
+        voted = False if len(v) == 0 else True
+    else:
+        voted = False
     choicelists = []
     for l in listL:
         commentlists = []
