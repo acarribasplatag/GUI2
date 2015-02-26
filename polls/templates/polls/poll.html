@@ -33,6 +33,9 @@
   			exporting : {
   				enabled : false
   			},
+  			credits: {
+  			    enabled: false
+  			},
   			plotOptions : {
   				pie : {
   					allowPointSelect : true,
@@ -105,7 +108,7 @@
 					<button id="btnVote" class="btn btn-default" data-toggle="modal"
 						data-target="#myModal">Vote Now!</button>
 				</div>
-				<div id="myChart" style="width: 500px; height: 500px;"></div>
+				<div id="myChart" style="width: 100%;"></div>
 
 			</div>
 
@@ -115,45 +118,80 @@
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs" role="tablist">
 				{% for c in choices %}
+				{% if c.votedFor == 1 %}
+				<li role="presentation" class="active"><a href="#{{ c.choice.choice_text }}"
+					aria-controls="{{ c.choice.choice_text }}" role="tab"
+					data-toggle="tab">{{ c.choice.choice_text }}</a></li>
+				{% else %}
 				<li role="presentation"><a href="#{{ c.choice.choice_text }}"
 					aria-controls="{{ c.choice.choice_text }}" role="tab"
-					data-toggle="tab">{{ c.choice.choice_text }}</a></li> {% endfor %}
+					data-toggle="tab">{{ c.choice.choice_text }}</a></li>
+				{% endif %}
+				{% endfor %}
 			</ul>
 
 			<!-- Tab panes -->
 			<div class="tab-content" id="comment-tabs">
 				{% for c in choices %}
-				<div role="tabpanel" class="tab-pane"
+				{% if c.votedFor == 1 %}
+				<div role="tabpanel" class="tab-pane fade in active"
 					id="{{ c.choice.choice_text }}">
+				{% else %}
+				<div role="tabpanel" class="tab-pane fade"
+					id="{{ c.choice.choice_text }}">
+				{% endif %}
 					{% for co in c.comments %}
 					<div class="well comment">
-						<form id="#delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.id }}">
+						<form id="delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
 							<button type="submit" class="close"
 							aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</form>
-						<p>{{ co.user.username }}</p>
-						{% autoescape off %}{{ co.comment_text }}{% endautoescape %}
-						<p>{{ co.likes }} people liked this comment.</p>
+						<p>{{ co.comment.user.username }}</p>
+						{% autoescape off %}{{ co.comment.comment_text }}{% endautoescape %}
+						{% if co.likedByUser == 0 %}
+						<form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
+							<button type="submit" class="btn btn-default">
+								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
+							</button>
+						</form>
+						{% else %}
+						<form id="like_comment" method="GET" action="/unlike_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
+							<button type="submit" class="btn btn-default">
+								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Unlike
+							</button>
+						</form>
+						{% endif %}
+						{% if co.comment.likes == 0 %}
+						<p>No one liked this comment.</p>
+						{% elif co.comment.likes == 1 and co.likedByUser == 1 %}
+						<p>You liked this comment.</p>
+						{% elif co.comment.likes > 1 and co.likedByUser == 1 %}
+						<p>You and {{ co.comment.likes|add:'-1' }} other people liked this comment.</p>
+						{% else %}
+						<p>{{ co.comment.likes }} people liked this comment.</p>
+						{% endif %}
 					</div>
 					{% endfor %}
+					
 				</div>
 				{% endfor %}
 			</div>
 
 		</div>
+				{% if voted == 1 %}
 				<form id="commentform" action="/new_comment/" method="POST">
 					{% csrf_token %}<input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
 					<div id="textarea">
 						<label for="mycomment">New Comment:</label>
 						<textarea name="mycomment" id="editor1" rows="10" cols="80">
-                This is my comment.
             </textarea>
 						<script>
                 // Replace the <textarea id="editor1"> with a CKEditor
                 // instance, using default configuration.
                 CKEDITOR.replace( 'editor1' );
+            	CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV;
             </script>
 					</div>
 					<div id="submit">
@@ -161,6 +199,7 @@
 							class="btn btn-primary" style="float:right; margin-top: 10px;"/>
 					</div>
 				</form>
+				{% endif %}
 			</div>
 		</div>
 </div>
@@ -178,11 +217,22 @@
 				<h4 class="modal-title" id="myModalLabel">Vote Now!</h4>
 			</div>
 			<div class="modal-body">
+				{% if voted == 0 %}
 				<form action="/vote/" method="POST">
+				{% else %}
+				<form action="/change_vote/" method="POST">
+				{% endif %}
 					{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
-					{% for c in choices %} <input type="radio" name="cid"
+					{% for c in choices %} 
+					{% if c.votedFor == 0 %}
+					<input type="radio" name="cid"
 						id="{{ c.choice.id }}" value="{{ c.choice.id }}"> <label
 						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
+					{% else %}
+					<input type="radio" name="cid"
+						id="{{ c.choice.id }}" value="{{ c.choice.id }}" checked> <label
+						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
+					{% endif %}
 					{% endfor %}
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
