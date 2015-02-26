@@ -100,9 +100,11 @@
 
 <!-- Content to be inserted into body of base.html -->
 {% block content %}
+{% load humanize %}
 <!-- /.container-fluid -->
 <div>
 		<div id="customcontrol">
+			<h1 id="poll-text">{{ poll.poll_text }}</h1>
 			<div id="control">
 				<div id="form">
 					<button id="btnVote" class="btn btn-default" data-toggle="modal"
@@ -148,8 +150,16 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</form>
-						<p>{{ co.comment.user.username }}</p>
-						{% autoescape off %}{{ co.comment.comment_text }}{% endautoescape %}
+						<div class="user-div">
+							<div class="thumbnail">
+								<img src="http://3.bp.blogspot.com/-yz5oMnsU_-8/TyTWKKjbNII/AAAAAAAABXE/envZTLLj5GM/s1600/sad.jpg" alt="{{ co.comment.user.username }}'s profile picture" class="img profile-pic">
+							</div>
+							<p class=username>{{ co.comment.user.username }}</p>
+							<p class="pub-date">{{ co.comment.pub_date|naturaltime|capfirst }}</p>
+						</div>
+						<div class="comment-content">
+							{% autoescape off %}{{ co.comment.comment_text }}{% endautoescape %}
+						</div>
 						{% if co.likedByUser == 0 %}
 						<form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
 							<button type="submit" class="btn btn-default">
