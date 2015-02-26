@@ -7,7 +7,7 @@ import datetime
 
 from django.core import serializers
 
-from polls.models import Poll, Category, Choice, Comment, Vote
+from polls.models import Poll, Category, Choice, Comment, Vote, Like
 import json
 
 
@@ -51,12 +51,20 @@ def poll(request, category_id, poll_id):
     context = RequestContext(request)
     p = Poll.objects.filter(pk=poll_id)
     listL = Choice.objects.filter(poll = p)
+    v = Vote.objects.filter(poll=p, user=request.user)
+    voted = False if len(v) == 0 else True
     choicelists = []
     for l in listL:
+        commentlists = []
         listC = Comment.objects.filter(choice = l)
-        choicelists.append({'choice': l, 'comments': listC})
-
-    context_dict = {'poll': p[0], 'choices': choicelists}
+        for c in listC:
+            li = Like.objects.filter(comment=c, user=request.user)
+            likedByUser = 0 if len(li) == 0 else 1
+            commentlists.append({'comment': c, 'likedByUser': likedByUser})
+        votedFor = 1 if voted and v[0].choice == l else 0
+        choicelists.append({'choice': l, 'comments': commentlists, 'votedFor': votedFor})
+    votedInt = 1 if voted else 0
+    context_dict = {'poll': p[0], 'choices': choicelists, 'voted': votedInt}
 
     # Render the response and send it back!
     return render_to_response('polls/poll.html', context_dict, context)
@@ -78,19 +86,59 @@ def vote(request):
     p = p[0]
     v = Vote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
     v.save()
-    return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
+    return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
+
+def change_vote(request):
+    c = Choice.objects.filter(pk=request.POST['cid'])
+    c = c[0]
+    p = Poll.objects.filter(pk=request.POST['qid'])
+    p = p[0]
+    v = Vote.objects.filter(poll=p, user=request.user)
+    v = v[0]
+    c2 = v.choice
+    c2.votes = c2.votes - 1
+    c2.save()
+    c.votes = c.votes + 1
+    c.save()
+    v.choice = c
+    v.save()
+    clist = Comment.objects.filter(choice=c2, user=request.user)
+    for co in clist:
+        llist = Like.objects.filter(user=request.user, comment=co)
+        for l in llist:
+            l.delete()
+        co.delete()
+    
+    return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
 
 def writecomment(request):
     cp = request.POST['mycomment']
-    v = Vote.objects.filter(user=request.user)
+    p = Poll.objects.get(pk=request.POST['qid'])
+    v = Vote.objects.filter(poll=p)
     v = v[0]
     c = Comment(comment_text=cp, choice=v.choice, user=request.user, pub_date=datetime.datetime.now())
     c.save()
-    return HttpResponseRedirect("/1/"+request.POST['qid']+"/")
+    return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
 
 def delete_comment(request, category_id, poll_id, comment_id):
     c = Comment.objects.get(pk=comment_id)
     c.delete()
+    return HttpResponseRedirect("/"+category_id+'/'+poll_id+'/')
+
+def like_comment(request, category_id, poll_id, comment_id):
+    c = Comment.objects.get(pk=comment_id)
+    c.likes = c.likes + 1;
+    c.save()
+    l = Like(user=request.user, comment=c, pub_date=datetime.datetime.now())
+    l.save()
+    return HttpResponseRedirect("/"+category_id+'/'+poll_id+'/')
+
+def unlike_comment(request, category_id, poll_id, comment_id):
+    c = Comment.objects.get(pk=comment_id)
+    c.likes = c.likes - 1;
+    c.save()
+    l = Like.objects.get(comment=c)
+    l.delete()
     return HttpResponseRedirect("/"+category_id+'/'+poll_id+'/')
 
 def delete_poll(request, poll_id):
