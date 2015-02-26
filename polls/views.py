@@ -62,8 +62,12 @@ def poll(request, category_id, poll_id):
         commentlists = []
         listC = Comment.objects.filter(choice = l)
         for c in listC:
-            li = Like.objects.filter(comment=c, user=request.user)
-            likedByUser = 0 if len(li) == 0 else 1
+            likedByUser = 0
+            if request.user.is_authenticated():
+                li = Like.objects.filter(comment=c, user=request.user)
+                likedByUser = 0 if len(li) == 0 else 1
+            else:
+                likedByUser = 0
             commentlists.append({'comment': c, 'likedByUser': likedByUser})
         votedFor = 1 if voted and v[0].choice == l else 0
         choicelists.append({'choice': l, 'comments': commentlists, 'votedFor': votedFor})
