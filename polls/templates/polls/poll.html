@@ -143,6 +143,7 @@
 					id="{{ c.choice.choice_text }}">
 				{% endif %}
 					{% for co in c.comments %}
+					{% if co.comment.choice == c.choice %}
 					<div class="well comment">
 						<form id="delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
 							<button type="submit" class="close"
@@ -151,7 +152,7 @@
 							</button>
 						</form>
 						<div class="user-div">
-							<div class="thumbnail">
+							<div class="prof-thumbnail">
 								<img src="http://3.bp.blogspot.com/-yz5oMnsU_-8/TyTWKKjbNII/AAAAAAAABXE/envZTLLj5GM/s1600/sad.jpg" alt="{{ co.comment.user.username }}'s profile picture" class="img profile-pic">
 							</div>
 							<p class=username>{{ co.comment.user.username }}</p>
@@ -183,6 +184,7 @@
 						<p>{{ co.comment.likes }} people liked this comment.</p>
 						{% endif %}
 					</div>
+					{% endif %}
 					{% endfor %}
 					
 				</div>
