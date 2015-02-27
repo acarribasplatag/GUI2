@@ -1,4 +1,8 @@
-.thumbnail {
+#createFrm {
+    margin-bottom: 20px;
+}
+
+.prof-thumbnail {
     width: 100px;
     height: 100px;
     overflow: hidden;
@@ -67,8 +71,8 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
-#a, #topics {
-    width: 300px;
+#topics, #accountInfo, #accountTabs {
+    width: 100%
 }
 
 #comments {
