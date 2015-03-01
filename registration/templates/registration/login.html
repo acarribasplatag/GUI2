@@ -114,52 +114,47 @@
 <!-- end scripts block -->
 
 
-
-
-
-
-
-
 <!-- This content is inserted into the base.html. -->
 {% block content %}
 
-  {% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
 
-  <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
   {% csrf_token %}
-
-    <div class="jumbotron">
-    <!-- ALGO AGREGADO -->
-
-      <div class="row">
-        <div class="col-xs-6 col-md-4">
-          <div class="account-wall">
-            <form class="form-signin">
-              <input type="text" class="form-control" id="username" name="username"placeholder="Username" required autofocus>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-              <button class="btn btn-lg btn-primary btn-block" type="submit"> Sign in</button>
-              <input type="hidden" name="next" value="/" />
-
-              <label class="checkbox pull-left">
-              <input type="checkbox" value="remember-me">Remember me</label>
-              <a href="#" class="pull-right need-help">Need help? </a>
-              <span class="clearfix"></span>
-            </form>
-          </div>
-          <a href="/register/" class="text-center new-account">Create an account </a>
-        </div>
-
-        <div class="col-xs-6 col-md-4">
-         <div
-          class="fb-like"
-          data-share="true"
-          data-width="450"
-          data-show-faces="true">
+  
+  <div class="jumbotron">
+    
+    <div class="row">
+      <!-- Right Side -->
+      <div class="col-xs-6">
+	<div class="well">
+	  <form id="loginForm">
+	    <!-- Username -->
+	      <div class="form-group">
+		<label for="username" class="control-label">Username</label>
+		<input type="text" class="form-control" id="username" placeholder="Username" tittle="Please enter your username">
+	      </div>
+	      <!-- Password -->
+	      <div class="form-group">
+                <label for="password" class="control-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" title="Please enter your password">
+              </div>
+	      <button type="submit" class="btn btn-primary btn-block">Login</button>
+              <a href="#" class="btn btn-default btn-block">Forgot your password?</a>
+          </form>
         </div>
       </div>
+      <!-- Left Side -->
+      <div class="col-xs-6">
+	<p>COMING SOON</p>
+	<img src="../polls/img/facebook.png" class="img-responsive">
+	</div>
     </div>
-  </form>
+    
+ 
+  </div>
+</form>
 
 {% endblock %}
