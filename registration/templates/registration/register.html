@@ -9,14 +9,12 @@
 {% block content %}
 
 <div class="jumbotron">
-  <h1>Create an account</h1>
+
   
   <!-- Form starts -->
   <form class="form-horizontal" method="POST" action="">
     {% csrf_token %}
-    <!--     {{ form.as_p }}
-	     <input type="submit" value="Create the account"> -->
-    
+
     <!-- First Name -->
     <div class="form-group">
       <label class="col-xs-6 col-sm-3 control-label">First Name:</label>
@@ -24,6 +22,7 @@
 	<input type="text" class="form-control" id="firstname" placeholder="First Name" required autofocus>
       </div>
     </div>
+
     <!-- Last Name -->
     <div class="form-group">
       <label class="col-xs-6 col-sm-3 control-label">Last Name:</label>
@@ -31,6 +30,7 @@
 	<input type="text" class="form-control" id="lastname" placeholder="Last Name">
       </div>
     </div>
+
     <!-- Email -->
     <div class="form-group">
       <label class="col-xs-6 col-sm-3 control-label">Email:</label>
@@ -38,6 +38,7 @@
 	<input type="email" class="form-control" id="email" placeholder="Username">
       </div>
     </div>
+
     <!-- Username -->
     <div class="form-group">
       <label class="col-xs-6 col-sm-3 control-label">Username:</label>
@@ -45,6 +46,7 @@
 	<input type="text" class="form-control" id="username" placeholder="Username">
       </div>
     </div>
+
     <!-- Password -->
     <div class="form-group">
       <label class="col-xs-6 col-sm-3 control-label">Password:</label>
@@ -59,6 +61,16 @@
 	<input type="password" class="form-control" id="password2" placeholder="Password" required>
       </div>
     </div>
+
+    <!-- Upload a picture -->
+    <div class="form-group">
+      <label class="col-xs-6 col-sm-3 control-label">Upload a picture:</label>
+      <div class="col-xs-6 col-sm-3 input-append">
+	<input id="photoCover" class="input-large" type="text">
+	<a class="btn" onclick="$('input[id=lefile]').click();">Browse</a>
+    	<input id="lefile" type="file" style="display:none">
+      </div>
+    </div>
     <!--- Need help and button -->
     <div class="form-group"> 
       <a href="#" class="col-xs-6 col-sm-3 need-help text-right">Need help? </a>
@@ -67,8 +79,17 @@
       </div>
     </div>
     
+ 
+<script type="text/javascript">
+  $('input[id=lefile]').change(function() {
+  $('#photoCover').val($(this).val());
+  });
+</script>
+
+
+
+
   </form>  
-  
 </div>
 
 
