@@ -122,7 +122,7 @@ def change_vote(request):
 def writecomment(request):
     cp = request.POST['mycomment']
     p = Poll.objects.get(pk=request.POST['qid'])
-    v = Vote.objects.filter(poll=p)
+    v = Vote.objects.filter(poll=p, user=request.user)
     v = v[0]
     c = Comment(comment_text=cp, choice=v.choice, user=request.user, pub_date=datetime.datetime.now())
     c.save()

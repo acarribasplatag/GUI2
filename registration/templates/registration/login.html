@@ -129,16 +129,17 @@
     <div class="row">
       <!-- Right Side -->
       	<div class="col-xs-6 col-md-6 well">
-	  <form id="loginForm">
+	  <div id="loginForm">
 	    <!-- Username -->
 	    <label for="username" class="col-xs-3 col-md-3 control-label">Username:</label>
-	    <input type="text" class="col-xs-3 col-xs-offset-2 col-md-3 form-control" id="username" placeholder="Username" tittle="Please enter your username">
+	    <input type="text" class="col-xs-3 col-xs-offset-2 col-md-3 form-control" id="username" placeholder="Username" title="Please enter your username">
 	    <!-- Password -->
 	    <label for="password" class="col-xs-3 col-md-3 control-label">Password:</label>
 	    <input type="password" class="col-xs-3 col-xs-offset-2 col-md-3 form-control" id="password" placeholder="Password" title="Please enter your password">
 	    <button type="submit" class="col-xs-4 col-md-6 btn btn-primary">Login</button>
 	    <button type="submit" class="col-xs-4 col-md-6 btn btn-default">Forgot your password?</button>
-	  </form>
+	    <input type="hidden" name="next" value="{{ next }}" />
+	  </div>
 	</div>
 	<!-- Left side -->
 	<div class="col-xs-6 col-md-6">
