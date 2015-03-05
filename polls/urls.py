@@ -40,11 +40,19 @@ urlpatterns = patterns('',
 
     url(r'^vote/$',
         views.vote, name='vote'),
+                       
+    url(r'^change_vote/$',
+        views.change_vote, name='change_vote'),
 
     url(r'^new_comment/$',
         views.writecomment, name='writecomment'),
 
     url(r'^delete_comment/(?P<category_id>\d+)/(?P<poll_id>\d+)/(?P<comment_id>\d+)$',
         views.delete_comment, name='deletecomment'),
-
+                       
+    url(r'^like_comment/(?P<category_id>\d+)/(?P<poll_id>\d+)/(?P<comment_id>\d+)$',
+        views.like_comment, name='likecomment'),
+                       
+    url(r'^unlike_comment/(?P<category_id>\d+)/(?P<poll_id>\d+)/(?P<comment_id>\d+)$',
+        views.unlike_comment, name='unlikecomment'),
 )

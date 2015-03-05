@@ -3,42 +3,95 @@
 {% block title %}Create an account{% endblock %}
 
 {% block scripts %}
-	<!-- scripts go here that you want to be inserted into base.html -->
+<!-- scripts go here that you want to be inserted into base.html -->
 {% endblock %}
 
 {% block content %}
 
-  <h1>Create an account</h1>
+<div class="jumbotron">
 
-  <!-- This is a django form. It currently is just using the default registration form. -->
-  <form method="POST" action=".">{% csrf_token %}
+  
+  <!-- Form starts -->
+  <form class="form-horizontal" method="POST" action="">
+    {% csrf_token %}
 
-    <div class="col-xs-6 col-md-4">
-      <div class="account-wall">
-        <form class="form-signin">
-
-          <input type="text" class="form-control" id="username" name="username"placeholder="Username" required autofocus>
-          <!-- This gives you any errors that occured relating to the username -->
-          <!-- {{ form.username.errors }} -->
-          <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
-          <!-- This gives you any errors related to the email -->
-          <!-- {{ form.email.errors }} -->
-          <input type="password" class="form-control" id="password1" name="password1" placeholder="Password" required>
-          <!-- This gives you any errors to the password1 -->
-          <!-- {{ form.password1.errors }} -->
-          <input type="password" class="form-control" id="password2" name="password2" placeholder="Password Confirmation" required>
-          <!-- This gives you any errors related to the password2 -->
-<!--           {{ form.password2.errors }}
- -->
-          <button class="btn btn-lg btn-primary btn-block" type="submit" value="register"> Create User</button>
-
-          <input type="hidden" name="next" value="Register" />
-
-          <span class="clearfix"></span>
-        </form>
+    <!-- First Name -->
+    <div class="form-group">
+      <label class="col-xs-6 col-sm-3 control-label">First Name:</label>
+      <div class="col-sm-4">
+	<input type="text" class="form-control" id="firstname" placeholder="First Name" required autofocus>
       </div>
     </div>
 
-  </form>
+    <!-- Last Name -->
+    <div class="form-group">
+      <label class="col-xs-6 col-sm-3 control-label">Last Name:</label>
+      <div class="col-sm-4">
+	<input type="text" class="form-control" id="lastname" placeholder="Last Name">
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label class="col-xs-6 col-sm-3 control-label">Email:</label>
+      <div class="col-sm-4">
+	<input type="email" class="form-control" id="email" placeholder="Username">
+      </div>
+    </div>
+
+    <!-- Username -->
+    <div class="form-group">
+      <label class="col-xs-6 col-sm-3 control-label">Username:</label>
+      <div class="col-sm-4">
+	<input type="text" class="form-control" id="username" placeholder="Username">
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label class="col-xs-6 col-sm-3 control-label">Password:</label>
+      <div class="col-sm-8">
+	<input type="password" class="form-control" id="password1" placeholder="Password" required>
+      </div>
+    </div>
+    <!-- Re-enter password -->
+    <div class="form-group"> 
+      <label class="col-xs-6 col-sm-3 control-label">Re-enter password:</label>
+      <div class="col-xs-6 col-sm-4">
+	<input type="password" class="form-control" id="password2" placeholder="Password" required>
+      </div>
+    </div>
+
+    <!-- Upload a picture -->
+    <div class="form-group">
+      <label class="col-xs-6 col-sm-3 control-label">Upload a picture:</label>
+      <div class="col-xs-6 col-sm-3 input-append">
+	<input id="photoCover" class="input-large" type="text">
+	<a class="btn" onclick="$('input[id=lefile]').click();">Browse</a>
+    	<input id="lefile" type="file" style="display:none">
+      </div>
+    </div>
+    <!--- Need help and button -->
+    <div class="form-group"> 
+      <a href="#" class="col-xs-6 col-sm-3 need-help text-right">Need help? </a>
+      <div class="col-xs-6 col-sm-4">
+	<button class="btn btn-large btn-primary btn-block" type="submit">Create User</button>
+      </div>
+    </div>
+    
+ 
+<script type="text/javascript">
+  $('input[id=lefile]').change(function() {
+  $('#photoCover').val($(this).val());
+  });
+</script>
+
+
+
+
+  </form>  
+</div>
+
+
 
 {% endblock %}

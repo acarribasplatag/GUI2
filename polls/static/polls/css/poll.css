@@ -1,9 +1,61 @@
-#comment-tabs, .comment {
-    width: 100%;
+#createFrm {
+    margin-bottom: 20px;
 }
 
-.comment {
-    margin: 10px;
+.prof-thumbnail {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    float: left;
+    margin-right: 30px;
+    margin-top: -30px; 
+    
+}
+.profile-pic {
+    position: absolute;
+    top: -9999px;
+    bottom: -9999px;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
+}
+
+.username {
+   margin-top: 30px; 
+}
+
+.comment-content {
+    margin-top: 60px;
+    float: none;
+}
+
+.pub-date {
+    font-size: 90%;
+    color: #9197A3;
+}
+
+#poll-text {
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#comment-tabs, .comment {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#commentform {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #form #btnVote {
@@ -19,8 +71,8 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
-#a, #topics {
-    width: 300px;
+#topics, #accountInfo, #accountTabs {
+    width: 100%
 }
 
 #comments {
