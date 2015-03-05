@@ -1,7 +1,7 @@
 
 from django import forms
 from polls.models import Category, Poll, Choice
-import datetime
+import datetime,json
 
 class CreatePollForm(forms.Form):
     poll_text = forms.CharField(label='Poll Text', max_length=300, error_messages={'required': 'This field is required.'})
@@ -46,11 +46,28 @@ class CreatePollForm(forms.Form):
             list2.append((i, bar.category_text))
             i = i+1
         return list2
-    
-        
 
 
+class ContactUsForm(forms.Form):
+    email = forms.EmailField(required=True)
+    name = forms.CharField(required=True)
+    comment = forms.CharField(required=True)
 
+    class Meta:
+        fields = ('email', 'name', 'comment')
 
-
-
+    def save(self, data):
+         baseUrl = 'https://api.github.com/repos/bdonald25/GUI2/issues';
+# 
+#         newIssue = {
+#             'title': "New Issue",
+#             'body':  data['comment'] + "\n Posted by:" + data['name'] + " " + data['name'],
+#             'token': "6fa39168b56ad905f38a3c2fb7a4bf36496e193a"
+#         }
+# 
+#         headers = {'content-type': 'application/json'}
+# 
+#         r = requests.post(baseUrl, data=json.dumps(newIssue), headers=headers)
+#         print r
+# 
+#         return r

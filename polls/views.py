@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
-from polls.forms import CreatePollForm
+from polls.forms import CreatePollForm, ContactUsForm
 from django.shortcuts import render_to_response
 from registration.views import myAccount
 import datetime
@@ -205,3 +205,16 @@ def get_all_polls(request):
     serialized_obj = serializers.serialize('json', [ latest_category_list, ])
 
     return HttpResponse(serialized_obj, content_type="application/json")
+
+def contact_us(request):
+    if request.method == 'POST':
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            form.save(form.cleaned_data)
+            return HttpResponseRedirect("/")
+
+    args = {}
+
+    args['form'] = ContactUsForm()
+
+    return render_to_response("contact_form/contact_form.html", args)
