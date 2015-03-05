@@ -15,8 +15,7 @@
 		<p>To send us a message fill out the below form.</p>
 		<div id="form-main">
 			<div id="form-div">
-				<form class="form" id="form1" method="post">
-					{% csrf_token %}
+				<form class="contact_form" id="form1" method="post"> {% csrf_token %}
 					<p class="name">
 						<input name="name" type="text"
 							class="validate[required,custom[onlyLetter],length[0,100]] feedback-input"

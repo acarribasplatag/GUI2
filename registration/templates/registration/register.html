@@ -10,24 +10,30 @@
 
   <h1>Create an account</h1>
 
-  <form method="POST" action="">
-
-  {% csrf_token %}
-  <!--     {{ form.as_p }}
-      <input type="submit" value="Create the account"> -->
-
+  <!-- This is a django form. It currently is just using the default registration form. -->
+  <form method="POST" action=".">{% csrf_token %}
 
     <div class="col-xs-6 col-md-4">
       <div class="account-wall">
         <form class="form-signin">
+
           <input type="text" class="form-control" id="username" name="username"placeholder="Username" required autofocus>
+          <!-- This gives you any errors that occured relating to the username -->
+          <!-- {{ form.username.errors }} -->
+          <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+          <!-- This gives you any errors related to the email -->
+          <!-- {{ form.email.errors }} -->
           <input type="password" class="form-control" id="password1" name="password1" placeholder="Password" required>
+          <!-- This gives you any errors to the password1 -->
+          <!-- {{ form.password1.errors }} -->
           <input type="password" class="form-control" id="password2" name="password2" placeholder="Password Confirmation" required>
-          <button class="btn btn-lg btn-primary btn-block" type="submit"> Create User</button>
+          <!-- This gives you any errors related to the password2 -->
+<!--           {{ form.password2.errors }}
+ -->
+          <button class="btn btn-lg btn-primary btn-block" type="submit" value="register"> Create User</button>
 
           <input type="hidden" name="next" value="Register" />
 
-          <a href="#" class="pull-right need-help">Need help? </a>
           <span class="clearfix"></span>
         </form>
       </div>
