@@ -41,4 +41,4 @@ bower.json
 /polls/templates/polls/nbproject/private/
 
 #database
-db.sqlite3
+*sqlite*
