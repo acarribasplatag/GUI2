@@ -106,15 +106,18 @@
 		<div id="customcontrol">
 			<h1 id="poll-text">{{ poll.poll_text }}</h1>
 			<div id="control">
+			{% if user.is_authenticated %}
 				<div id="form">
 					<button id="btnVote" class="btn btn-default" data-toggle="modal"
 						data-target="#myModal">Vote Now!</button>
 				</div>
+			{% endif %}
 				<div id="myChart" style="width: 100%;"></div>
 
 			</div>
 
 			<div id="comments">
+			<h3>Comments:</h3>
 							<div role="tabpanel">
 
 			<!-- Nav tabs -->
@@ -143,16 +146,17 @@
 					id="{{ c.choice.choice_text }}">
 				{% endif %}
 					{% for co in c.comments %}
-					{% if co.comment.choice == c.choice %}
 					<div class="well comment">
+					{% if user == co.comment.user %}
 						<form id="delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
 							<button type="submit" class="close"
 							aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</form>
+					{% endif %}
 						<div class="user-div">
-							<div class="prof-thumbnail">
+							<div class="prof-thumbnail img-thumbnail">
 								<img src="http://3.bp.blogspot.com/-yz5oMnsU_-8/TyTWKKjbNII/AAAAAAAABXE/envZTLLj5GM/s1600/sad.jpg" alt="{{ co.comment.user.username }}'s profile picture" class="img profile-pic">
 							</div>
 							<p class=username>{{ co.comment.user.username }}</p>
@@ -161,6 +165,7 @@
 						<div class="comment-content">
 							{% autoescape off %}{{ co.comment.comment_text }}{% endautoescape %}
 						</div>
+						{% if user.is_authenticated %}
 						{% if co.likedByUser == 0 %}
 						<form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
 							<button type="submit" class="btn btn-default">
@@ -174,6 +179,7 @@
 							</button>
 						</form>
 						{% endif %}
+						{% endif %}
 						{% if co.comment.likes == 0 %}
 						<p>No one liked this comment.</p>
 						{% elif co.comment.likes == 1 and co.likedByUser == 1 %}
@@ -184,7 +190,6 @@
 						<p>{{ co.comment.likes }} people liked this comment.</p>
 						{% endif %}
 					</div>
-					{% endif %}
 					{% endfor %}
 					
 				</div>
