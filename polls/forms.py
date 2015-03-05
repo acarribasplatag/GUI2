@@ -56,21 +56,18 @@ class ContactUsForm(forms.Form):
     class Meta:
         fields = ('email', 'name', 'comment')
 
-    def save(self):
-        baseUrl = 'https://api.github.com/repos/bdonald25/GUI2/issues';
-
-        # newIssue = {
-        #     'title': "New Issue",
-        #     'body':  comment + "\n Posted by:" + name + " " + name,
-        #     'token': "6fa39168b56ad905f38a3c2fb7a4bf36496e193a"
-        # }
-
-        # headers = {'content-type': 'application/json'}
-
-        # r = requests.post(url, data=json.dumps(newIssue), headers=headers)
-        # print r
-
-        # return r
-
-
-
+    def save(self, data):
+         baseUrl = 'https://api.github.com/repos/bdonald25/GUI2/issues';
+# 
+#         newIssue = {
+#             'title': "New Issue",
+#             'body':  data['comment'] + "\n Posted by:" + data['name'] + " " + data['name'],
+#             'token': "6fa39168b56ad905f38a3c2fb7a4bf36496e193a"
+#         }
+# 
+#         headers = {'content-type': 'application/json'}
+# 
+#         r = requests.post(baseUrl, data=json.dumps(newIssue), headers=headers)
+#         print r
+# 
+#         return r

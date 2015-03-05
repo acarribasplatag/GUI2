@@ -124,6 +124,7 @@
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
   {% csrf_token %}
 
+
   <div class="jumbotron">
 
     <div class="row">
@@ -150,5 +151,6 @@
     </div>
   </div>
 </form>
+
 
 {% endblock %}

@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.conf.global_settings import LOGIN_REDIRECT_URL
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -105,3 +106,5 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+LOGIN_REDIRECT_URL = '/myAccount/'
