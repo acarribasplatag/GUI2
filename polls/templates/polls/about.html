@@ -10,7 +10,13 @@
 {% block content %}
 	<div class="jumbotron">
 		<h1>About</h1>
+
+	{% load staticfiles %}
+	<img src= "{% static 'polls/img/ana.jpg' %}"
+					class="img-rounded" alt="Ana">
 	</div>
+
+
 {% endblock %}
 
 

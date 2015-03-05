@@ -5,20 +5,36 @@
 <!-- This script will be inserted into base.html. -->
 {% block scripts %}
 
+  {% load staticfiles %}
+	<!-- Important Owl stylesheet -->
+  <link rel="stylesheet" href={%static 'polls/css/owl-carousel/owl.carousel.css' %}>
+
+	<!-- Default Theme -->
+  <link rel="stylesheet" href={%static 'polls/css/owl-carousel/owl.theme.css' %}>
+
+
+	<!--  jQuery 1.7+  -->
+	<script src="jquery-1.9.1.min.js"></script>
+
+	<!-- Include js plugin -->
+	<script src="{%static 'polls/js/owl.carousel.min.js' %}"></script>
+
+
+
 	<!-- Carousel Script-->
 	<script>
 
-		$('#myCarousel').carousel({
-		    interval: 500;
-		});
+	$(document).ready(function() {
+ 		$("#myCarousel").owlCarousel({
 
-		$('.carousel-control.left').click(function () {
-		    $('#myCarousel').carousel('prev');
-		});
+        autoPlay: 3000, //Set AutoPlay to 3 seconds
 
-		$('.carousel-control.right').click(function () {
-		    $('#myCarousel').carousel('next');
-		});
+        items : 3,
+        itemsDesktop : [1199,3],
+        itemsDesktopSmall : [979,3]
+  	});
+  });
+
 
 	</script>
 
@@ -30,93 +46,72 @@
 
 		<p id="subtitle">Select a category</p>
 
-		<!--  the carousel itself -->
-		<div id="myCarousel" class="carousel slide" data-ride="carousel">
-			<!-- Indicators -->
-			<ol class="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				<li data-target="#myCarousel" data-slide-to="1"></li>
-			</ol>
+    <!-- Own Carousel -->
+    <div id="myCarousel" class="owl-carousel">
 
-			<!-- Wrapper for slides -->
-			<div class="carousel-inner">
-				<div class="item active">
-					<div class="row">
-						<div class="col-sm-6 col-md-4">
-							<a href="/polls/" class="thumbnail"> <img class="img-rounded"
-								src="http://assignmenteditor.com/wp-content/uploads/2012/04/politics.jpg"
-								alt="Politics">
-								<center>
-									<p>Politics</p>
-								</center>
-							</a>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<a href="/polls/" class="thumbnail"> <img
-								src="http://www.picturesnew.com/media/images/39d4fc9f39.png"
-								class="img-rounded" alt="Fashion">
-								<center>
-									<p>Fashion</p>
-								</center>
-							</a>
-
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<a href="/polls/" class="thumbnail"> <img
-								src="http://t2.ftcdn.net/jpg/00/28/81/51/400_F_28815198_PyMFIR4SSZu3JJo0TVrkBCkbv0zuomt4.jpg"
-								class="img-rounded" alt="Religion">
-								<center>
-									<p>Religion</p>
-								</center>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- Second slide -->
-				<div class="item">
-					<div class="row">
-						<div class="col-sm-6 col-md-4">
-							<a href="/polls/" class="thumbnail"> <img class="img-rounded"
-								src="https://davidwaldock.files.wordpress.com/2011/05/scc2011.jpg"
-								alt="Science">
-								<center>
-									<p>Science</p>
-								</center>
-							</a>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<a href="/polls/" class="thumbnail"> <img class="img-rounded"
-								src="http://saepec.mgvz.com/files/images/technology_word_cloud.jpg"
-								alt="Technology">
-								<center>
-									<p>Technology</p>
-								</center>
-							</a>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<a href="/polls/" class="thumbnail"> <img class="img-rounded"
-								src="http://101fundraising.org/wp-content/uploads/2014/05/5484651-535312-welcome-word-in-different-languages.jpg"
-								alt="Languages">
-								<center>
-									<p>Languages</p>
-								</center>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-				<!-- Controls-->
-				<a class="left carousel-control" href="#myCarousel" role="button"
-					data-slide="prev"> <span
-					class="glyphicon glyphicon-chevron-left"></span>
-				</a> <a class="right carousel-control" href="#myCarousel" role="button"
-					data-slide="next"> <span
-					class="glyphicon glyphicon-chevron-right"></span>
+			<div class="item">
+				<a href="/polls/" class="thumbnail"> <img class="img-rounded"
+					src="http://assignmenteditor.com/wp-content/uploads/2012/04/politics.jpg"
+					alt="Politics">
+					<center>
+						<p>Politics</p>
+					</center>
 				</a>
 			</div>
-			<!-- Carousel-->
-		</div>
+
+			<div class="item">
+				<a href="/polls/" class="thumbnail"> <img
+					src="http://www.picturesnew.com/media/images/39d4fc9f39.png"
+					class="img-rounded" alt="Fashion">
+					<center>
+						<p>Fashion</p>
+					</center>
+				</a>
+
+			</div>
+
+			<div class="item">
+				<a href="/polls/" class="thumbnail"> <img
+					src="http://t2.ftcdn.net/jpg/00/28/81/51/400_F_28815198_PyMFIR4SSZu3JJo0TVrkBCkbv0zuomt4.jpg"
+					class="img-rounded" alt="Religion">
+					<center>
+						<p>Religion</p>
+					</center>
+				</a>
+			</div>
+
+			<div class="item">
+				<a href="/polls/" class="thumbnail"> <img class="img-rounded"
+					src="https://davidwaldock.files.wordpress.com/2011/05/scc2011.jpg"
+					alt="Science">
+					<center>
+						<p>Science</p>
+					</center>
+				</a>
+			</div>
+
+			<div class="item">
+				<a href="/polls/" class="thumbnail"> <img class="img-rounded"
+					src="http://saepec.mgvz.com/files/images/technology_word_cloud.jpg"
+					alt="Technology">
+					<center>
+						<p>Technology</p>
+					</center>
+				</a>
+			</div>
+
+			<div class="item">
+				<a href="/polls/" class="thumbnail"> <img class="img-rounded"
+					src="http://101fundraising.org/wp-content/uploads/2014/05/5484651-535312-welcome-word-in-different-languages.jpg"
+					alt="Languages">
+					<center>
+						<p>Languages</p>
+					</center>
+				</a>
+			</div>
+
+    </div>  <!-- End of owl carousel -->
+
 	</div>
 {% endblock %}
 

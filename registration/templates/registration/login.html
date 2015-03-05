@@ -123,27 +123,29 @@
 
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
   {% csrf_token %}
-  
+
   <div class="jumbotron">
-    
+
     <div class="row">
       <!-- Right Side -->
-      	<div class="col-xs-6 col-md-6 well">
+      	<div class="col-xs-12 col-md-6">
 	  <form id="loginForm">
 	    <!-- Username -->
-	    <label for="username" class="col-xs-3 col-md-3 control-label">Username:</label>
-	    <input type="text" class="col-xs-3 col-xs-offset-2 col-md-3 form-control" id="username" placeholder="Username" tittle="Please enter your username">
+	    <label for="username" class="col-xs-3 control-label">Username:</label>
+	    <input type="text" class="col-xs-3 col-xs-offset-2 col-md-3 form-control" id="username" name="username" placeholder="Username" title="Please enter your username">
 	    <!-- Password -->
-	    <label for="password" class="col-xs-3 col-md-3 control-label">Password:</label>
-	    <input type="password" class="col-xs-3 col-xs-offset-2 col-md-3 form-control" id="password" placeholder="Password" title="Please enter your password">
-	    <button type="submit" class="col-xs-4 col-md-6 btn btn-primary">Login</button>
-	    <button type="submit" class="col-xs-4 col-md-6 btn btn-default">Forgot your password?</button>
+	    <label for="password" class="col-xs-3 control-label">Password:</label>
+	    <input type="password" class="col-xs-3 col-xs-offset-2 col-md-3 form-control" id="password" name="password" placeholder="Password" title="Please enter your password">
+	    <button type="submit" class="col-xs-6 btn btn-primary">Login</button>
+      <input type="hidden" name="next" value="/" />
+	    <button type="submit" class="col-xs-6 btn btn-default">Forgot your password?</button>
 	  </form>
 	</div>
 	<!-- Left side -->
-	<div class="col-xs-6 col-md-6">
+	<div class="col-xs-12 col-md-6">
 	  <p>COMING SOON</p>
-	  <!--<img src="../css/facebook.png">-->
+	  {% load static %}
+	  <img src="{% static 'registration/img/facebook.png' %}">
 	</div>
     </div>
   </div>

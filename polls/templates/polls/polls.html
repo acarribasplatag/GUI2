@@ -14,73 +14,83 @@
 <div class="jumbotron">
   <h1>Select a Poll</h1>
   <div class="row">
-    <div class="col-xs-6 col-sm-3">
-      <ul class="nav nav-pills nav-stacked">
+
+    <!-- Each tab -->
+    <div id="content">
+      <ul id="tabs" class="nav nav-pills nav-stacked" data-tabs="tabs">
         <!-- get all categories from database -->
 		    {% for category in category_list %}
 	        <li><a href="#{{ category.category_text }}"
 	         data-toggle="tab">{{ category.category_text }}</a></li>
 		    {% endfor %}
       </ul>
-    </div>
-    <div class="col-lg-9 col-lg-9">
-	  <div class="tab-content">
-      <!-- fill each category with questions that are in that category -->
-	   <div class="tab-pane fade active" id="Politics">
-      <ul>
-        {% for poll in politics_list %}
-  	      <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
-              <a>User: {{ poll.user }}</a>
-          </li>
-        {% endfor %}
-      </ul>
+
+
+  	  <div class="tab-content">
+        <!-- fill each category with questions that are in that category -->
+  	    <div class="tab-pane fade active" id="Politics">
+          <ul>
+            {% for poll in politics_list %}
+      	      <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+                  <a>User: {{ poll.user }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+    	  </div>
+        <div class="tab-pane fade active" id="Politics">
+          <ul>
+            {% for poll in politics_list %}
+              <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+                  <a>User: {{ poll.user }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="tab-pane fade active" id="Fashion">
+          <ul>
+            {% for poll in fashion_list %}
+              <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+                  <a>User: {{ poll.user }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="tab-pane fade active" id="Science">
+          <ul>
+            {% for poll in science_list %}
+              <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+                  <a>User: {{ poll.user }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="tab-pane fade active" id="Technology">
+          <ul>
+            {% for poll in technology_list %}
+              <div>
+                <h1><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a></h1>
+                <p>User: {{ poll.user }}</p>
+              </div>
+
+
+
+            <!--   <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+                <a>User: {{ poll.user }}</a>
+              </li> -->
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="tab-pane fade active" id="Literature">
+          <ul>
+            {% for poll in literature_list %}
+              <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
+                  <a>User: {{ poll.user }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
 	  </div>
-    <div class="tab-pane fade active" id="Politics">
-      <ul>
-        {% for poll in politics_list %}
-          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
-              <a>User: {{ poll.user }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="tab-pane fade active" id="Fashion">
-      <ul>
-        {% for poll in fashion_list %}
-          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
-              <a>User: {{ poll.user }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="tab-pane fade active" id="Science">
-      <ul>
-        {% for poll in science_list %}
-          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
-              <a>User: {{ poll.user }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="tab-pane fade active" id="Technology">
-      <ul>
-        {% for poll in technology_list %}
-          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
-              <a>User: {{ poll.user }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="tab-pane fade active" id="Literature">
-      <ul>
-        {% for poll in literature_list %}
-          <li><a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a>
-              <a>User: {{ poll.user }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-	 </div>
   </div>
 </div>
 {% endblock %}
