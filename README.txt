@@ -2,7 +2,10 @@
 https://www.djangoproject.com/download/ - install django python
 "sudo apt-get install python-dev" - install python dev tools
 "sudo apt-get install python-pip" - install pip (manages python packages)
-sudo pip install -r requirements.txt - installs required dependancies needed
+pip install -r requirements.txt - installs required dependancies needed
+python manage.py makemigrations polls - build database for polls app
+python manage.py makemigrations registration - build database for registration app
+python manage.py migrate - initial migration
 
 *** Start Server ***
 start server : "python manage.py runserver" from GUI2 directory
