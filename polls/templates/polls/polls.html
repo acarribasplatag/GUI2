@@ -20,6 +20,12 @@
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Poll
         </button>
     </form>
+  {% else %}
+    <form id="createFrm" method="LINK" action="/login/">
+      <button type="submit" class="btn btn-default">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Poll
+        </button>
+    </form>
   {% endif %}
 
   <div class="row">
