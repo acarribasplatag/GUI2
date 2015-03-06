@@ -13,6 +13,15 @@
 {% block content %}
 <div class="jumbotron">
   <h1>Select a Poll</h1>
+
+  {% if user.is_authenticated %}
+    <form id="createFrm" method="LINK" action="/create_poll/">
+      <button type="submit" class="btn btn-default">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Poll
+        </button>
+    </form>
+  {% endif %}
+
   <div class="row">
 
     <!-- Each tab -->
@@ -69,7 +78,7 @@
             {% endfor %}
         </div>
         <div class="tab-pane fade active" id="Languages">
-            {% for poll in literature_list %}
+            {% for poll in language_list %}
               <div>
                 <a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a></br>
                 <p>User: {{ poll.user }}</p>

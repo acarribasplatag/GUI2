@@ -8,6 +8,16 @@
 
 <div class="jumbotron">
 	<h1>My Account</h1>
+
+  {% if user.is_authenticated %}
+    <form id="createFrm" method="LINK" action="/create_poll/">
+      <button type="submit" class="btn btn-default">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Poll
+        </button>
+    </form>
+  {% endif %}
+
+
 	<div class="row">
 		<!-- tabs left -->
 		<div class="col-xs-6 col-sm-3">
@@ -20,11 +30,6 @@
 		<div class="col-xs-6 col-sm-9">
 			<div class="tab-content" id="accountTabs">
 				<div id="a" class="tab-pane fade">
-					<form id="createFrm" method="LINK" action="/create_poll/">
-						<button type="submit" class="btn btn-default">
-								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Poll
-							</button>
-					</form>
 					<table id="topics">
 						<tr>
 							<th>Poll</th>
