@@ -124,11 +124,11 @@
 			<ul class="nav nav-pills" role="tablist">
 				{% for c in choices %}
 				{% if c.votedFor == 1 %}
-				<li role="presentation" class="active"><a href="#{{ c.choice.choice_text }}"
+				<li role="presentation" class="active"><a href="#{{ c.choice.id }}"
 					aria-controls="{{ c.choice.choice_text }}" role="tab"
 					data-toggle="tab">{{ c.choice.choice_text }}</a></li>
 				{% else %}
-				<li role="presentation"><a href="#{{ c.choice.choice_text }}"
+				<li role="presentation" class=""><a href="#{{ c.choice.id }}"
 					aria-controls="{{ c.choice.choice_text }}" role="tab"
 					data-toggle="tab">{{ c.choice.choice_text }}</a></li>
 				{% endif %}
@@ -140,10 +140,10 @@
 				{% for c in choices %}
 				{% if c.votedFor == 1 %}
 				<div role="tabpanel" class="tab-pane fade in active"
-					id="{{ c.choice.choice_text }}">
+					id="{{ c.choice.id }}">
 				{% else %}
 				<div role="tabpanel" class="tab-pane fade"
-					id="{{ c.choice.choice_text }}">
+					id="{{ c.choice.id }}">
 				{% endif %}
 					{% for co in c.comments %}
 					<div class="well comment">
