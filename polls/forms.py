@@ -29,6 +29,7 @@ class CreatePollForm(forms.Form):
         for c in choices:
             choice = Choice(poll=topic, choice_text=c, votes=0, user=request.user, pub_date=datetime.datetime.now())
             choice.save()
+        return topic
 
     def getCategoryWithName(self, name):
         latest_category_list = Category.objects.order_by('category_text')

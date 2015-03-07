@@ -180,11 +180,14 @@ def create_poll(request):
         # Have we been provided with a valid form?
         if form.is_valid():
             # Save the new poll to the database.
-            form.save(request)
+            p = form.save(request)
+            
 
             # Now call the index() view.
-            # The user will be shown the homepage.
-            return myAccount(request)
+            # The user will be shown the homepage
+            
+    # Render the response and send it back!
+            return poll(request, p.category.id, p.id)
         else:
             # The supplied form contained errors - just print them to the terminal.
             print form.errors
