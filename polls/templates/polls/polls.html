@@ -34,63 +34,35 @@
     <div id="content">
       <ul id="tabs" class="nav nav-pills" data-tabs="tabs">
         <!-- get all categories from database -->
-		    {% for category in category_list %}
-	        <li><a href="#{{ category.category_text }}"
-	         data-toggle="tab">{{ category.category_text }}</a></li>
+		    {% for c in categories %}
+	        <li><a href="#{{ c.category.category_text }}"
+	         data-toggle="tab">{{ c.category.category_text }}</a></li>
 		    {% endfor %}
       </ul>
 
 
   	  <div class="tab-content">
         <!-- fill each category with questions that are in that category -->
-        <div class="tab-pane fade active" id="Politics">
-            {% for poll in politics_list %}
-              <div>
-                <a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a> </br>
-                <p>User: {{ poll.user }}</p>
+        {% for c in categories %}
+        <div class="tab-pane fade" id="{{ c.category.category_text }}">
+        	{% for poll in c.polls %}
+        	{% if c.category == poll.poll.category %}
+              <div  class="poll-select panel panel-default">
+                <div class="panel-body">
+                	<a href="/{{ c.category.id }}/{{ poll.poll.id }}">{{ poll.poll.poll_text }}</a><br>
+                	by <a href="#">{{ poll.poll.user }}</a><br>
+                	on {{ poll.poll.pub_date }}
+                	<div id="bottom">
+                		<span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>
+                		<span class="glyphicon glyphicon-check label label-default" data-toggle="tooltip" data-placement="top" title="Votes"> {{ poll.numVotes }}</span>
+                		<span class="glyphicon glyphicon-edit label label-default" data-toggle="tooltip" data-placement="top" title="Comments"> {{ poll.numComments }}</span>
+                	</div>
+                </div>
               </div>
+              {% endif %}
             {% endfor %}
         </div>
-        <div class="tab-pane fade active" id="Fashion">
-            {% for poll in fashion_list %}
-              <div>
-                <a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a> </br>
-                <p>User: {{ poll.user }}</p>
-              </div>
-            {% endfor %}
-        </div>
-        <div class="tab-pane fade active" id="Science">
-            {% for poll in science_list %}
-            	<div>
-                <a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a> </br>
-                <p>User: {{ poll.user }}</p>
-              <div/>
-            {% endfor %}
-        </div>
-        <div class="tab-pane fade active" id="Technology">
-            {% for poll in technology_list %}
-              <div>
-                <a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a></br>
-                <p>User: {{ poll.user }}</p>
-              </div>
-            {% endfor %}
-        </div>
-        <div class="tab-pane fade active" id="Literature">
-            {% for poll in literature_list %}
-              <div>
-                <a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a></br>
-                <p>User: {{ poll.user }}</p>
-              </div>
-            {% endfor %}
-        </div>
-        <div class="tab-pane fade active" id="Languages">
-            {% for poll in language_list %}
-              <div>
-                <a href="/{{poll.category.id}}/{{poll.id}}">{{ poll.poll_text }}</a></br>
-                <p>User: {{ poll.user }}</p>
-              </div>
-            {% endfor %}
-        </div>
+        {% endfor %}
       </div>
   </div>
 </div>

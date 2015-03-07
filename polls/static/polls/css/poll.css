@@ -1,5 +1,21 @@
+.poll-select {
+    display: inline-block;
+}
+
 #createFrm {
     margin-bottom: 20px;
+}
+
+#tabs {
+    margin-bottom: 20px;
+}
+
+#pills {
+    margin-bottom: 30px;
+}
+
+#changePass {
+    margin-top: 10px;
 }
 
 .prof-thumbnail {
@@ -73,7 +89,7 @@ body {
     margin-right: auto;
 }
 #topics, #accountInfo, #accountTabs {
-    width: 100%
+    width: 100%;
 }
 
 #comments {
@@ -129,10 +145,6 @@ input[type=text], input[type=password], input[type=email], input[type=number], t
 
 h1 {
     margin-bottom: 10px;
-}
-
-table tr:nth-child(2n+1) {
-    background: #CCC;
 }
 
 table tr td, th{

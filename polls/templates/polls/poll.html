@@ -28,7 +28,7 @@
   				text : null
   			},
   			tooltip : {
-  				pointFormat : '{point.percentage:.1f}%'
+  				pointFormat : '{point.y} votes, {point.percentage:.1f}%'
   			},
   			exporting : {
   				enabled : false
@@ -121,7 +121,7 @@
 							<div role="tabpanel">
 
 			<!-- Nav tabs -->
-			<ul class="nav nav-tabs" role="tablist">
+			<ul class="nav nav-pills" role="tablist">
 				{% for c in choices %}
 				{% if c.votedFor == 1 %}
 				<li role="presentation" class="active"><a href="#{{ c.choice.choice_text }}"
