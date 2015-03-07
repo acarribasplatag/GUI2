@@ -20,24 +20,28 @@ def home(request):
     return HttpResponse(template.render(context))
 
 def polls(request):
-    category_list = Category.objects.order_by('-pub_date')
-    template = loader.get_template('polls/polls.html')
-
-    politics_list = Poll.objects.select_related().filter(category=1)
-    fashion_list = Poll.objects.select_related().filter(category=2)
-    science_list = Poll.objects.select_related().filter(category=3)
-    technology_list = Poll.objects.select_related().filter(category=4)
-    literature_list = Poll.objects.select_related().filter(category=5)
-
-    context = RequestContext(request, {
-        'category_list': category_list,
-        'politics_list': politics_list,
-        'fashion_list': fashion_list,
-        'science_list': science_list,
-        'technology_list': technology_list,
-        'literature_list': literature_list,
-    })
-    return HttpResponse(template.render(context))
+    context = RequestContext(request)
+    category_list = Category.objects.all()
+    catlists = []
+    plists = []
+    for cat in category_list:
+        polls_list = Poll.objects.filter(category=cat)
+        for p in polls_list:
+            numchoices = 0
+            numcomments = 0
+            numvotes = 0
+            clist = Choice.objects.filter(poll=p)
+            for c in clist:
+                numchoices = numchoices + 1
+                numvotes = numvotes+c.votes
+                colist = Comment.objects.filter(choice = c)
+                for co in colist:
+                    numcomments = numcomments+1
+            plists.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments, 'numVotes': numvotes})
+        catlists.append({'category': cat, 'polls': plists})
+    context_dict = {'categories': catlists}
+    
+    return render_to_response('polls/polls.html', context_dict, context)
 
 # def category(request, category_id):
 #     latest_category_list = Category.objects.order_by('-pub_date')[:5]
