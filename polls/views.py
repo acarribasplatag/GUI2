@@ -40,7 +40,6 @@ def polls(request):
             plists.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments, 'numVotes': numvotes})
         catlists.append({'category': cat, 'polls': plists})
     context_dict = {'categories': catlists}
-    
     return render_to_response('polls/polls.html', context_dict, context)
 
 # def category(request, category_id):
@@ -120,7 +119,7 @@ def change_vote(request):
         for l in llist:
             l.delete()
         co.delete()
-    
+
     return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
 
 def writecomment(request):
@@ -181,11 +180,11 @@ def create_poll(request):
         if form.is_valid():
             # Save the new poll to the database.
             p = form.save(request)
-            
+
 
             # Now call the index() view.
             # The user will be shown the homepage
-            
+
     # Render the response and send it back!
             return poll(request, p.category.id, p.id)
         else:
