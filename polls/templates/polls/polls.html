@@ -50,7 +50,7 @@
               <div  class="poll-select panel panel-default">
                 <div class="panel-body">
                 	<a href="/{{ c.category.id }}/{{ poll.poll.id }}">{{ poll.poll.poll_text }}</a><br>
-                	by <a href="#">{{ poll.poll.user }}</a><br>
+                	by <a href="/user/{{ poll.poll.user.id }}">{{ poll.poll.user }}</a><br>
                 	on {{ poll.poll.pub_date }}
                 	<div id="bottom">
                 		<span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>

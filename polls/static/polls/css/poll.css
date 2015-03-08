@@ -1,3 +1,11 @@
+#editFrm {
+    float: right;
+}
+
+#textarea2 {
+    margin-top: 10px;
+}
+
 .poll-select {
     display: inline-block;
 }
@@ -39,6 +47,10 @@
 
 .username {
    margin-top: 30px;
+}
+
+.aboutMe {
+    margin-top: 30px;
 }
 
 .comment-content {
