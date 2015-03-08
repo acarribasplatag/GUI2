@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- Developed By: Virinchi Balabhadrapatruni
+	 Date:  3/7/2015
+	 UMass Lowell, GUI II
+-->
+
+{% extends "polls/base.html" %} {% block content %}
+
+<div class="jumbotron">
+
+	<div class="user-div">
+	{% if user.is_authenticated %}
+	<form id="editFrm" method="get" action="/user/edit/{{user.id}}/">
+		<button type="submit" class="btn btn-default">Edit Profile</button>
+	</form>
+	{% endif %}
+		<div class="prof-thumbnail img-thumbnail">
+			{% if profile.avatar %}
+			<a href="{{ profile.avatar.url }}" class=".thumbnail">
+				<img
+				src="{{ profile.avatar.url }}"
+				alt="{{ user.username }}'s profile picture"
+				class="img profile-pic">
+			</a>
+			{% endif %}
+		</div>
+		<h1 class="username">{{ user.username }}</h1>
+		
+	</div>
+	
+	<hr>
+	<div class="aboutMe">
+		<h2>About Me:</h2>
+		{% autoescape off %}{{ profile.aboutMe }}{% endautoescape %}
+	</div>
+	<div class="aboutMe">
+		<h2>Interests:</h2>
+		{% autoescape off %}{{ profile.aboutMe }}{% endautoescape %}
+	</div>
+</div>
+{% endblock %}
