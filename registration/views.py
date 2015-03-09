@@ -78,6 +78,10 @@ def upload_pic(request):
     if request.method == 'POST':
         form = UserProfilePicUploadForm(request.POST, request.FILES)
         if form.is_valid():
+            prof = UserProfile.objects.get(user=request.user)
+            avatar = request.FILES['image']
+            prof.avatar = avatar
             form.save()
+            prof.save()
             return HttpResponse('image upload success')
     return HttpResponseForbidden('allowed only via POST')

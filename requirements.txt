@@ -15,7 +15,6 @@ pexpect==3.2
 piston-mini-client==0.7.5
 pyOpenSSL==0.13.1
 pyasn1==0.1.7
-pillow==2.7.0
 pyasn1-modules==0.0.5
 pycrypto==2.6.1
 pycups==1.9.67
