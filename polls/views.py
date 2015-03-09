@@ -218,22 +218,6 @@ def contact_us(request):
         form = ContactUsForm(request.POST)
         if form.is_valid():
             form.save()
-            # baseUrl = 'https://api.github.com/repos/bdonald25/GUI2/issues';
-
-            # newIssue = {
-            #     'title': "New Issue",
-            #     'body':  form.cleaned_data['comment'] + "\n Posted by:" + form.cleaned_data['email'] + " " + form.cleaned_data['name'],
-            #     'access_token': "887d003dd0293e168f02595cb7d2faf2a0550061",
-            #     "scope":"repo,gist",
-            #     "token_type":"bearer"
-            # }
-
-            # headers = {'content-type': 'application/json'}
-
-            # print json.dumps(newIssue)
-            # print baseUrl
-            # r = requests.post(baseUrl, data=json.dumps(newIssue), headers=headers)
-            # print r
 
             return HttpResponseRedirect("/")
         else:
