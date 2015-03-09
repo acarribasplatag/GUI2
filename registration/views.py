@@ -31,19 +31,29 @@ def public_profile_edit(request, user_id):
 
     # A HTTP POST?
     if request.method == 'POST':
-        form = UserProfileEditForm(request.POST)
+        form = UserProfileEditForm(request.POST, request.FILES)
 
         # Have we been provided with a valid form?
         if form.is_valid():
             # Save the new poll to the database.
-            form.save(request)
-            
+            prof = UserProfile.objects.get(user=request.user)
+            if prof is not None:    
+                prof.aboutMe = request.POST['aboutMe']
+                prof.interests = request.POST['interests']
+                avatar = request.FILES['avatar']
+                prof.avatar = avatar
+                
+            else:
+                prof = UserProfile(aboutMe=request.POST['aboutMe'], 
+                                   interests=request.POST['interests'],
+                                   avatar = request.FILES['avatar'])
+            prof.save()
 
             # Now call the index() view.
             # The user will be shown the homepage
             
     # Render the response and send it back!
-            return public_profile(request, user_id)
+            return HttpResponseRedirect('/user/'+ user_id)
         else:
             # The supplied form contained errors - just print them to the terminal.
             print form.errors
@@ -77,6 +87,7 @@ def register_user(request):
 def upload_pic(request):
     if request.method == 'POST':
         form = UserProfilePicUploadForm(request.POST, request.FILES)
+        print request.FILES
         if form.is_valid():
             prof = UserProfile.objects.get(user=request.user)
             avatar = request.FILES['image']
