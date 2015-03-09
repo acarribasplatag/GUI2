@@ -1,5 +1,5 @@
 from django.contrib import admin
-from polls.models import Poll, Category, Choice, Comment, Vote, Like
+from polls.models import Poll, Category, Choice, Comment, Vote, Like, Feedback
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -61,3 +61,12 @@ class LikeAdmin(admin.ModelAdmin):
     ]
 
 admin.site.register(Like, LikeAdmin)
+
+class FeedbackAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Sent From', {'fields': ['email']}),
+        ('Topic',  {'fields': ['name']}),
+        ('Message',  {'fields': ['comment']}),
+    ]
+
+admin.site.register(Feedback, FeedbackAdmin)
