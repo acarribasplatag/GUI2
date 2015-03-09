@@ -56,3 +56,12 @@ class Like(models.Model):
     pub_date = models.DateTimeField('date published')
     def __unicode__(self):               # __str__ on Python 3
         return self.comment.comment_text
+
+class Feedback(models.Model):
+    email = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    comment = models.CharField(max_length=5000)
+    def __unicode__(self):               # __str__ on Python 3
+        return self.comment
+
+
