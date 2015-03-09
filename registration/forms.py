@@ -34,19 +34,11 @@ class UserProfilePicUploadForm(forms.Form):
     avatar = forms.FileField()
 
     
-class UserProfileEditForm(forms.ModelForm):
+class UserProfileEditForm(forms.Form):
+    avatar = forms.FileField(label="Select New Profile Picture")
     aboutMe = forms.CharField(widget=forms.Textarea, label="About Me")
     interests = forms.CharField(widget=forms.Textarea, label="Interests")
+    
     class Meta:
-         model = UserProfile
-         fields = ['aboutMe', 'interests']
-         
-    def save(self, commit=True):
-        
-        prof = UserProfile.objects.get(user=self.user)
-        prof.aboutMe = self.aboutMe
-        prof.interests = self.interests
-        
-        prof.save()
-        return prof
+         fields = ['avatar', 'aboutMe', 'interests']
     
