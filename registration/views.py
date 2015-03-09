@@ -20,10 +20,8 @@ def public_profile(request, user_id):
     print "TETESTESTESTSETS STESET"
     context = RequestContext(request)
     u = User.objects.get(pk=user_id)
-    try: #try to get user profile
-        prof = UserProfile.objects.get(user=u)
-    except: # it didn't exist so create one
-        print "Here"
+    prof = UserProfile.objects.get(user=u)
+    if prof is None:
         prof = UserProfile(user=u)
         prof.save()
 
@@ -51,7 +49,8 @@ def public_profile_edit(request, user_id):
                 prof.avatar = avatar
 
             else:
-                prof = UserProfile(aboutMe=request.POST['aboutMe'],
+                prof = UserProfile(user=request.user, 
+                                   aboutMe=request.POST['aboutMe'],
                                    interests=request.POST['interests'],
                                    avatar = request.FILES['avatar'])
             prof.save()
