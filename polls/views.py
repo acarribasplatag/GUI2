@@ -3,8 +3,8 @@ from django.template import RequestContext, loader
 from polls.forms import CreatePollForm, ContactUsForm
 from django.shortcuts import render_to_response
 from registration.views import myAccount
+from registration.models import UserProfile
 import datetime
-import requests
 
 from django.core import serializers
 
@@ -54,6 +54,8 @@ def polls(request):
 def poll(request, category_id, poll_id):
     context = RequestContext(request)
     p = Poll.objects.filter(pk=poll_id)
+    p = p[0]
+    print p
     listL = Choice.objects.filter(poll = p)
     voted = 0
     if request.user.is_authenticated():
@@ -72,11 +74,12 @@ def poll(request, category_id, poll_id):
                 likedByUser = 0 if len(li) == 0 else 1
             else:
                 likedByUser = 0
-            commentlists.append({'comment': c, 'likedByUser': likedByUser})
+            prof = UserProfile.objects.get(user=c.user)
+            commentlists.append({'comment': c, 'likedByUser': likedByUser, 'userProfile': prof})
         votedFor = 1 if voted and v[0].choice == l else 0
         choicelists.append({'choice': l, 'comments': commentlists, 'votedFor': votedFor})
     votedInt = 1 if voted else 0
-    context_dict = {'poll': p[0], 'choices': choicelists, 'voted': votedInt}
+    context_dict = {'poll': p, 'choices': choicelists, 'voted': votedInt}
 
     # Render the response and send it back!
     return render_to_response('polls/poll.html', context_dict, context)
@@ -92,10 +95,12 @@ def get_poll_chart(request, poll_id):
 def vote(request):
     c = Choice.objects.filter(pk=request.POST['cid'])
     c = c[0]
+    print c
     c.votes = c.votes + 1
     c.save()
     p = Poll.objects.filter(pk=request.POST['qid'])
     p = p[0]
+    print p
     v = Vote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
     v.save()
     return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
@@ -108,6 +113,8 @@ def change_vote(request):
     v = Vote.objects.filter(poll=p, user=request.user)
     v = v[0]
     c2 = v.choice
+    if c.id == c2.id:
+        return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
     c2.votes = c2.votes - 1
     c2.save()
     c.votes = c.votes + 1
@@ -181,10 +188,6 @@ def create_poll(request):
         if form.is_valid():
             # Save the new poll to the database.
             p = form.save(request)
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 
             # Now call the index() view.
             # The user will be shown the homepage

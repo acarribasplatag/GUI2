@@ -17,9 +17,16 @@ def myAccount(request):
     return render_to_response('registration/dashboard.html', context_dict, context)
 
 def public_profile(request, user_id):
+    print "TETESTESTESTSETS STESET"
     context = RequestContext(request)
     u = User.objects.get(pk=user_id)
-    prof = UserProfile.objects.get(user=u)
+    try: #try to get user profile
+        prof = UserProfile.objects.get(user=u)
+    except: # it didn't exist so create one
+        print "Here"
+        prof = UserProfile(user=u)
+        prof.save()
+
     context_dict = {'profile': prof}
 
     # Render the response and send it back!
@@ -31,19 +38,29 @@ def public_profile_edit(request, user_id):
 
     # A HTTP POST?
     if request.method == 'POST':
-        form = UserProfileEditForm(request.POST)
+        form = UserProfileEditForm(request.POST, request.FILES)
 
         # Have we been provided with a valid form?
         if form.is_valid():
             # Save the new poll to the database.
-            form.save(request)
-            
+            prof = UserProfile.objects.get(user=request.user)
+            if prof is not None:
+                prof.aboutMe = request.POST['aboutMe']
+                prof.interests = request.POST['interests']
+                avatar = request.FILES['avatar']
+                prof.avatar = avatar
+
+            else:
+                prof = UserProfile(aboutMe=request.POST['aboutMe'],
+                                   interests=request.POST['interests'],
+                                   avatar = request.FILES['avatar'])
+            prof.save()
 
             # Now call the index() view.
             # The user will be shown the homepage
-            
+
     # Render the response and send it back!
-            return public_profile(request, user_id)
+            return HttpResponseRedirect('/user/'+ user_id)
         else:
             # The supplied form contained errors - just print them to the terminal.
             print form.errors
@@ -77,6 +94,7 @@ def register_user(request):
 def upload_pic(request):
     if request.method == 'POST':
         form = UserProfilePicUploadForm(request.POST, request.FILES)
+        print request.FILES
         if form.is_valid():
             prof = UserProfile.objects.get(user=request.user)
             avatar = request.FILES['image']

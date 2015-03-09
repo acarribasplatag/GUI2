@@ -9,23 +9,16 @@
 <div class="jumbotron">
 	<h1>Edit Profile:</h1>
 	<hr>
-	<div id="editPic">
-		<h2>Upload New Profile Picture</h2>
-		<form action="/user/{{ user.id }}/upload_pic/" method="post"
-		enctype="multipart/form-data">
-			{% csrf_token %}
-			<p>
-				<input id="id_image" type="file" class="" name="image">
-			</p>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
-	</div>
-	<hr>
 	<div id="editInfo">
-		<h2>Edit Profile</h2>
-		<form action="/user/edit/{{ user.id }}/" method="post">
+		<form action="/user/edit/{{ user.id }}/" method="post" enctype="multipart/form-data">
 			{% csrf_token %}
 			{% for field in form %}
+			{% if field.name == "avatar" %}
+			<div id="img-upload">
+				<p>{{ field.label }}:</p>
+				<input name="{{ field.name }}" id="id_{{ field.name }}" type="file">
+			</div>
+			{% else %}
 			<div id="textarea_{{ field.name }}">
 				<p>{{ field.label }}:</p>
 				<textarea name="{{ field.name }}" id="editor_{{ field.name }}" rows="10" cols="80"></textarea>
@@ -36,6 +29,7 @@
 					CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV;
 				</script>
 			</div>
+			{% endif %}
 			<br>
 			{% endfor %}
 			<button type="submit" class="btn btn-primary">Submit</button>
