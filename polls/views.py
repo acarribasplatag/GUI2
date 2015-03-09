@@ -4,6 +4,7 @@ from polls.forms import CreatePollForm, ContactUsForm
 from django.shortcuts import render_to_response
 from registration.views import myAccount
 import datetime
+import requests
 
 from django.core import serializers
 
@@ -180,7 +181,10 @@ def create_poll(request):
         if form.is_valid():
             # Save the new poll to the database.
             p = form.save(request)
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 
             # Now call the index() view.
             # The user will be shown the homepage
@@ -216,11 +220,15 @@ def contact_us(request):
     if request.method == 'POST':
         form = ContactUsForm(request.POST)
         if form.is_valid():
-            form.save(form.cleaned_data)
+            form.save()
+
             return HttpResponseRedirect("/")
+        else:
+            print "invalid contact_us form"
+            print form.errors
 
     args = {}
 
     args['form'] = ContactUsForm()
 
-    return render_to_response("contact_form/contact_form.html", args)
+    return render_to_response("contact_form/contact_form.html", args, RequestContext(request))
