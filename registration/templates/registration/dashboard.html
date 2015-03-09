@@ -27,7 +27,7 @@
 			<div>
 			<div class="tab-content" id="accountTabs">
 				<div id="a" class="tab-pane fade">
-					<div class="table-responsive">
+					<div class="table">
 						<table class="table-striped" id="topics">
 							<tr>
 								<th>Poll</th>
@@ -47,9 +47,9 @@
 										<ul class="dropdown-menu" role="menu"
 											aria-labelledby="dropdownMenu1">
 											<li role="presentation"><a role="menuitem" tabindex="-1"
-												href="/myAccount/freeze_voting/{{p.id}}">Freeze Voting</a></li>
+												href="/freeze_voting/{{p.id}}">Freeze Voting</a></li>
 											<li role="presentation"><a role="menuitem" tabindex="-1"
-												href='/myAccount/delete_poll/{{p.id}}'>Delete Poll</a></li>
+												href='/delete_poll/{{p.id}}'>Delete Poll</a></li>
 											<li role="presentation"><a role="menuitem" tabindex="-1"
 												href="#">Generate PDF Summary (IN BETA)</a></li>
 										</ul>
@@ -66,7 +66,6 @@
 							<tr>
 								<th>Name:</th>
 								<td>{{ user.get_full_name }}</td>
-	
 							</tr>
 							<tr>
 								<th>Username:</th>
@@ -76,7 +75,6 @@
 							<tr>
 								<th>Email Address:</th>
 								<td>{{ user.email }}</td>
-	
 							</tr>
 							<tr>
 								<th>Password:</th>
@@ -89,7 +87,6 @@
 							<tr>
 								<th>Date Joined:</th>
 								<td>{{ user.date_joined }}</td>
-	
 							</tr>
 						</table>
 					</div>

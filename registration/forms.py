@@ -20,7 +20,8 @@ class PollPortalUserCreationForm(UserCreationForm):
         
         if commit:
             user.save()
-            
+        
+        #create user profile
         prof = UserProfile(user=user)
         prof.save()
         

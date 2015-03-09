@@ -17,9 +17,16 @@ def myAccount(request):
     return render_to_response('registration/dashboard.html', context_dict, context)
 
 def public_profile(request, user_id):
+    print "TETESTESTESTSETS STESET"
     context = RequestContext(request)
     u = User.objects.get(pk=user_id)
-    prof = UserProfile.objects.get(user=u)
+    try: #try to get user profile
+        prof = UserProfile.objects.get(user=u)
+    except: # it didn't exist so create one
+        print "Here"
+        prof = UserProfile(user=u)
+        prof.save()
+
     context_dict = {'profile': prof}
 
     # Render the response and send it back!
@@ -37,21 +44,21 @@ def public_profile_edit(request, user_id):
         if form.is_valid():
             # Save the new poll to the database.
             prof = UserProfile.objects.get(user=request.user)
-            if prof is not None:    
+            if prof is not None:
                 prof.aboutMe = request.POST['aboutMe']
                 prof.interests = request.POST['interests']
                 avatar = request.FILES['avatar']
                 prof.avatar = avatar
-                
+
             else:
-                prof = UserProfile(aboutMe=request.POST['aboutMe'], 
+                prof = UserProfile(aboutMe=request.POST['aboutMe'],
                                    interests=request.POST['interests'],
                                    avatar = request.FILES['avatar'])
             prof.save()
 
             # Now call the index() view.
             # The user will be shown the homepage
-            
+
     # Render the response and send it back!
             return HttpResponseRedirect('/user/'+ user_id)
         else:

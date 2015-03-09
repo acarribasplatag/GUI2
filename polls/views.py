@@ -5,7 +5,6 @@ from django.shortcuts import render_to_response
 from registration.views import myAccount
 from registration.models import UserProfile
 import datetime
-import requests
 
 from django.core import serializers
 
@@ -42,7 +41,6 @@ def polls(request):
             plists.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments, 'numVotes': numvotes})
         catlists.append({'category': cat, 'polls': plists})
     context_dict = {'categories': catlists}
-    
     return render_to_response('polls/polls.html', context_dict, context)
 
 # def category(request, category_id):
@@ -129,7 +127,7 @@ def change_vote(request):
         for l in llist:
             l.delete()
         co.delete()
-    
+
     return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
 
 def writecomment(request):
