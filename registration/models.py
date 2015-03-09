@@ -6,7 +6,7 @@ from django.utils import timezone
 class UserProfile(models.Model):
     # This field is required.
     user = models.OneToOneField(User)
-    avatar = models.ImageField()
+    avatar = models.FileField(upload_to='profile/')
     aboutMe = models.TextField()
     interests = models.TextField()
     def __unicode__(self):              # __str__ on Python 3

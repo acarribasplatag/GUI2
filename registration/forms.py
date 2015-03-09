@@ -31,23 +31,8 @@ class PollPortalUserCreationForm(UserCreationForm):
         return avatar
 
 class UserProfilePicUploadForm(forms.Form):
-    avatar = forms.ImageField()
-    
-    class Meta:
-        fields = ('avatar')
-        
-    def save(self, commit=True):
-        
-        prof = UserProfile.objects.get(user=self.user)
-        prof.avatar = self.clean_avatar()
-        prof.save()
-        
-        return prof
+    avatar = forms.FileField()
 
-    def clean_avatar(self):
-        avatar = self.cleaned_data['avatar']
-
-        return avatar
     
 class UserProfileEditForm(forms.ModelForm):
     aboutMe = forms.CharField(widget=forms.Textarea, label="About Me")
