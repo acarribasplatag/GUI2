@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-        
+
     #my apps
     'polls',
     'registration',
@@ -106,5 +106,3 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-LOGIN_REDIRECT_URL = '/myAccount/'

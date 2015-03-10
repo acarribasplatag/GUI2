@@ -42,3 +42,4 @@ bower.json
 
 #database
 *sqlite*
+*migrations*

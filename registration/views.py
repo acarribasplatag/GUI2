@@ -17,13 +17,12 @@ def myAccount(request):
     return render_to_response('registration/dashboard.html', context_dict, context)
 
 def public_profile(request, user_id):
-    print "TETESTESTESTSETS STESET"
     context = RequestContext(request)
     u = User.objects.get(pk=user_id)
     try: #try to get user profile
         prof = UserProfile.objects.get(user=u)
     except: # it didn't exist so create one
-        print "Here"
+        print "profile doesnt exist for " + u + ", creating one now."
         prof = UserProfile(user=u)
         prof.save()
 
@@ -34,6 +33,7 @@ def public_profile(request, user_id):
 
 def public_profile_edit(request, user_id):
     # Get the context from the request.
+    u = User.objects.get(pk=user_id)
     context = RequestContext(request)
 
     # A HTTP POST?
@@ -44,16 +44,18 @@ def public_profile_edit(request, user_id):
         if form.is_valid():
             # Save the new poll to the database.
             prof = UserProfile.objects.get(user=request.user)
-            if prof is not None:
-                prof.aboutMe = request.POST['aboutMe']
-                prof.interests = request.POST['interests']
-                avatar = request.FILES['avatar']
-                prof.avatar = avatar
+            try: #try to get user profile
+                prof = UserProfile.objects.get(user=u)
+                
+            except: # it didn't exist so create one
+                print "Here"
+                prof = UserProfile(user=u)
+            
+            prof.aboutMe = request.POST['aboutMe']
+            prof.interests = request.POST['interests']
+            avatar = request.FILES['avatar']
+            prof.avatar = avatar
 
-            else:
-                prof = UserProfile(aboutMe=request.POST['aboutMe'],
-                                   interests=request.POST['interests'],
-                                   avatar = request.FILES['avatar'])
             prof.save()
 
             # Now call the index() view.

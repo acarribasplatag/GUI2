@@ -9,8 +9,8 @@
 <div class="jumbotron">
 
 	<div class="user-div">
-	{% if user.is_authenticated %}
-	<form id="editFrm" method="get" action="/user/edit/{{user.id}}/">
+	{% if user.is_authenticated and profile.user == user %}
+	<form id="editFrm" method="get" action="/user/edit/{{ profile.user.id }}/">
 		<button type="submit" class="btn btn-default">Edit Profile</button>
 	</form>
 	{% endif %}
@@ -19,12 +19,12 @@
 			<a href="{{ profile.avatar.url }}" class=".thumbnail">
 				<img
 				src="{{ profile.avatar.url }}"
-				alt="{{ user.username }}'s profile picture"
+				alt="{{ profile.user.username }}'s profile picture"
 				class="img profile-pic">
 			</a>
 			{% endif %}
 		</div>
-		<h1 class="username">{{ user.username }}</h1>
+		<h1 class="username">{{ profile.user.username }}</h1>
 		
 	</div>
 	
