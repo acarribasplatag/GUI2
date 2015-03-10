@@ -17,13 +17,12 @@ def myAccount(request):
     return render_to_response('registration/dashboard.html', context_dict, context)
 
 def public_profile(request, user_id):
-    print "TETESTESTESTSETS STESET"
     context = RequestContext(request)
     u = User.objects.get(pk=user_id)
     try: #try to get user profile
         prof = UserProfile.objects.get(user=u)
     except: # it didn't exist so create one
-        print "Here"
+        print "profile doesnt exist for " + u + ", creating one now."
         prof = UserProfile(user=u)
         prof.save()
 
