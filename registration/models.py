@@ -7,7 +7,7 @@ class UserProfile(models.Model):
     # This field is required. User Profile belongs to a user
     user = models.OneToOneField(User)
     avatar = models.FileField(upload_to='profile/', null=True)
-    aboutMe = models.TextField(null=True, blank=true)
-    interests = models.TextField(null=True, blank=true)
+    aboutMe = models.TextField(null=True, blank=True)
+    interests = models.TextField(null=True, blank=True)
     def __unicode__(self):              # __str__ on Python 3
         return self.user.username
