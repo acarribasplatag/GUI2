@@ -49,6 +49,7 @@ def polls(request):
     # Make a list of all the polls by date they were created.
     polls_list = Poll.objects.order_by('-pub_date')
     for p in polls_list:
+        category = Category.objects.get(poll=p)
         numchoices = 0
         numcomments = 0
         numvotes = 0
@@ -59,11 +60,13 @@ def polls(request):
             colist = Comment.objects.filter(choice = c)
             for co in colist:
                 numcomments = numcomments+1
-        recent_list.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments, 'numVotes': numvotes})
+        recent_list.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments,
+         'numVotes': numvotes, 'categoryID': category.id})
 
     # Make a list of the most popular polls.
     polls_list = sorted(Poll.objects.all(), key = getTotalVotes, reverse=True)
     for p in polls_list:
+        category = Category.objects.get(poll=p)
         numchoices = 0
         numcomments = 0
         numvotes = 0
@@ -74,7 +77,8 @@ def polls(request):
             colist = Comment.objects.filter(choice = c)
             for co in colist:
                 numcomments = numcomments+1
-        popular_list.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments, 'numVotes': numvotes})
+        popular_list.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments,
+         'numVotes': numvotes, 'categoryID': category.id })
 
     context_dict = {'categories': catlists, 'recent':recent_list, 'popular':popular_list}
     return render_to_response('polls/polls.html', context_dict, context)
@@ -84,9 +88,6 @@ def getTotalVotes(p):
     numvotes = 0
     for c in choice_list:
         numvotes += c.votes
-        print "votes = "
-        print numvotes
-        print c
     return numvotes
 
 
