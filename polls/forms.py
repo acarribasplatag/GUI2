@@ -12,7 +12,7 @@ class CreatePollForm(forms.Form):
         list2.append((i, bar.category_text))
         i = i+1
     category = forms.ChoiceField(choices=list2, required=True, error_messages={'required': 'This field is required.'})
-    choices = forms.CharField(label= 'Choices: (comma-separated)', widget=forms.Textarea, error_messages={'required': 'This field is required.'})
+    choices = forms.CharField(label= 'Choices (comma-separated)', widget=forms.Textarea, error_messages={'required': 'This field is required.'})
 
     def __init__(self, *args, **kwargs):
         super(CreatePollForm, self).__init__(*args, **kwargs)
