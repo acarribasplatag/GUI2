@@ -25,14 +25,19 @@ def polls(request):
     category_list = Category.objects.all()
     catlists = []
     plists = []
+    recent_list = []
+    popular_list = []
+
+
+    # Make  a list that contains polls, along with their choices, votes, and comments
     for cat in category_list:
         polls_list = Poll.objects.filter(category=cat)
         for p in polls_list:
             numchoices = 0
             numcomments = 0
             numvotes = 0
-            clist = Choice.objects.filter(poll=p)
-            for c in clist:
+            choice_list = Choice.objects.filter(poll=p)
+            for c in choice_list:
                 numchoices = numchoices + 1
                 numvotes = numvotes+c.votes
                 colist = Comment.objects.filter(choice = c)
@@ -40,16 +45,50 @@ def polls(request):
                     numcomments = numcomments+1
             plists.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments, 'numVotes': numvotes})
         catlists.append({'category': cat, 'polls': plists})
-    context_dict = {'categories': catlists}
+
+    # Make a list of all the polls by date they were created.
+    polls_list = Poll.objects.order_by('-pub_date')
+    for p in polls_list:
+        numchoices = 0
+        numcomments = 0
+        numvotes = 0
+        choice_list = Choice.objects.filter(poll=p)
+        for c in choice_list:
+            numchoices = numchoices + 1
+            numvotes = numvotes+c.votes
+            colist = Comment.objects.filter(choice = c)
+            for co in colist:
+                numcomments = numcomments+1
+        recent_list.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments, 'numVotes': numvotes})
+
+    # Make a list of the most popular polls.
+    polls_list = sorted(Poll.objects.all(), key = getTotalVotes, reverse=True)
+    for p in polls_list:
+        numchoices = 0
+        numcomments = 0
+        numvotes = 0
+        choice_list = Choice.objects.filter(poll=p)
+        for c in choice_list:
+            numchoices = numchoices + 1
+            numvotes = numvotes+c.votes
+            colist = Comment.objects.filter(choice = c)
+            for co in colist:
+                numcomments = numcomments+1
+        popular_list.append({'poll': p, 'numChoices': numchoices, 'numComments': numcomments, 'numVotes': numvotes})
+
+    context_dict = {'categories': catlists, 'recent':recent_list, 'popular':popular_list}
     return render_to_response('polls/polls.html', context_dict, context)
 
-# def category(request, category_id):
-#     latest_category_list = Category.objects.order_by('-pub_date')[:5]
-#     template = loader.get_template('polls/poll.html')
-#     context = RequestContext(request, {
-#                              'latest_category_list': latest_category_list,
-#                              })
-#     return HttpResponse(template.render(context))
+def getTotalVotes(p):
+    choice_list = Choice.objects.filter(poll=p)
+    numvotes = 0
+    for c in choice_list:
+        numvotes += c.votes
+        print "votes = "
+        print numvotes
+        print c
+    return numvotes
+
 
 def poll(request, category_id, poll_id):
     context = RequestContext(request)
