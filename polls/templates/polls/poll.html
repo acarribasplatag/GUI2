@@ -157,7 +157,7 @@
 					{% endif %}
 						<div class="user-div">
 							<div class="prof-thumbnail img-thumbnail">
-								{% if co.userProfile.avatar is not None%}
+								{% if co.userProfile.avatar%}
 								<a href="{{ co.userProfile.avatar.url }}" class=".thumbnail">
 									<img src="{{ co.userProfile.avatar.url }}"
 									alt="{{ co.comment.user.username }}'s profile picture"
