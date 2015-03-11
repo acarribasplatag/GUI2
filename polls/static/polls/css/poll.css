@@ -131,6 +131,12 @@ label[for=mycomment] {
     text-overflow: ellipsis;
 }
 
+.panel-body {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .panel-heading a {
     color: white;
     text-align: center;
