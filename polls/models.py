@@ -49,7 +49,7 @@ class Vote(models.Model):
     pub_date = models.DateTimeField('date published')
     def __unicode__(self):               # __str__ on Python 3
         return self.choice.choice_text
-    
+
 class Like(models.Model):
     user = models.ForeignKey(User)
     comment = models.ForeignKey(Comment)
