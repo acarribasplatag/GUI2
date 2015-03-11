@@ -65,6 +65,7 @@ $(document).ready(function(){
         {% for c in categories %}
         <div class="tab-pane" id="{{ c.category.category_text }}">
         	{% for poll in c.polls %}
+          {% if c.category == poll.poll.category %}
           <div  class="poll-select panel panel-default col-sm-4 col-xs-6">
             <div class="panel-body">
             	<a href="/{{ c.category.id }}/{{ poll.poll.id }}">{{ poll.poll.poll_text }}</a><br>
@@ -77,6 +78,7 @@ $(document).ready(function(){
             	</div>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
         {% endfor %}
