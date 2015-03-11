@@ -66,12 +66,16 @@ $(document).ready(function(){
         <div class="tab-pane" id="{{ c.category.category_text }}">
         	{% for poll in c.polls %}
           {% if c.category == poll.poll.category %}
-          <div  class="poll-select panel panel-default col-sm-4 col-xs-6">
-            <div class="panel-body">
-            	<a href="/{{ c.category.id }}/{{ poll.poll.id }}">{{ poll.poll.poll_text }}</a><br>
-            	by <a href="/user/{{ poll.poll.user.id }}">{{ poll.poll.user }}</a><br>
-            	on {{ poll.poll.pub_date }}
-            	<div id="bottom">
+          <div class="col-sm-4 col-xs-6">
+            <div  class="panel panel-primary">
+              <div class="panel-heading">
+              	<a href="/{{ c.category.id }}/{{ poll.poll.id }}" >{{ poll.poll.poll_text }}</a>
+              </div>
+            	<div class="panel-body">
+                Created by: <a href="/user/{{ poll.poll.user.id }}">{{ poll.poll.user }}</a><br>
+                on {{ poll.poll.pub_date }}
+              </div>
+              <div class="poll-panel-footer">
             		<span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>
             		<span class="glyphicon glyphicon-check label label-default" data-toggle="tooltip" data-placement="top" title="Votes"> {{ poll.numVotes }}</span>
             		<span class="glyphicon glyphicon-edit label label-default" data-toggle="tooltip" data-placement="top" title="Comments"> {{ poll.numComments }}</span>
@@ -86,12 +90,16 @@ $(document).ready(function(){
         <!-- This is the tab with the most recent polls. -->
         <div class="tab-pane" id="Recent">
           {% for poll in recent %}
-          <div  class="poll-select panel panel-default col-sm-4 col-xs-6">
-            <div class="panel-body">
-              <a href="/{{ poll.categoryID }}/{{ poll.poll.id }}">{{ poll.poll.poll_text }}</a><br>
-              by <a href="/user/{{ poll.poll.user.id }}">{{ poll.poll.user }}</a><br>
-              on {{ poll.poll.pub_date }}
-              <div id="bottom">
+          <div class="col-sm-4 col-xs-6">
+            <div  class="panel panel-primary">
+              <div class="panel-heading">
+                <a href="/{{ poll.categoryID }}/{{ poll.poll.id }}">{{ poll.poll.poll_text }}</a><br>
+              </div>
+              <div class="panel-body">
+                Created by: <a href="/user/{{ poll.poll.user.id }}">{{ poll.poll.user }}</a><br>
+                on {{ poll.poll.pub_date }}
+              </div>
+              <div class="poll-panel-footer">
                 <span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>
                 <span class="glyphicon glyphicon-check label label-default" data-toggle="tooltip" data-placement="top" title="Votes"> {{ poll.numVotes }}</span>
                 <span class="glyphicon glyphicon-edit label label-default" data-toggle="tooltip" data-placement="top" title="Comments"> {{ poll.numComments }}</span>
@@ -104,15 +112,19 @@ $(document).ready(function(){
         <!-- This is the tab with the most popular polls. -->
         <div class="tab-pane" id="Popular">
           {% for poll in popular %}
-          <div  class="poll-select panel panel-default col-sm-4 col-xs-6">
-            <div class="panel-body">
-              <a href="/{{ poll.categoryID }}/{{ poll.poll.id }}">{{ poll.poll.poll_text }}</a><br>
-              by <a href="/user/{{ poll.poll.user.id }}">{{ poll.poll.user }}</a><br>
-              on {{ poll.poll.pub_date }}
-              <div id="bottom">
-                <span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>
-                <span class="glyphicon glyphicon-check label label-default" data-toggle="tooltip" data-placement="top" title="Votes"> {{ poll.numVotes }}</span>
-                <span class="glyphicon glyphicon-edit label label-default" data-toggle="tooltip" data-placement="top" title="Comments"> {{ poll.numComments }}</span>
+          <div class="col-sm-4 col-xs-6">
+            <div  class="panel panel-primary">
+              <div class="panel-heading">
+                <a href="/{{ poll.categoryID }}/{{ poll.poll.id }}">{{ poll.poll.poll_text }}</a><br>
+              </div>
+              <div class="panel-body">
+                Created by: <a href="/user/{{ poll.poll.user.id }}">{{ poll.poll.user }}</a><br>
+                on {{ poll.poll.pub_date }}
+              </div>
+              <div class="poll-panel-footer">
+                  <span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>
+                  <span class="glyphicon glyphicon-check label label-default" data-toggle="tooltip" data-placement="top" title="Votes"> {{ poll.numVotes }}</span>
+                  <span class="glyphicon glyphicon-edit label label-default" data-toggle="tooltip" data-placement="top" title="Comments"> {{ poll.numComments }}</span>
               </div>
             </div>
           </div>

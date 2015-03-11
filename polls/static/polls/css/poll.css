@@ -124,12 +124,28 @@ label[for=mycomment] {
   background-color: black;
 }
 
-.col-sm-6 {
-    height: 300px;
-    margin-bottom: 20px;
+.panel-heading {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.col-xs-4 {
+.panel-heading a {
+    color: white;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.poll-panel-footer {
+    bottom:0;
+    padding: 5px;
+}
+
+/*.col-xs-4 {
     height: 35px;
     margin-bottom: 20px;
 }
@@ -137,7 +153,7 @@ label[for=mycomment] {
 .col-sm-6 img {
     height: 200px;
     margin: 3px;
-}
+}*/
 
 #myCarousel .item{
   margin: 3px;
