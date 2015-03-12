@@ -26,6 +26,10 @@
     margin-top: 10px;
 }
 
+.dropdown-menu li a{
+    height: 30px;
+}
+
 .prof-thumbnail {
     width: 100px;
     height: 100px;
