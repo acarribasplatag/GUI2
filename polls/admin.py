@@ -6,6 +6,7 @@ class CategoryAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['category_text']}),
         ('Date information', {'fields': ['pub_date']}),
+        ('Image', {'fields': ['image']}),
     ]
 
 admin.site.register(Category, CategoryAdmin)

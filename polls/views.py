@@ -13,10 +13,13 @@ import json
 
 
 def home(request):
-    latest_poll_list = Poll.objects.order_by('-pub_date')[:5]
     template = loader.get_template('polls/home_page.html')
+
+    context = RequestContext(request)
+    category_list = Category.objects.all()
+
     context = RequestContext(request, {
-        'latest_poll_list': latest_poll_list,
+        'categories': category_list,
     })
     return HttpResponse(template.render(context))
 
