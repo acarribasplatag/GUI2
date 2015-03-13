@@ -49,7 +49,7 @@
     <!-- Own Carousel -->
     <div id="myCarousel" class="owl-carousel">
     	{% for c in categories %}
-    	{% if c.image.url %}
+    	{% if c.image %}
 		<div class="item">
 			<a href="/polls/#{{c.category_text}}" class="thumbnail"> <img class="img-rounded"
 				src="{{c.image.url}}"
