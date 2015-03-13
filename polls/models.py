@@ -7,6 +7,7 @@ from django.utils import timezone
 class Category(models.Model):
     category_text = models.CharField(max_length=50)
     pub_date = models.DateTimeField('date published')
+    image = models.FileField(upload_to='category/', null=True)
     def __unicode__(self):              # __str__ on Python 3
         return self.category_text
     def was_published_recently(self):
