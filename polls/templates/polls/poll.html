@@ -112,7 +112,9 @@
 					data-target="#myModal">Vote Now!</button>
 			</div>
 		{% else %}
-
+			<form id="form" method="LINK" action="/login/">
+      			<button id="btnVote" type="submit" class="btn btn-default">Vote Now!</button>
+    		</form>
 		{% endif %}
 			<div id="myChart" style="width: 100%;"></div>
 
