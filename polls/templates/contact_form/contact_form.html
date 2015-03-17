@@ -28,14 +28,20 @@
 							id="email" placeholder="Email" />
 					</p>
 
-					<p class="text">
-						<input name="comment" type="text"
-							id="comment" placeholder="Comment"></input>
-					</p>
-
+					<input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
+					<div id="textarea">
+						<textarea name="comment" id="comment" rows="10" cols="80">
+       	             </textarea>
+					<script>
+                        // Replace the <textarea id="editor1"> with a CKEditor
+                        // instance, using default configuration.
+                        CKEDITOR.replace( 'comment' );
+                    	CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV;
+                    </script>
+				   </div>
 
 					<div class="submit">
-						<input type="submit" value="Submit" id="button-blue" />
+						<input type="submit" value="Submit" class="btn btn-primary" />
 						<div class="ease"></div>
 					</div>
 				</form>
