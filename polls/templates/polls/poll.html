@@ -147,6 +147,12 @@
 			<div role="tabpanel" class="tab-pane fade"
 				id="{{ c.choice.id }}">
 			{% endif %}
+				{% if not c.comments %}
+
+				<div class="well comment">
+					<p> No comments. </p>
+				</div>
+				{% else %}
 				{% for co in c.comments %}
 				<div class="well comment">
 				{% if user == co.comment.user %}
@@ -202,6 +208,7 @@
 				</div>
 				{% endfor %}
 
+				{% endif %}
 
 				{% if voted == 1 and c.votedFor == 1  %}
 				<form id="commentform" action="/new_comment/" method="POST">
@@ -224,7 +231,6 @@
 				{% endif %}
 
 			</div>
-
 			{% endfor %}
 		</div>
 	</div>
