@@ -194,6 +194,8 @@
 					<p>You liked this comment.</p>
 					{% elif co.comment.likes > 1 and co.likedByUser == 1 %}
 					<p>You and {{ co.comment.likes|add:'-1' }} other people liked this comment.</p>
+					{% elif co.comment.likes == 1 %}
+					<p>1 person liked this comment.</p>
 					{% else %}
 					<p>{{ co.comment.likes }} people liked this comment.</p>
 					{% endif %}
