@@ -8,6 +8,16 @@ from forms import UserProfileEditForm
 from django.contrib.auth import login, authenticate
 from registration.forms import UserProfilePicUploadForm, PollPortalUserCreationForm
 from registration.models import UserProfile, User
+from reportlab.pdfgen import canvas
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph, Table, TableStyle
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import mm
+from reportlab.graphics import renderPDF
+from reportlab.graphics.shapes import Drawing
+from reportlab.graphics.charts.piecharts import Pie
+from reportlab.platypus.flowables import Spacer
 def myAccount(request):
     context = RequestContext(request)
     polls_list = Poll.objects.filter(user=request.user)
@@ -105,3 +115,67 @@ def upload_pic(request):
             prof.save()
             return HttpResponse('image upload success')
     return HttpResponseForbidden('allowed only via POST')
+
+def view_pdf_report(request, poll_id):
+    poll = Poll.objects.get(pk=poll_id)
+    response = HttpResponse(content_type='application/pdf')
+    filename = 'report_' + poll_id + ".pdf"
+    response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
+    styles = getSampleStyleSheet()
+    styleN = styles['Normal']
+    styleH = styles['Heading1']
+    styleH2 = styles['Heading2']
+    width, height = letter
+    choices = Choice.objects.filter(poll=poll)
+    # Create the PDF object, using the response object as its "file."
+    c = canvas.Canvas(response)
+    
+    p = Paragraph('Poll Summary Report:', styleH)
+    
+    p.wrapOn(c, width, height)
+    p.drawOn(c, 100, 750, mm)
+    
+    p = Paragraph(poll.poll_text, styleH2)
+    
+    p.wrapOn(c, width, height)
+    p.drawOn(c, 100, 700, mm)
+    
+    
+    data = []
+    labels = []
+    v_t = 0
+    for choice in choices:
+        v_t += choice.votes
+        data.append(choice.votes)
+        labels.append(choice.choice_text)
+
+    pie_chart = Drawing(200, 200)
+    pc = Pie()
+    pc.x = 0
+    pc.y = 0
+    pc.width = 200
+    pc.height = 200
+    pc.data = data
+    pc.labels = labels
+
+    pie_chart.add(pc)
+    renderPDF.draw(pie_chart, c, 200, 475)
+    
+    dataT = [['Choice:', '# of votes:']]
+    
+    for choice in choices:
+        dataT.append([choice.choice_text, choice.votes])
+        
+    t = Table(dataT, colWidths=200)
+    t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),
+                       ('ALIGN',(0,0),(-1,-1),'CENTER'),
+                       ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+                       ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+                       ('BACKGROUND', (0, 0), (1, 0), colors.lightblue),
+                       ]))
+    t.wrapOn(c, width, height)
+    t.drawOn(c, 100, 375, mm)
+    # Close the PDF object cleanly, and we're done.
+    c.showPage()
+    c.save()
+    return response 
