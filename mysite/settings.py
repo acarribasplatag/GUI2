@@ -20,12 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '74&479nvpwd&#&+y&)*f*faf+tfe_@+pww%d#qgf11wcl+65@h'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+TEMPLATE_DEBUG = DEBUG
 
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'pollportal.herokuapp.com']
 
 
 # Application definition
