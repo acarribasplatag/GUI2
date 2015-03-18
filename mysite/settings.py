@@ -13,12 +13,16 @@ import os
 from django.conf.global_settings import LOGIN_REDIRECT_URL
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '74&479nvpwd&#&+y&)*f*faf+tfe_@+pww%d#qgf11wcl+65@h'
+
+DEBUG=False
+# DYNO will not be in os eviornment on local but will be on heroku
+if not 'DYNO' in os.environ:
+	DEBUG=True
 
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
 TEMPLATE_DEBUG = DEBUG
@@ -83,7 +87,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATIC_URL='/static/'
-STATIC_ROOT= 'http://www.cs.uml.edu/~vbalabha/static/'
+STATIC_ROOT= os.path.join(BASE_DIR, 'static')
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 STATICFILES_DIRS = (
@@ -93,14 +97,18 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_USE_TLS = True  
-EMAIL_HOST = 'smtp.gmail.com'  
-EMAIL_PORT = 587  
-EMAIL_HOST_USER = 'virinchi.balabhadrapatruni@gmail.com'  # this is my email address, use yours
-EMAIL_HOST_PASSWORD = 'sa+mast3r9000'   # set environ yourself
+# Bobby's Amazon webservice credentials for media
+AWS_ACCESS_KEY_ID = 'AKIAJP3MBZRMYA4HD2TA'
+AWS_SECRET_ACCESS_KEY = 'mKJEBSANeeRfXKiINW0Tk1cp6o+32clQtYk1iUIq'
+AWS_STORAGE_BUCKET_NAME = 'bobbysdebate'
+
+DEFAULT_FILE_STORAGE = 'mysite.s3utils.MediaRootS3BotoStorage'
+STATICFILES_STORAGE = 'mysite.s3utils.StaticRootS3BotoStorage'
+
 
 ADMINS = (
-    ('Poll Portal Admin', 'virinchi.balabhadrapatruni@gmail.com'),   # email will be sent to your_email
+    ('Poll Portal Admin', 'virinchi.balabhadrapatruni@gmail.com'),
+    ('Poll Portal Admin', 'bobbydonald25@gmail.com'),   # email will be sent to your_email
 )
 
 MANAGERS = ADMINS
