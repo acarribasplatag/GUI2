@@ -42,4 +42,6 @@ bower.json
 
 #database
 *sqlite*
-*migrations*
+
+#media (profile pics/category images)
+*media*

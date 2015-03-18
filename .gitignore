@@ -42,3 +42,6 @@ bower.json
 
 #database
 *sqlite*
+
+#media (profile pics/category images)
+*/media/*
