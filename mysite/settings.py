@@ -85,37 +85,27 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL='/static/'
-STATIC_ROOT= 'http://www.cs.uml.edu/~vbalabha/static/'
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+STATIC_URL='/static/'
 
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'static'),
 )
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-
-# STATIC_URL='/static/'
-# STATIC_ROOT= os.path.join(BASE_DIR, 'static')
-# SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-
-# STATICFILES_DIRS = (
-#   os.path.join(BASE_DIR, 'static'),
-# )
-
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Bobby's Amazon webservice credentials for media
-# AWS_ACCESS_KEY_ID = 'AKIAJP3MBZRMYA4HD2TA'
-# AWS_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME = 'bobbysdebate'
-
-# DEFAULT_FILE_STORAGE = 'mysite.s3utils.MediaRootS3BotoStorage'
-# STATICFILES_STORAGE = 'mysite.s3utils.StaticRootS3BotoStorage'
+# If dev save media locally else save to amazon s3
+if DEBUG:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    # Bobby's Amazon webservice credentials for media
+    AWS_ACCESS_KEY_ID = 'AKIAJP3MBZRMYA4HD2TA'
+    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_STORAGE_BUCKET_NAME = 'bobbysdebate'
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+    # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    DEFAULT_FILE_STORAGE = 'mysite.s3utils.MediaRootS3BotoStorage'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
