@@ -27,11 +27,11 @@
 
 	<!-- Loads css files from polls/static/polls folder (It's a django thing)-->
 	<!-- https://docs.djangoproject.com/en/1.7/howto/static-files/ -->
-	{% load staticfiles %}
+    {% load static from staticfiles %}
 	<link rel="stylesheet" href={%static 'polls/css/poll.css' %}>
 	<link rel="stylesheet" href={%static 'polls/css/logo.css' %}>
 
-	<script src={%static 'polls/js/ckeditor/ckeditor.js' %}></script>
+	<script src={% static 'polls/js/ckeditor/ckeditor.js' %}></script>
 
 	<link rel="shortcut icon" href={%static 'polls/img/small-logo.png' %} />
 
