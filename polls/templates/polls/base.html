@@ -21,9 +21,13 @@
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js" type="text/javascript"></script>
+
 	<!-- Loads css files from polls/static/polls folder (It's a django thing)-->
 	<!-- https://docs.djangoproject.com/en/1.7/howto/static-files/ -->
-    {% load static %}
+    {% load static from staticfiles %}
 	<link rel="stylesheet" href={%static 'polls/css/poll.css' %}>
 	<link rel="stylesheet" href={%static 'polls/css/logo.css' %}>
 
