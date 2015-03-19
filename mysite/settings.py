@@ -98,7 +98,7 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-if not Debug: #if live
+if not DEBUG: #if live
     # Bobby's Amazon webservice credentials for media
     AWS_STORAGE_BUCKET_NAME = 'bobbysdebate'
     AWS_ACCESS_KEY_ID = 'AKIAJP3MBZRMYA4HD2TA'
