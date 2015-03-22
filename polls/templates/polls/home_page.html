@@ -19,22 +19,20 @@
 	<!-- Include js plugin -->
 	<script src="{% static 'polls/js/owl.carousel.min.js' %}"></script>
 
-
-
 	<!-- Carousel Script-->
 	<script>
 
 	$(document).ready(function() {
  		$("#myCarousel").owlCarousel({
-
-        autoPlay: 5000, //Set AutoPlay to 5 seconds
-
-        items : 3,
-        itemsDesktop : [1199,3],
-        itemsDesktopSmall : [979,3]
+      autoPlay: 5000, //Set AutoPlay to 5 seconds
+      navigation : true,
+      scrollPerPage : true,
+      itemsScaleUp : true,
+      pagination : true,
+      responsiveRefreshRate : 1,
+      stopOnHover : true
   	});
   });
-
 
 	</script>
 
