@@ -118,10 +118,17 @@
 		<h1 id="poll-text">{{ poll.poll_text }}</h1>
 		<div id="control">
 		{% if user.is_authenticated %}
+			{% if voted == 0 %}
 			<div id="form">
 				<button id="btnVote" class="btn btn-default" data-toggle="modal"
 					data-target="#myModal">Vote Now!</button>
 			</div>
+			{% else %}
+				<div id="form">
+					<button id="btnVote" class="btn btn btn-success" data-toggle="modal"
+						data-target="#myModal">Voted</button>
+				</div>
+			{% endif %}
 		{% else %}
 			<form id="form" method="LINK" action="/login/">
       			<button id="btnVote" type="submit" class="btn btn-default">Vote Now!</button>
@@ -269,9 +276,26 @@
 			<div class="modal-body">
 				{% if voted == 0 %}
 				<form action="/vote/" method="POST">
+				{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
+					{% for c in choices %}
+					{% if c.votedFor == 0 %}
+					<input type="radio" name="cid"
+						id="{{ c.choice.id }}" value="{{ c.choice.id }}"> <label
+						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
+					{% else %}
+					<input type="radio" name="cid"
+						id="{{ c.choice.id }}" value="{{ c.choice.id }}" checked> <label
+						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
+					{% endif %}
+					{% endfor %}
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal"
+							value="Close"> <input type="submit" value="Vote"
+							class="btn btn-primary" />
+					</div>
+				</form>
 				{% else %}
 				<form action="/change_vote/" method="POST">
-				{% endif %}
 					{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
 					{% for c in choices %}
 					{% if c.votedFor == 0 %}
@@ -290,6 +314,18 @@
 							class="btn btn-primary" />
 					</div>
 				</form>
+				<form action="/delete_vote/" method="POST">
+					{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
+					{% for c in choices %}
+					{% if c.votedFor == 1 %}
+					<input type="hidden" name="cid"
+						id="{{ c.choice.id }}" value="{{ c.choice.id }}">
+					{% endif %}
+					{% endfor %}
+					<input type="submit" value="Delete Vote"
+							class="btn btn-danger" />
+				</form>
+				{% endif %}
 			</div>
 		</div>
 	</div>

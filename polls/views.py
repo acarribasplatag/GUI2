@@ -173,6 +173,27 @@ def change_vote(request):
 
     return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
 
+def delete_vote(request):
+    c = Choice.objects.filter(pk=request.POST['cid'])
+    c = c[0]
+    p = Poll.objects.filter(pk=request.POST['qid'])
+    p = p[0]
+    v = Vote.objects.filter(poll=p, user=request.user)
+    v = v[0]
+    c.votes = c.votes - 1
+    c.save()
+    
+    v.delete()
+    
+    clist = Comment.objects.filter(choice=c, user=request.user)
+    for co in clist:
+        llist = Like.objects.filter(user=request.user, comment=co)
+        for l in llist:
+            l.delete()
+        co.delete()
+
+    return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
+
 def writecomment(request):
     cp = request.POST['mycomment']
     p = Poll.objects.get(pk=request.POST['qid'])
