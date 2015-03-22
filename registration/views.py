@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth import logout
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render_to_response
@@ -13,7 +14,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph, Table, TableStyle
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
-from reportlab.lib.units import mm
+from reportlab.lib.units import mm, inch
 from reportlab.graphics import renderPDF
 from reportlab.graphics.shapes import Drawing
 from reportlab.graphics.charts.piecharts import Pie
@@ -102,6 +103,14 @@ def register_user(request):
         form = PollPortalUserCreationForm()
 
     return render_to_response("registration/register.html", {'form': form}, context)
+
+def close_account(request, user_id):
+    u = User.objects.get(pk=user_id)
+    u.is_active = False
+    u.save()
+    logout(request)
+    return HttpResponseRedirect("/")
+
     
 def upload_pic(request):
     if request.method == 'POST':
@@ -157,6 +166,11 @@ def view_pdf_report(request, poll_id):
     pc.height = 200
     pc.data = data
     pc.labels = labels
+    
+    rightMargin=inch/4
+    leftMargin=inch/4
+    topMargin=inch/2
+    bottomMargin=inch/4
 
     pie_chart.add(pc)
     renderPDF.draw(pie_chart, c, 200, 475)
@@ -175,6 +189,10 @@ def view_pdf_report(request, poll_id):
                        ]))
     t.wrapOn(c, width, height)
     t.drawOn(c, 100, 375, mm)
+    
+    footer = Paragraph(datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S'), styleN)
+    w, h = footer.wrap(width, bottomMargin)
+    footer.drawOn(c, leftMargin, h)
     # Close the PDF object cleanly, and we're done.
     c.showPage()
     c.save()
