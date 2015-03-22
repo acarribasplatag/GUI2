@@ -26,9 +26,10 @@ urlpatterns = patterns('',
     url(r'^myAccount/password_change/done/$',
         'django.contrib.auth.views.password_change_done',
         {'template_name': 'registration/password_change_done.html'}),
-    url(r'^user/(?P<user_id>\d+)/', views.public_profile, name='public_profile'),
-    url(r'^user/edit/(?P<user_id>\d+)/', views.public_profile_edit, name='public_profile_edit'),
-    url(r'^user/(?P<user_id>\d+)/upload_pic/', views.upload_pic, name='upload-profile-pic'),
+    url(r'^user/(?P<user_id>\d+)/$', views.public_profile, name='public_profile'),
+    url(r'^user/edit/(?P<user_id>\d+)/$', views.public_profile_edit, name='public_profile_edit'),
+    url(r'^user/(?P<user_id>\d+)/upload_pic/$', views.upload_pic, name='upload-profile-pic'),
     url(r'^view_pdf_summary/(?P<poll_id>\d+)/$', views.view_pdf_report, name="view-pdf-report"),
+    url(r'^user/(?P<user_id>\d+)/close/$', views.close_account, name='close-account'),
 
 )
