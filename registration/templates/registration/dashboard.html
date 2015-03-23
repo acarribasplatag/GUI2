@@ -20,8 +20,10 @@
 			<div id="pills">
 				<ul class="nav nav-pills">
 					<li><a href="#a" data-toggle="tab">My Polls</a></li>
+					<li><a href="#c" data-toggle="tab">My Votes</a></li>
 					<li class="active"><a href="#b" data-toggle="tab">My
 							Account</a></li>
+					
 				</ul>
 			</div>
 			<div>
@@ -96,7 +98,29 @@
 							</tr>
 						</table>
 					</div>
-
+					
+				</div>
+				<div id="c" class="tab-pane fade">
+					<div class="table">
+						<table class="table-striped" id="topics">
+							<tr>
+								<th>Poll</th>
+								<th>Date created</th>
+								<th class="change">Owner</th>
+							</tr>
+							{% for p in polls_voted %}
+							<tr>
+								<td class="change"><a href="/{{ p.category.id }}/{{ p.id }}">{{ p.poll_text }}</a></td>
+								<td>{{ p.pub_date }}</td>
+								{% if p.user.username == user.username %}
+									<td><a href="/user/{{ p.user.id }}">Me</a></td>
+								{% else %}
+									<td><a href="/user/{{ p.user.id }}">{{ p.user.username }}</a></td>
+								{% endif %}
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
