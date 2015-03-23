@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidde
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.template import RequestContext, loader
-from polls.models import Poll, Category, Choice
+from polls.models import Poll, Category, Choice, Vote
 from forms import UserProfileEditForm
 from django.contrib.auth import login, authenticate
 from registration.forms import UserProfilePicUploadForm, PollPortalUserCreationForm
@@ -22,8 +22,13 @@ from reportlab.platypus.flowables import Spacer
 def myAccount(request):
     context = RequestContext(request)
     polls_list = Poll.objects.filter(user=request.user)
-    context_dict = {'polls': polls_list}
-
+    votes_list = Vote.objects.filter(user=request.user)
+    
+    polls_voted_list = []
+    for vote in votes_list:
+        polls_voted_list.append(vote.poll)
+    
+    context_dict = {'polls': polls_list, 'polls_voted': polls_voted_list}
     # Render the response and send it back!
     return render_to_response('registration/dashboard.html', context_dict, context)
 
