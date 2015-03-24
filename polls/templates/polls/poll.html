@@ -124,12 +124,16 @@
 			</div>
 		{% else %}
 			<form id="form" method="LINK" action="/login/">
-      			<button id="btnVote" type="submit" class="btn btn-default">Vote Now!</button>
-    		</form>
+  			<button id="btnVote" type="submit" class="btn btn-default">Vote Now!</button>
+    	</form>
 		{% endif %}
 			<div id="myChart" style="width: 100%;"></div>
 
 			</div>
+      
+    <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
+      <button id="btnVote" type="submit" class="btn btn-default">PDF Report</button>
+    </form>
 
     <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
 
