@@ -146,7 +146,7 @@ def get_poll_timeline(request, poll_id):
     for date in date_list:
         date2 = date.date()
         date_list2.append(date2)
-    votes = {'votes': [], 'dates': []}
+    votes = {'votes': []}
     start_date = date_list2[0]
     end_date = datetime.date.today()
               
@@ -159,7 +159,6 @@ def get_poll_timeline(request, poll_id):
         raw_dates.append(nd)
         d = time.mktime(nd.timetuple())
         dates.append(d)
-    votes['dates'] = dates
     for c in clist:
         count_list = []
         for date in raw_dates:
@@ -169,8 +168,9 @@ def get_poll_timeline(request, poll_id):
             total_choice = 0
             for vote in vote_list:
                 total_choice = total_choice + 1
-            count_list.append(total_choice)
+            count_list.append([time.mktime(date.timetuple()), total_choice])
         v_json = {'choice': serializers.serialize('json', [ c, ]),'count_list': count_list}
+        print v_json
         votes['votes'].append(v_json)
     return HttpResponse(json.dumps(votes, cls=DjangoJSONEncoder), content_type="application/json")
 

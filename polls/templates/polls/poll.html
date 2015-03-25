@@ -112,34 +112,22 @@ $(function () {
   				plotBackgroundColor : null,
   				plotBorderWidth : null,
   				plotShadow : false,
-  				type: 'column'
 
   			},
+  			rangeSelector : {
+  				enabled:true,
+                selected : 1
+            },
   			scrollBar:{
                 enabled:true
             },
   			title : {
   				text : 'Timeline of Votes'
   			},
-  			xAxis: {
-  	            categories: [],
-  	            crosshair: true
-  	        },
-  	        yAxis: {
-  	            min: 0,
-  	            title: {
-  	                text: 'Votes'
-  	            }
-  	        },
+
   	        tooltip: {
   	            shared: true,
   	            useHTML: true
-  	        },
-  	        plotOptions: {
-  	            column: {
-  	                pointPadding: 0.2,
-  	                borderWidth: 0
-  	            }
   	        },
   			exporting : {
   				enabled : false
@@ -169,28 +157,16 @@ $(function () {
   				var choice = JSON.parse(vote['choice']);
   				var dat = vote['count_list'];
   				console.log(dat);
+  				for (var j = 0 ; j < dat.length ; j++) {
+  					dat[j][0] =  dat[j][0] * 1000;
+  				}
   				var s = {
   					name: choice[0]['fields']['choice_text'],
   					data: dat
   				};
   				options.series.push(s);
   			}
-  			
-  			var dates = data['dates'];
-  			var m_names = new Array("January", "February", "March", 
-  					"April", "May", "June", "July", "August", "September", 
-  					"October", "November", "December");
-  			for (var i = 0 ; i < dates.length ; i++) {
-  				var date = JSON.parse(dates[i]);
-  				var d = new Date( parseInt(date)*1000 );
-  				var curr_date = d.getDate();
-  				var curr_month = d.getMonth();
-  				var curr_year = d.getFullYear();
-  				formatted = curr_date + "-" + m_names[curr_month] 
-  				+ "-" + curr_year;
-  				options.xAxis.categories.push(formatted);
-  			}
-  			$('#myTimeline').highcharts(options);
+  			$('#myTimeline').highcharts('StockChart', options);
   		});
 
   	});
