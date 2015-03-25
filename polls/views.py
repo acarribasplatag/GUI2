@@ -202,6 +202,7 @@ def change_vote(request):
     c.votes = c.votes + 1
     c.save()
     v.choice = c
+    v.pub_date = datetime.datetime.now()
     v.save()
     clist = Comment.objects.filter(choice=c2, user=request.user)
     for co in clist:
