@@ -2,6 +2,14 @@
     float: right;
 }
 
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
+.modal.modal-wide .modal-dialog {
+    width: 50%;
+}
+
 #textarea2 {
     margin-top: 10px;
 }
@@ -91,7 +99,7 @@
     margin-bottom: 10px;
 }
 
-#form #btnVote {
+#form #btnVote, #form #btnTimeline {
     margin-left: auto;
     margin-right: auto;
     display: block;

@@ -5,8 +5,10 @@ from django.shortcuts import render_to_response
 from registration.views import myAccount
 from registration.models import UserProfile
 import datetime
+import time
 
 from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
 
 from polls.models import Poll, Category, Choice, Comment, Vote, Like
 import json
@@ -134,6 +136,52 @@ def get_poll_chart(request, poll_id):
     for c in clist:
         choices['choices'].append(serializers.serialize('json', [ c, ]))
     return HttpResponse(json.dumps(choices), content_type="application/json")
+
+def get_poll_timeline(request, poll_id):
+    p = Poll.objects.get(pk=poll_id)
+    clist = Choice.objects.filter(poll = p)
+    print clist
+    date_list = Vote.objects.filter(poll=p).datetimes('pub_date', 'day')
+    date_list2 = []
+    for date in date_list:
+        date2 = date.date()
+        date_list2.append(date2)
+    print date_list2
+    i = 0
+    votes = {'votes': [], 'dates': []}
+    for c in clist:
+        count_list = []
+        for date in date_list:
+            start_date = date
+            end_date = start_date + datetime.timedelta( days=1 ) 
+            vote_list = Vote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, end_date))
+            print vote_list
+            total_choice = 0
+            for vote in vote_list:
+                total_choice = total_choice + 1
+            count_list.append(total_choice)
+        print count_list
+        v_json = {'choice': serializers.serialize('json', [ c, ]),'count_list': count_list}
+        print v_json
+        votes['votes'].append(v_json)
+    
+    start_date = date_list2[0]
+    end_date = datetime.date.today()
+    
+    
+    print start_date
+    print end_date
+              
+    num_days = (end_date+ datetime.timedelta(days=1) - start_date).days
+    print num_days
+    
+    for i in range(0, num_days):
+        nd = start_date+datetime.timedelta(days=i)
+        d = time.mktime(nd.timetuple())
+        votes['dates'].append(d)
+    print votes['dates']
+    print votes
+    return HttpResponse(json.dumps(votes, cls=DjangoJSONEncoder), content_type="application/json")
 
 def vote(request):
     c = Choice.objects.filter(pk=request.POST['cid'])
