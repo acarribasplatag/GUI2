@@ -20,6 +20,9 @@ urlpatterns = patterns('',
 
     url(r'^get_chart/(?P<poll_id>\d+)/$',
         views.get_poll_chart, name='get_chart'),
+    
+    url(r'^get_timeline/(?P<poll_id>\d+)/$',
+        views.get_poll_timeline, name='get_timeline'),
 
     # ex: localhost:8000/categories/
     url(r'^categories/$', views.get_all_categories, name='get_all_categories'),
