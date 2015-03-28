@@ -197,9 +197,12 @@ $(".modal-wide").on("show.bs.modal", function() {
     	</form>
 		{% endif %}
 			<div id="myChart" style="width: 100%;"></div>
-			<div id="form">
-				<button id="btnTimeline" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Timeline of Votes</button>
-			</div>
+
+		<div id="form">
+			<button id="btnTimeline" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Timeline of Votes</button>
+		</div>
+
+    </br>
 
     <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
       <button id="btnVote" type="submit" class="btn btn-default">PDF Report</button>
