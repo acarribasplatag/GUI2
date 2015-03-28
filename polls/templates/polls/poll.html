@@ -212,9 +212,13 @@ $(".modal-wide").on("show.bs.modal", function() {
   <!-- This is for the Facebook share/like button. -->
 	<div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
   </br>
-  </br>
   <!-- This is for the Twitter Tweet button.  -->
   <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ request.build_absolute_uri }}">Tweet</a>
+
+  </br>
+
+  <!-- Place this tag where you want the share button to render. -->
+  <div class="g-plus" data-action="share"></div>
 
 		<div id="comments">
 		<h3>Comments:</h3>
