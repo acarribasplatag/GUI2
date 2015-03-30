@@ -182,30 +182,31 @@ $(".modal-wide").on("show.bs.modal", function() {
 		{% if user.is_authenticated %}
 			{% if voted == 0 %}
 			<div id="form">
-				<button id="btnVote" class="btn btn-default" data-toggle="modal"
-					data-target="#myModal">Vote Now!</button>
+				<md-button id="btnVote" class="md-raised md-button btn-success" data-toggle="modal"
+					data-target="#myModal">Vote Now!</md-button>
 			</div>
 			{% else %}
 				<div id="form">
-					<button id="btnVote" class="btn btn btn-success" data-toggle="modal"
-						data-target="#myModal">Voted</button>
+					<md-button id="btnVote" class="md-raised md-button" data-toggle="modal"
+						data-target="#myModal">Voted</md-button>
 				</div>
 			{% endif %}
 		{% else %}
 			<form id="form" method="LINK" action="/login/">
-  			<button id="btnVote" type="submit" class="btn btn-default">Vote Now!</button>
+  			<md-button id="btnVote" type="submit" class="md-raised md-button">Vote Now!</md-button>
     	</form>
 		{% endif %}
-			<div id="myChart" style="width: 100%;"></div>
+		</br>
+		<div id="myChart" style="width: 100%;"></div>
 
 		<div id="form">
-			<button id="btnTimeline" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Timeline of Votes</button>
+			<md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2">Timeline of Votes</md-button>
 		</div>
 
     </br>
 
     <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
-      <button id="btnVote" type="submit" class="btn btn-default">PDF Report</button>
+      <md-button id="btnVote" type="submit" class="md-raised md-button">PDF Report</md-button>
     </form>
 
   </br>
@@ -216,7 +217,6 @@ $(".modal-wide").on("show.bs.modal", function() {
   <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ request.build_absolute_uri }}">Tweet</a>
 
   </br>
-
   <!-- This is the google plus share button. -->
   <div class="g-plus" data-action="share" data-width="200"></div>
 
@@ -284,15 +284,15 @@ $(".modal-wide").on("show.bs.modal", function() {
 					{% if user.is_authenticated %}
 					{% if co.likedByUser == 0 %}
 					<form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
-						<button type="submit" class="btn btn-default">
+						<md-button type="submit" class="md-primary">
 							<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
-						</button>
+						</md-button>
 					</form>
 					{% else %}
 					<form id="like_comment" method="GET" action="/unlike_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
-						<button type="submit" class="btn btn-default">
+						<md-button type="submit" class="md-primary">
 							<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Unlike
-						</button>
+						</md-button>
 					</form>
 					{% endif %}
 					{% endif %}
@@ -326,8 +326,8 @@ $(".modal-wide").on("show.bs.modal", function() {
 			            </script>
 					</div>
 					<div id="submit">
-						<input type="submit" value="Post comment"
-							class="btn btn-primary" style="float:right; margin-top: 10px;"/>
+						<md-button class="md-raised md-primary" type="submit"
+							style="float:right; margin-top: 10px;">Post Comment</md-button>
 					</div>
 				</form>
 				{% endif %}
