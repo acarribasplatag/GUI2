@@ -149,9 +149,9 @@ def get_poll_timeline(request, poll_id):
     votes = {'votes': []}
     start_date = date_list2[0]
     end_date = datetime.date.today()
-              
+
     num_days = (end_date+ datetime.timedelta(days=1) - start_date).days
-    
+
     dates = []
     raw_dates = []
     for i in range(0, num_days):
@@ -163,7 +163,7 @@ def get_poll_timeline(request, poll_id):
         count_list = []
         for date in raw_dates:
             start_date = date
-            end_date = start_date + datetime.timedelta( days=1 ) 
+            end_date = start_date + datetime.timedelta( days=1 )
             vote_list = Vote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, end_date))
             total_choice = 0
             for vote in vote_list:
