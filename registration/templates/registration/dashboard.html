@@ -9,27 +9,18 @@
 <div class="jumbotron">
 	<h1>My Account</h1>
 	<form id="createFrm" method="LINK" action="/create_poll/">
-		<button type="submit" class="btn btn-default">
+		<md-button class="md-raised md-button" type="submit">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 			Create New Poll
-		</button>
+		</md-button>
 	</form>
 
-	<div class="row">
-		<!-- tabs left -->
-			<div id="pills">
-				<ul class="nav nav-pills">
-					<li><a href="#a" data-toggle="tab">My Polls</a></li>
-					<li><a href="#c" data-toggle="tab">My Votes</a></li>
-					<li class="active"><a href="#b" data-toggle="tab">My
-							Account</a></li>
-					
-				</ul>
-			</div>
-			<div>
-			<div class="tab-content" id="accountTabs">
-				<div id="a" class="tab-pane fade">
-					<div class="table">
+	<div ng-controller="AppCtrl" class="tabsdemoStaticTabs sample">
+    <md-tabs md-selected="data.selectedIndex">
+      <md-tab id="tab1">
+        <md-tab-label>My Polls</md-tab-label>
+        <md-tab-template>
+          <div class="table">
 						<table class="table-striped" id="topics">
 							<tr>
 								<th>Poll</th>
@@ -55,19 +46,27 @@
 											<li role="presentation"><a role="menuitem" tabindex="-1"
 												href="/view_pdf_summary/{{p.id}}">Generate PDF Summary</a></li>
 										</ul>
+                    <!-- <td>
+                      <md-button class="md-raised" href="/freeze_voting/{{p.id}}">Freeze Voting</md-button>
+                      <md-button class="md-raised" type="submit" href="/view_pdf_summary/{{p.id}}">Generate PDF Summary</md-button>
+                      <md-button class="md-raised md-warn" type="submit" href='/delete_poll/{{p.id}}'>Delete Poll</md-button>
+                    </td> -->
 									</div>
 								</td>
 							</tr>
 							{% endfor %}
 						</table>
 					</div>
-				</div>
-				<div class="tab-pane fade active in" id="b">
-					<form id="createFrm" method="LINK" action="/user/{{ user.id }}/close/">
-						<button type="submit" class="btn btn-default">
+        </md-tab-template>
+      </md-tab>
+      <md-tab id="tab2" ng-disabled="data.secondLocked">
+        <md-tab-label>My Votes</md-tab-label>
+        <md-tab-template>
+          	<form id="createFrm" method="LINK" action="/user/{{ user.id }}/close/">
+						<md-button class="md-warn" type="submit">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							Close Account
-						</button>
+						</md-button>
 					</form>
 					<div class="table-responsive">
 						<table class="table-striped" id="accountInfo">
@@ -78,7 +77,6 @@
 							<tr>
 								<th>Username:</th>
 								<td><a href="/user/{{ user.id }}/">{{ user.username }}</a></td>
-	
 							</tr>
 							<tr>
 								<th>Email Address:</th>
@@ -88,7 +86,7 @@
 								<th>Password:</th>
 								<td>&#x25CF;&#x25CF;&#x25CF;&#x25CF;&#x25CF;&#x25CF;&#x25CF;
 									<form method="LINK" action="/myAccount/password_change/">
-										<button id="changePass" type="submit" class="btn btn-default">Change Password</button>
+										<md-button class="md-primary" id="changePass" type="submit">Change Password</md-button>
 									</form>
 								</td>
 							</tr>
@@ -98,10 +96,12 @@
 							</tr>
 						</table>
 					</div>
-					
-				</div>
-				<div id="c" class="tab-pane fade">
-					<div class="table">
+        </md-tab-template>
+      </md-tab>
+      <md-tab id="tab3">
+        <md-tab-label>My Account</md-tab-label>
+        <md-tab-template>
+          <div class="table">
 						<table class="table-striped" id="topics">
 							<tr>
 								<th>Poll</th>
@@ -121,9 +121,8 @@
 							{% endfor %}
 						</table>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        </md-tab-template>
+      </md-tab>
+    </md-tabs>
 </div>
 {% endblock %}
