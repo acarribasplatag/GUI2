@@ -330,7 +330,6 @@ This CSS is from the following site: http://www.bootply.com/74926 */
   width: 150px;
 }
 
-
 .tabsdemoStaticTabs .sample {
   height: 450px;
 }
@@ -339,8 +338,4 @@ This CSS is from the following site: http://www.bootply.com/74926 */
 }
 .md-tab-label {
   background-color: #42A5F5;
-}
-
-.md-raised {
-  margin-bottom: 40px;
 }
