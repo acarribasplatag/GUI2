@@ -182,12 +182,12 @@ $(".modal-wide").on("show.bs.modal", function() {
 		{% if user.is_authenticated %}
 			{% if voted == 0 %}
 			<div id="form">
-				<md-button id="btnVote" class="md-raised md-button btn-success" data-toggle="modal"
+				<md-button id="btnVote" class="md-raised md-button" data-toggle="modal"
 					data-target="#myModal">Vote Now!</md-button>
 			</div>
 			{% else %}
 				<div id="form">
-					<md-button id="btnVote" class="md-raised md-button" data-toggle="modal"
+					<md-button id="btnVote" class="md-raised" style="background: #4CAF50" data-toggle="modal"
 						data-target="#myModal">Voted</md-button>
 				</div>
 			{% endif %}
