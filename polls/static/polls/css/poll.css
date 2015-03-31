@@ -339,3 +339,7 @@ This CSS is from the following site: http://www.bootply.com/74926 */
 .md-tab-label {
   background-color: #42A5F5;
 }
+
+.dropdown-backdrop{
+  position: static;
+}
