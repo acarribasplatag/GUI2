@@ -8,9 +8,10 @@
 <!-- Scripts that will be inserted to base.html -->
 
 {% block scripts %}
-
 <!--  Load the pie chart using highcharts -->
 <script>
+
+
 
   	function SecondIndexOf(Val, Str) {
   		var Fst = Str.indexOf(Val);
@@ -72,7 +73,6 @@
   		input.setAttribute("value", current);
   		req_url = req_url + current;
   		$.getJSON(req_url, function(data) {
-  			console.log('Got data');
   			options.title.text = data['poll'][0]['question_text'];
   			options.series[0].type = 'pie';
   			var choices = data['choices'];
@@ -80,7 +80,6 @@
   			var dat = [];
 
   			for (var i=0; i<choices.length; i++) {
-  				console.log('Hello');
   				var r = JSON.parse(choices[i]);
   				var text = r[0]['fields']['choice_text'];
   				var votes = r[0]['fields']['votes'];
@@ -88,7 +87,6 @@
   				dat.push(row);
   				total += parseInt(votes);
   			}
-  			console.log(dat);
   			options.series[0].data = dat;
   			$('#myChart').highcharts(options);
   		});
@@ -174,172 +172,161 @@ $(".modal-wide").on("show.bs.modal", function() {
 <!-- Content to be inserted into body of base.html -->
 {% block content %}
 {% load humanize %}
-<!-- /.container-fluid -->
-<div>
-	<div id="customcontrol">
-		<h1 id="poll-text">{{ poll.poll_text }}</h1>
-		<div id="control">
-		{% if user.is_authenticated %}
-			{% if voted == 0 %}
-			<div id="form">
-				<md-button id="btnVote" class="md-raised md-button" data-toggle="modal"
-					data-target="#myModal">Vote Now!</md-button>
-			</div>
-			{% else %}
-				<div id="form">
-					<md-button id="btnVote" class="md-raised" style="background: #4CAF50" data-toggle="modal"
-						data-target="#myModal">Voted</md-button>
-				</div>
-			{% endif %}
-		{% else %}
-			<form id="form" method="LINK" action="/login/">
-  			<md-button id="btnVote" type="submit" class="md-raised md-button">Vote Now!</md-button>
-    	</form>
-		{% endif %}
-		</br>
-		<div id="myChart" style="width: 100%;"></div>
 
-		<div id="form">
-			<md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2">Timeline of Votes</md-button>
-		</div>
+<div ng-controller="AppCtrl" class="sample" layout="column">
+    <md-tabs md-selected="data.selectedIndex">
+      <md-tab id="tab1">
+        <md-tab-label>Vote</md-tab-label>
+        <md-tab-template>
 
-    </br>
+          <div id="customcontrol">
+              <h1 id="poll-text">{{ poll.poll_text }}</h1>
+              <div id="control">
+              {% if user.is_authenticated %}
+                {% if voted == 0 %}
+                <div id="form">
+                  <md-button id="btnVote" class="md-raised md-button" data-toggle="modal"
+                    data-target="#myModal">Vote Now!</md-button>
+                </div>
+                {% else %}
+                  <div id="form">
+                    <md-button id="btnVote" class="md-raised" style="background: #4CAF50" data-toggle="modal"
+                      data-target="#myModal">Voted</md-button>
+                  </div>
+                {% endif %}
+              {% else %}
+                <form id="form" method="LINK" action="/login/">
+                  <md-button id="btnVote" type="submit" class="md-raised md-button">Vote Now!</md-button>
+                </form>
+              {% endif %}
+              </br>
+              <div id="myChart" style="width: 100%;"></div>
 
-    <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
-      <md-button id="btnVote" type="submit" class="md-raised md-button">PDF Report</md-button>
-    </form>
+            <!-- This is for the Facebook share/like button. -->
+            <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></br>
 
-  </br>
-  <!-- This is for the Facebook share/like button. -->
-	<div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-  </br>
-  <!-- This is for the Twitter Tweet button.  -->
-  <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ request.build_absolute_uri }}">Tweet</a>
+            <!-- This is for the Twitter Tweet button.  -->
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ request.build_absolute_uri }}">Tweet</a></br>
 
-  </br>
-  <!-- This is the google plus share button. -->
-  <div class="g-plus" data-action="share" data-width="200"></div>
+            <!-- This is the google plus share button. -->
+            <div class="g-plus" data-action="share" data-width="200"></div>
 
-		<div id="comments">
-		<h3>Comments:</h3>
-		<div role="tabpanel">
+              <div id="form">
+                <md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2">Timeline of Votes</md-button>
+              </div>
+              </br>
+              <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
+                <md-button id="btnVote" type="submit" class="md-raised md-button">PDF Report</md-button>
+              </form>
+              </br>
+              </br>
+          </div>
+        </div>
 
-		<!-- Nav tabs -->
-		<ul class="nav nav-pills" role="tablist">
-			{% for c in choices %}
-			{% if c.votedFor == 1 %}
-			<li role="presentation" class="active"><a href="#{{ c.choice.id }}"
-				aria-controls="{{ c.choice.choice_text }}" role="tab"
-				data-toggle="tab">{{ c.choice.choice_text }}</a></li>
-			{% else %}
-			<li role="presentation" class=""><a href="#{{ c.choice.id }}"
-				aria-controls="{{ c.choice.choice_text }}" role="tab"
-				data-toggle="tab">{{ c.choice.choice_text }}</a></li>
-			{% endif %}
-			{% endfor %}
-		</ul>
 
-		<!-- Tab panes -->
-		<div class="tab-content" id="comment-tabs">
-			{% for c in choices %}
-			{% if c.votedFor == 1 %}
-			<div role="tabpanel" class="tab-pane fade in active"
-				id="{{ c.choice.id }}">
-			{% else %}
-			<div role="tabpanel" class="tab-pane fade"
-				id="{{ c.choice.id }}">
-			{% endif %}
-				{% if not c.comments %}
+        </md-tab-template>
+      </md-tab>
 
-				<div class="well comment">
-					<p> No comments. </p>
-				</div>
-				{% else %}
-				{% for co in c.comments %}
-				<div class="well comment">
-				{% if user == co.comment.user %}
-					<form id="delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
-						<button type="submit" class="close"
-						aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</form>
-				{% endif %}
-					<div class="user-div">
-						<div class="prof-thumbnail img-thumbnail">
-							{% if co.userProfile.avatar %}
-							<a href="{{ co.userProfile.avatar.url }}" class=".thumbnail">
-								<img src="{{ co.userProfile.avatar.url }}"
-								alt="{{ co.comment.user.username }}'s profile picture"
-								class="img profile-pic">
-							</a>
-							{% endif %}
-						</div>
-						<p class=username><a href="/user/{{ co.comment.user.id }}/">{{ co.comment.user.username }}</a></p>
-						<p class="pub-date">{{ co.comment.pub_date|naturaltime|capfirst }}</p>
-					</div>
-					<div class="comment-content">
-						{% autoescape off %}{{ co.comment.comment_text }}{% endautoescape %}
-					</div>
-					{% if user.is_authenticated %}
-					{% if co.likedByUser == 0 %}
-					<form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
-						<md-button type="submit" class="md-primary">
-							<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
-						</md-button>
-					</form>
-					{% else %}
-					<form id="like_comment" method="GET" action="/unlike_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
-						<md-button type="submit" class="md-primary">
-							<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Unlike
-						</md-button>
-					</form>
-					{% endif %}
-					{% endif %}
-					{% if co.comment.likes == 0 %}
-					<p>No one liked this comment.</p>
-					{% elif co.comment.likes == 1 and co.likedByUser == 1 %}
-					<p>You liked this comment.</p>
-					{% elif co.comment.likes > 1 and co.likedByUser == 1 %}
-					<p>You and {{ co.comment.likes|add:'-1' }} other people liked this comment.</p>
-					{% elif co.comment.likes == 1 %}
-					<p>1 person liked this comment.</p>
-					{% else %}
-					<p>{{ co.comment.likes }} people liked this comment.</p>
-					{% endif %}
-				</div>
-				{% endfor %}
+      {% for c in choices %}
+      <md-tab id="#{{ c.choice.id }}" ng-disabled="data.secondLocked">
+        <md-tab-label>{{ c.choice.choice_text }}</md-tab-label>
+        <md-tab-template>
+          {% if not c.comments %}
 
-				{% endif %}
+        <div class="well comment">
+          <p> No comments. </p>
+        </div>
+        {% else %}
 
-				{% if voted == 1 and c.votedFor == 1  %}
-				<form id="commentform" action="/new_comment/" method="POST">
-					{% csrf_token %}<input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
-					<div id="textarea">
-						<label for="mycomment">New Comment:</label>
-						<textarea name="mycomment" id="editor1" rows="10" cols="80"></textarea>
-						<script>
-			                // Replace the <textarea id="editor1"> with a CKEditor
-			                // instance, using default configuration.
-			                CKEDITOR.replace( 'editor1' );
-			            	CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV;
-			            </script>
-					</div>
-					<div id="submit">
-						<md-button class="md-raised md-primary" type="submit"
-							style="float:right; margin-top: 10px;">Post Comment</md-button>
-					</div>
-				</form>
-				{% endif %}
+        {% for co in c.comments %}
+        <div class="well comment">
+        {% if user == co.comment.user %}
+          <form id="delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
+            <button type="submit" class="close"
+            aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </form>
+        {% endif %}
+          <div class="user-div">
+            <div class="prof-thumbnail img-thumbnail">
+              {% if co.userProfile.avatar %}
+              <a href="{{ co.userProfile.avatar.url }}" class=".thumbnail">
+                <img src="{{ co.userProfile.avatar.url }}"
+                alt="{{ co.comment.user.username }}'s profile picture"
+                class="img profile-pic">
+              </a>
+              {% endif %}
+            </div>
+            <p class=username><a href="/user/{{ co.comment.user.id }}/">{{ co.comment.user.username }}</a></p>
+            <p class="pub-date">{{ co.comment.pub_date|naturaltime|capfirst }}</p>
+          </div>
+          <div class="comment-content">
+            {% autoescape off %}{{ co.comment.comment_text }}{% endautoescape %}
+          </div>
+          {% if user.is_authenticated %}
+          {% if co.likedByUser == 0 %}
+          <form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
+            <md-button type="submit" class="md-primary">
+              <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
+            </md-button>
+          </form>
+          {% else %}
+          <form id="like_comment" method="GET" action="/unlike_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
+            <md-button type="submit" class="md-primary">
+              <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Unlike
+            </md-button>
+          </form>
+          {% endif %}
+          {% endif %}
+          {% if co.comment.likes == 0 %}
+          <p>No one liked this comment.</p>
+          {% elif co.comment.likes == 1 and co.likedByUser == 1 %}
+          <p>You liked this comment.</p>
+          {% elif co.comment.likes > 1 and co.likedByUser == 1 %}
+          <p>You and {{ co.comment.likes|add:'-1' }} other people liked this comment.</p>
+          {% elif co.comment.likes == 1 %}
+          <p>1 person liked this comment.</p>
+          {% else %}
+          <p>{{ co.comment.likes }} people liked this comment.</p>
+          {% endif %}
+        </div>
+        {% endfor %}
 
-			</div>
-			{% endfor %}
-		</div>
-	</div>
+        {% endif %}
 
-		</div>
-	</div>
-</div>
+        <!-- If user voted for this choice let them comment under it.  -->
+        <!-- ckeditor -->
+
+        {% if voted == 1 and c.votedFor == 1  %}
+          <form id="commentform" action="/new_comment/" method="POST">
+            {% csrf_token %}<input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
+            <div id="textarea">
+              <label for="mycomment">New Comment:</label>
+              <textarea name="mycomment" id="editor1" rows="10" cols="80"></textarea>
+              <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                jQuery(document).ready(function() {
+                  if (CKEDITOR.instances['editor1'])
+                    CKEDITOR.instances['editor1'].destroy();
+                  CKEDITOR.replace("editor1")
+                  CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV;
+                 });
+              </script>
+            </div>
+            <div id="submit">
+              <md-button class="md-raised md-primary" type="submit"
+                style="float:right; margin-top: 10px;">Post Comment</md-button>
+            </div>
+          </form>
+        {% endif %}
+
+        </md-tab-template>
+      </md-tab>
+      {% endfor %}
+      </md-tabs>
+    </div>
 
 <!-- Modal Dialog for voting-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
