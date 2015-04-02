@@ -172,7 +172,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 <!-- Content to be inserted into body of base.html -->
 {% block content %}
 {% load humanize %}
-
+{% load static from staticfiles %}
 <div ng-controller="AppCtrl" class="sample" layout="column">
     <md-tabs md-selected="data.selectedIndex">
       <md-tab id="tab1">
@@ -256,7 +256,14 @@ $(".modal-wide").on("show.bs.modal", function() {
                 alt="{{ co.comment.user.username }}'s profile picture"
                 class="img profile-pic">
               </a>
-              {% endif %}
+              {% else %}
+			<a href="" class=".thumbnail">
+				<img
+				src= "{% static 'polls/img/default_profile.jpg' %}"
+				alt="{{ co.comment.user.username }}'s profile picture"
+				class="img profile-pic">
+			</a>
+			{% endif %}
             </div>
             <p class=username><a href="/user/{{ co.comment.user.id }}/">{{ co.comment.user.username }}</a></p>
             <p class="pub-date">{{ co.comment.pub_date|naturaltime|capfirst }}</p>

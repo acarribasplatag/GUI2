@@ -2,6 +2,7 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.template.defaultfilters import default
 
 
 class Category(models.Model):
@@ -44,6 +45,15 @@ class Comment(models.Model):
         return self.comment_text
 
 class Vote(models.Model):
+    old = models.BooleanField(default=False)
+    poll = models.ForeignKey(Poll)
+    choice = models.ForeignKey(Choice)
+    user = models.ForeignKey(User)
+    pub_date = models.DateTimeField('date published')
+    def __unicode__(self):               # __str__ on Python 3
+        return self.choice.choice_text
+    
+class NegativeVote(models.Model):
     poll = models.ForeignKey(Poll)
     choice = models.ForeignKey(Choice)
     user = models.ForeignKey(User)
