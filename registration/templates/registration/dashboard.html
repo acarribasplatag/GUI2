@@ -16,7 +16,7 @@
 	</form>
 
 	<div ng-controller="AppCtrl" class="tabsdemoStaticTabs sample">
-    <md-tabs md-selected="data.selectedIndex">
+    <md-tabs md-selected="2">
       <md-tab id="tab1">
         <md-tab-label>My Polls</md-tab-label>
         <md-tab-template>
@@ -44,6 +44,31 @@
       </md-tab>
       <md-tab id="tab2" ng-disabled="data.secondLocked">
         <md-tab-label>My Votes</md-tab-label>
+        <md-tab-template>
+          <div class="table">
+						<table class="table-striped" id="topics">
+							<tr>
+								<th>Poll</th>
+								<th>Date created</th>
+								<th class="change">Owner</th>
+							</tr>
+							{% for p in polls_voted %}
+							<tr>
+								<td class="change"><a href="/{{ p.category.id }}/{{ p.id }}">{{ p.poll_text }}</a></td>
+								<td>{{ p.pub_date }}</td>
+								{% if p.user.username == user.username %}
+									<td><a href="/user/{{ p.user.id }}">Me</a></td>
+								{% else %}
+									<td><a href="/user/{{ p.user.id }}">{{ p.user.username }}</a></td>
+								{% endif %}
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
+        </md-tab-template>
+      </md-tab>
+      <md-tab id="tab3">
+        <md-tab-label>My Account</md-tab-label>
         <md-tab-template>
           	<form id="createFrm" method="LINK" action="/user/{{ user.id }}/close/">
 						<md-button class="md-warn" type="submit">
@@ -77,31 +102,6 @@
 								<th>Date Joined:</th>
 								<td>{{ user.date_joined }}</td>
 							</tr>
-						</table>
-					</div>
-        </md-tab-template>
-      </md-tab>
-      <md-tab id="tab3">
-        <md-tab-label>My Account</md-tab-label>
-        <md-tab-template>
-          <div class="table">
-						<table class="table-striped" id="topics">
-							<tr>
-								<th>Poll</th>
-								<th>Date created</th>
-								<th class="change">Owner</th>
-							</tr>
-							{% for p in polls_voted %}
-							<tr>
-								<td class="change"><a href="/{{ p.category.id }}/{{ p.id }}">{{ p.poll_text }}</a></td>
-								<td>{{ p.pub_date }}</td>
-								{% if p.user.username == user.username %}
-									<td><a href="/user/{{ p.user.id }}">Me</a></td>
-								{% else %}
-									<td><a href="/user/{{ p.user.id }}">{{ p.user.username }}</a></td>
-								{% endif %}
-							</tr>
-							{% endfor %}
 						</table>
 					</div>
         </md-tab-template>

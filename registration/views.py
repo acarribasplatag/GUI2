@@ -147,12 +147,12 @@ def view_pdf_report(request, poll_id):
     p = Paragraph('Poll Summary Report:', styleH)
     
     p.wrapOn(c, width, height)
-    p.drawOn(c, 100, 750, mm)
+    p.drawOn(c, 100, height - 50, mm)
     
     p = Paragraph(poll.poll_text, styleH2)
     
     p.wrapOn(c, width, height)
-    p.drawOn(c, 100, 700, mm)
+    p.drawOn(c, 100, height - 100, mm)
     
     
     data = []
@@ -192,8 +192,8 @@ def view_pdf_report(request, poll_id):
                        ('BOX', (0,0), (-1,-1), 0.25, colors.black),
                        ('BACKGROUND', (0, 0), (1, 0), colors.lightblue),
                        ]))
-    t.wrapOn(c, width, height)
-    t.drawOn(c, 100, 375, mm)
+    w, h = t.wrapOn(c, width, height)
+    t.drawOn(c, 100, height - 400 - h, mm)
     
     footer = Paragraph(datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S'), styleN)
     w, h = footer.wrap(width, bottomMargin)
