@@ -20,7 +20,7 @@ urlpatterns = patterns('',
 
     url(r'^get_chart/(?P<poll_id>\d+)/$',
         views.get_poll_chart, name='get_chart'),
-    
+
     url(r'^get_timeline/(?P<poll_id>\d+)/$',
         views.get_poll_timeline, name='get_timeline'),
 
@@ -43,10 +43,10 @@ urlpatterns = patterns('',
 
     url(r'^vote/$',
         views.vote, name='vote'),
-                       
+
     url(r'^change_vote/$',
         views.change_vote, name='change_vote'),
-                       
+
     url(r'^delete_vote/$',
         views.delete_vote, name='delete_vote'),
 
@@ -55,10 +55,10 @@ urlpatterns = patterns('',
 
     url(r'^delete_comment/(?P<category_id>\d+)/(?P<poll_id>\d+)/(?P<comment_id>\d+)$',
         views.delete_comment, name='deletecomment'),
-                       
+
     url(r'^like_comment/(?P<category_id>\d+)/(?P<poll_id>\d+)/(?P<comment_id>\d+)$',
         views.like_comment, name='likecomment'),
-                       
+
     url(r'^unlike_comment/(?P<category_id>\d+)/(?P<poll_id>\d+)/(?P<comment_id>\d+)$',
         views.unlike_comment, name='unlikecomment'),
 )

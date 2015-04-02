@@ -44,7 +44,6 @@
   <div class="jumbotron">
 
     <div class="row">
-      <!-- Right Side -->
       <div class="col-xs-12 col-md-6">
     	  <form id="loginForm">
     	    <!-- Username -->
@@ -52,22 +51,19 @@
       	    <label for="username" class="col-xs-3 control-label">Username:</label>
       	    <input type="text" class="col-xs-9 form-control" id="username" name="username" placeholder="Username" title="Please enter your username">
           </div>
+          </br>
     	    <!-- Password -->
           <div class="row">
       	    <label for="password" class="col-xs-3 control-label">Password:</label>
       	    <input type="password" class="col-xs-9 form-control" id="password" name="password" placeholder="Password" title="Please enter your password">
           </div>
-    	    <button type="submit" class="col-xs-6 btn btn-primary">Login</button>
+          </br>
+    	    <md-button class="col-xs-6 md-raised md-primary" type="submit">Login</md-button>
         </form>
       <input type="hidden" name="next" value="/" />
-	    <button type="submit" class="col-xs-6 btn btn-default">Forgot password?</button>
-	</div>
-	<!-- Left side -->
-	<div class="col-xs-12 col-md-6">
-	  <p>COMING SOON</p>
-	  {% load static %}
-	  <img src="{% static 'registration/img/facebook.png' %}">
-	</div>
+	    <md-button class="col-xs-6 md-raised" type="submit">Forgot password?</md-button>
+    </div>
+
     </div>
   </div>
 </form>

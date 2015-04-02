@@ -321,3 +321,25 @@ This CSS is from the following site: http://www.bootply.com/74926 */
     color: red;
 /*#6D6E70;*/
 }
+
+.fb-like {
+  padding-bottom: 5px;
+}
+
+.twitter-share-button {
+  width: 150px;
+}
+
+.tabsdemoStaticTabs .sample {
+  height: 450px;
+}
+.tabsdemoStaticTabs .sample md-tab-content {
+  padding: 25px;
+}
+.md-tab-label {
+  background-color: #42A5F5;
+}
+
+.dropdown-backdrop{
+  position: static;
+}

@@ -11,7 +11,7 @@
 	<div class="user-div">
 	{% if user.is_authenticated and profile.user == user %}
 	<form id="editFrm" method="get" action="/user/edit/{{ profile.user.id }}/">
-		<button type="submit" class="btn btn-default">Edit Profile</button>
+		<md-button class="md-raised md-button" type="submit">Edit Profile</md-button>
 	</form>
 	{% endif %}
 		<div class="prof-thumbnail img-thumbnail">
@@ -25,9 +25,9 @@
 			{% endif %}
 		</div>
 		<h1 class="username">{{ profile.user.username }}</h1>
-		
+
 	</div>
-	
+
 	<hr>
 	<div class="aboutMe">
 		<h2>About Me:</h2>
