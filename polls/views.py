@@ -10,7 +10,7 @@ import time
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 
-from polls.models import Poll, Category, Choice, Comment, Vote, Like
+from polls.models import Poll, Category, Choice, Comment, Vote, Like, NegativeVote
 import json
 
 
@@ -166,9 +166,13 @@ def get_poll_timeline(request, poll_id):
             end_date = start_date + datetime.timedelta( days=1 ) 
             vote_list = Vote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, end_date))
             total_choice = 0
+            total_neg = 0
             for vote in vote_list:
                 total_choice = total_choice + 1
-            count_list.append([time.mktime(date.timetuple()), total_choice])
+            neg_vote_list = NegativeVote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, end_date))
+            for vote in neg_vote_list:
+                total_neg = total_neg + 1
+            count_list.append([time.mktime(date.timetuple()), total_choice - total_neg])
         v_json = {'choice': serializers.serialize('json', [ c, ]),'count_list': count_list}
         print v_json
         votes['votes'].append(v_json)
@@ -194,6 +198,7 @@ def change_vote(request):
     p = p[0]
     v = Vote.objects.filter(poll=p, user=request.user)
     v = v[0]
+    v.old = True
     c2 = v.choice
     if c.id == c2.id:
         return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
@@ -201,9 +206,11 @@ def change_vote(request):
     c2.save()
     c.votes = c.votes + 1
     c.save()
-    v.choice = c
-    v.pub_date = datetime.datetime.now()
     v.save()
+    v = Vote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
+    v.save()
+    v2  = NegativeVote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
+    v2.save()
     clist = Comment.objects.filter(choice=c2, user=request.user)
     for co in clist:
         llist = Like.objects.filter(user=request.user, comment=co)
@@ -223,7 +230,11 @@ def delete_vote(request):
     c.votes = c.votes - 1
     c.save()
     
-    v.delete()
+    v.old = True
+    v.save()
+    
+    v2  = NegativeVote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
+    v2.save()
     
     clist = Comment.objects.filter(choice=c, user=request.user)
     for co in clist:
