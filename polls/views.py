@@ -25,6 +25,13 @@ def home(request):
     })
     return HttpResponse(template.render(context))
 
+def sheet(request):
+    template = loader.get_template('polls/bottom-sheet-grid-template.html')
+
+    context = RequestContext(request)
+    
+    return HttpResponse(template.render(context))
+
 def polls(request):
     context = RequestContext(request)
     category_list = Category.objects.all()
