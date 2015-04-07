@@ -6,6 +6,8 @@ urlpatterns = patterns('',
 
     # ex: localhost:8000/
     url(r'^$', views.home, name='home'),
+    
+    url(r'^sheet/$', views.sheet, name='sheet'),
 
     # ex: localhost:8000/polls/   (category selection screen)
     url(r'^polls/$', views.polls, name='polls'),
