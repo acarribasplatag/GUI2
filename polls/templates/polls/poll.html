@@ -226,7 +226,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 
       {% for c in choices %}
       <md-tab id="#{{ c.choice.id }}" ng-disabled="data.secondLocked">
-        <md-tab-label>{{ c.choice.choice_text }} Comments</md-tab-label>
+        <md-tab-label>Comments: {{ c.choice.choice_text }}</md-tab-label>
         <md-tab-template>
           {% if not c.comments %}
 
