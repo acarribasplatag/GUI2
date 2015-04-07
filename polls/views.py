@@ -321,7 +321,7 @@ def create_poll(request):
             # The user will be shown the homepage
 
     # Render the response and send it back!
-            return HttpResponseRedirect("/"+p.category_id+ "/"+p.id+"/")
+            return HttpResponseRedirect("/"+ str(p.category_id) + "/"+ str(p.id) +"/")
         else:
             # The supplied form contained errors - just print them to the terminal.
             print form.errors

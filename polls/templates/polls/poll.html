@@ -10,9 +10,6 @@
 {% block scripts %}
 <!--  Load the pie chart using highcharts -->
 <script>
-
-
-
   	function SecondIndexOf(Val, Str) {
   		var Fst = Str.indexOf(Val);
   		var Snd = Str.indexOf(Val, Fst + 1)
@@ -176,7 +173,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 <div ng-controller="AppCtrl" class="sample" layout="column">
     <md-tabs md-selected="data.selectedIndex">
       <md-tab id="tab1">
-        <md-tab-label>Vote</md-tab-label>
+        <md-tab-label>View Votes</md-tab-label>
         <md-tab-template>
 
           <div id="customcontrol">
@@ -224,7 +221,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 
       {% for c in choices %}
       <md-tab id="#{{ c.choice.id }}" ng-disabled="data.secondLocked">
-        <md-tab-label>{{ c.choice.choice_text }}</md-tab-label>
+        <md-tab-label>Comments: {{ c.choice.choice_text }}</md-tab-label>
         <md-tab-template>
           {% if not c.comments %}
 
