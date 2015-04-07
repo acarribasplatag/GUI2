@@ -32,9 +32,9 @@
 								<td class="change"><a href="/{{ p.category.id }}/{{ p.id }}">{{ p.poll_text }}</a></td>
 								<td>{{ p.pub_date }}</td>
 								<td>
-			                      <md-button href="/freeze_voting/{{p.id}}">Freeze Voting</md-button>
+			                      <md-button href="/freeze_voting/{{ p.category.id }}/{{ p.id }}">Freeze Voting</md-button>
 			                      <md-button type="submit" href="/view_pdf_summary/{{p.id}}">Generate PDF Summary</md-button>
-			                      <md-button class="md-warn" type="submit" href='/delete_poll/{{p.id}}'>Delete Poll</md-button>
+			                      <md-button class="md-warn" type="submit" href='/delete_poll/{{ p.category.id }}/{{ p.id }}'>Delete Poll</md-button>
 								</td>
 							</tr>
 							{% endfor %}

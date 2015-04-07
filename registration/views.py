@@ -22,7 +22,7 @@ from reportlab.platypus.flowables import Spacer
 def myAccount(request):
     context = RequestContext(request)
     polls_list = Poll.objects.filter(user=request.user)
-    votes_list = Vote.objects.filter(user=request.user)
+    votes_list = Vote.objects.filter(user=request.user, old=False)
     
     polls_voted_list = []
     for vote in votes_list:
@@ -139,6 +139,7 @@ def view_pdf_report(request, poll_id):
     styleN = styles['Normal']
     styleH = styles['Heading1']
     styleH2 = styles['Heading2']
+    styleH4 = styles['Heading4']
     width, height = letter
     choices = Choice.objects.filter(poll=poll)
     # Create the PDF object, using the response object as its "file."
@@ -149,10 +150,15 @@ def view_pdf_report(request, poll_id):
     p.wrapOn(c, width, height)
     p.drawOn(c, 100, height - 50, mm)
     
+    p = Paragraph('Owner: ' + poll.user.username, styleH4)
+    
+    p.wrapOn(c, width, height)
+    p.drawOn(c, 100, height - 85, mm)
+    
     p = Paragraph(poll.poll_text, styleH2)
     
     p.wrapOn(c, width, height)
-    p.drawOn(c, 100, height - 100, mm)
+    p.drawOn(c, 100, height - 75, mm)
     
     
     data = []

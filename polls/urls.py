@@ -34,11 +34,11 @@ urlpatterns = patterns('',
     url(r'^contact/', views.contact_us, name='contact_us'),
 
     # ex: localhost:8000/freeze_voting/(category_id)/(poll_id)
-    url(r'^freeze_voting/(?P<poll_id>\d+)/$',
+    url(r'^freeze_voting/(?P<category_id>\d+)/(?P<poll_id>\d+)/$',
         views.freeze_voting, name='freeze_voting'),
 
     # ex: localhost:8000/delete_poll/(category_id)/poll_id/
-    url(r'^delete_poll/(?P<poll_id>\d+)/$',
+    url(r'^delete_poll/(?P<category_id>\d+)/(?P<poll_id>\d+)/$',
         views.delete_poll, name='delete_poll'),
 
     url(r'^vote/$',
