@@ -17,7 +17,7 @@ app.controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet, $location
 	var template_F = 'https://www.facebook.com/dialog/share?app_id=690937737684299&display=popup&href=[URL]&redirect_uri=[REDIR_URL]';
 	var withUrl_F = template_F.replace('[URL]', str);
 	withUrl_F = withUrl_F.replace('[REDIR_URL]', str);
-	var template_T = 'https://twitter.com/intent/tweet&text=Poll%20Portal&url=[URL]';
+	var template_T = 'https://twitter.com/intent/tweet&url=[URL]';
 	var withUrl_T = template_T.replace('[URL]', str);
 	var template_G = 'https://plus.google.com/share?url=[URL]';
 	var withUrl_G = template_G.replace('[URL]', str);
