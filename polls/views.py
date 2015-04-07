@@ -275,7 +275,7 @@ def unlike_comment(request, category_id, poll_id, comment_id):
     l.delete()
     return HttpResponseRedirect("/"+category_id+'/'+poll_id+'/')
 
-def delete_poll(request, poll_id):
+def delete_poll(request, category_id, poll_id):
     p = Poll.objects.get(pk=poll_id)
     p.delete()
     return HttpResponseRedirect("/")
@@ -285,11 +285,11 @@ def about(request):
     context = RequestContext(request)
     return HttpResponse(template.render(context))
 
-def freeze_voting(request, poll_id):
+def freeze_voting(request, category_id, poll_id):
     p = Poll.objects.get(pk=poll_id)
     p.frozen = False if p.frozen else True
     p.save()
-    return HttpResponseRedirect("/1/"+poll_id+"/")
+    return HttpResponseRedirect("/"+category_id+ "/"+poll_id+"/")
 
 def create_poll(request):
     # Get the context from the request.
@@ -308,7 +308,7 @@ def create_poll(request):
             # The user will be shown the homepage
 
     # Render the response and send it back!
-            return poll(request, p.category.id, p.id)
+            return HttpResponseRedirect("/"+p.category_id+ "/"+p.id+"/")
         else:
             # The supplied form contained errors - just print them to the terminal.
             print form.errors
