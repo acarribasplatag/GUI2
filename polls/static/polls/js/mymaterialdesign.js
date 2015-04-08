@@ -4,6 +4,12 @@ var app = angular.module('PollApp', ['ngMaterial']).config(function($mdThemingPr
     .accentPalette('blue');
 });
 
+function share(url, title, winWidth, winHeight) {
+    var winTop = (screen.height / 2) - (winHeight / 2);
+    var winLeft = (screen.width / 2) - (winWidth / 2);
+    window.open(url, title, 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width='+winWidth+',height='+winHeight);
+}
+
 app.config(function($mdIconProvider) {
     $mdIconProvider
     .icon('facebook', 'http://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg', 24)
@@ -17,7 +23,8 @@ app.controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet, $location
 	var template_F = 'https://www.facebook.com/dialog/share?app_id=690937737684299&display=popup&href=[URL]&redirect_uri=[REDIR_URL]';
 	var withUrl_F = template_F.replace('[URL]', str);
 	withUrl_F = withUrl_F.replace('[REDIR_URL]', str);
-	var template_T = 'https://twitter.com/intent/tweet';
+	var template_T = 'https://twitter.com/intent/tweet?hashtags=PollPortal&text=Poll%20Portal&url=[URL]';
+	var withUrl_T = template_T.replace('[URL]', str);
 	var template_G = 'https://plus.google.com/share?url=[URL]';
 	var withUrl_G = template_G.replace('[URL]', str);
 	$scope.items = [ {
@@ -27,7 +34,7 @@ app.controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet, $location
 	}, {
 		name : 'Tweet',
 		icon : 'twitter',
-		href : template_T
+		href : withUrl_T
 	}, {
 		name : 'Google+',
 		icon : 'gplus',
@@ -35,6 +42,8 @@ app.controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet, $location
 	}, ];
 	$scope.listItemClick = function($index) {
 		var clickedItem = $scope.items[$index];
+		share(clickedItem.href,
+				clickedItem.name,580, 400);
 		$mdBottomSheet.hide(clickedItem);
 	};
 });
