@@ -38,7 +38,6 @@ def public_profile(request, user_id):
     try: #try to get user profile
         prof = UserProfile.objects.get(user=u)
     except: # it didn't exist so create one
-        print "profile doesnt exist for " + u + ", creating one now."
         prof = UserProfile(user=u)
         prof.save()
 
