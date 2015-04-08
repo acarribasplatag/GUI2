@@ -145,9 +145,11 @@ def get_poll_chart(request, poll_id):
     return HttpResponse(json.dumps(choices), content_type="application/json")
 
 def get_poll_timeline(request, poll_id):
+    # Get Poll and Choices for poll
     p = Poll.objects.get(pk=poll_id)
     clist = Choice.objects.filter(poll = p)
 
+    # Get a list of all the dates of all the votes
     date_list = Vote.objects.filter(poll=p).datetimes('pub_date', 'day')
     date_list2 = []
     for date in date_list:
@@ -169,31 +171,25 @@ def get_poll_timeline(request, poll_id):
     for c in clist:
         count_list = []
         for date in raw_dates:
-            start_date = date
             end_date = start_date + datetime.timedelta( days=1 )
             vote_list = Vote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, end_date))
+            neg_vote_list = NegativeVote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, end_date))
             total_choice = 0
             total_neg = 0
-            for vote in vote_list:
-                total_choice = total_choice + 1
-            neg_vote_list = NegativeVote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, end_date))
-            for vote in neg_vote_list:
-                total_neg = total_neg + 1
+            total_choice = len(vote_list)
+            total_neg = len(neg_vote_list)
             count_list.append([time.mktime(date.timetuple()), total_choice - total_neg])
         v_json = {'choice': serializers.serialize('json', [ c, ]),'count_list': count_list}
-        print v_json
         votes['votes'].append(v_json)
     return HttpResponse(json.dumps(votes, cls=DjangoJSONEncoder), content_type="application/json")
 
 def vote(request):
     c = Choice.objects.filter(pk=request.POST['cid'])
     c = c[0]
-    print c
     c.votes = c.votes + 1
     c.save()
     p = Poll.objects.filter(pk=request.POST['qid'])
     p = p[0]
-    print p
     v = Vote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
     v.save()
     return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
@@ -236,13 +232,13 @@ def delete_vote(request):
     v = v[0]
     c.votes = c.votes - 1
     c.save()
-    
+
     v.old = True
     v.save()
-    
+
     v2  = NegativeVote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
     v2.save()
-    
+
     clist = Comment.objects.filter(choice=c, user=request.user)
     for co in clist:
         llist = Like.objects.filter(user=request.user, comment=co)
