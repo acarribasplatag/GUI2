@@ -113,6 +113,8 @@ def poll(request, category_id, poll_id):
     if request.user.is_authenticated():
         v = Vote.objects.filter(poll=p, user=request.user)
         voted = False if len(v) == 0 else True
+        for v_i in v:
+            voted = False if v_i.old else True
     else:
         voted = False
     choicelists = []
@@ -128,7 +130,11 @@ def poll(request, category_id, poll_id):
                 likedByUser = 0
             prof = UserProfile.objects.get(user=c.user)
             commentlists.append({'comment': c, 'likedByUser': likedByUser, 'userProfile': prof})
-        votedFor = 1 if voted and v[0].choice == l else 0
+        votedFor = 1 if voted else 0
+        if request.user.is_authenticated():
+            for v_i in v:
+                votedFor = 1 if voted and v_i.choice == l and not v_i.old else 0
+        
         choicelists.append({'choice': l, 'comments': commentlists, 'votedFor': votedFor})
     votedInt = 1 if voted else 0
     context_dict = {'poll': p, 'choices': choicelists, 'voted': votedInt}
@@ -199,12 +205,12 @@ def change_vote(request):
     c = c[0]
     p = Poll.objects.filter(pk=request.POST['qid'])
     p = p[0]
-    v = Vote.objects.filter(poll=p, user=request.user)
+    v = Vote.objects.filter(poll=p, user=request.user, old=False)
     v = v[0]
-    v.old = True
     c2 = v.choice
     if c.id == c2.id:
         return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
+    v.old = True
     c2.votes = c2.votes - 1
     c2.save()
     c.votes = c.votes + 1
@@ -228,7 +234,7 @@ def delete_vote(request):
     c = c[0]
     p = Poll.objects.filter(pk=request.POST['qid'])
     p = p[0]
-    v = Vote.objects.filter(poll=p, user=request.user)
+    v = Vote.objects.filter(poll=p, user=request.user, old=False)
     v = v[0]
     c.votes = c.votes - 1
     c.save()
