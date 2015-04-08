@@ -1,7 +1,8 @@
 <md-bottom-sheet style="position:fixed" class="md-grid">
   <md-list id="poll-sheet">
     <md-item ng-repeat="item in items">
-      <a href="" class="md-grid-item-content" ng-click="listItemClick($index)">
+      <md-button ng-href="{% verbatim %}{{item.href}}{% endverbatim %}" 
+      class="md-grid-item-content" ng-click="listItemClick($index)">
         <md-icon md-svg-src="{% verbatim %}{{item.icon}}{% endverbatim %}"></md-icon>
         <div class="md-grid-text"> {% verbatim %}{{ item.name }}{% endverbatim %} </div>
       </md-button>

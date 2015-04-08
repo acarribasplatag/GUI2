@@ -4,10 +4,8 @@ var app = angular.module('PollApp', ['ngMaterial']).config(function($mdThemingPr
     .accentPalette('blue');
 });
 
-function share(url, title, winWidth, winHeight) {
-    var winTop = (screen.height / 2) - (winHeight / 2);
-    var winLeft = (screen.width / 2) - (winWidth / 2);
-    window.open(url, title, 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width='+winWidth+',height='+winHeight);
+function share(url) {
+    window.location = url;
 }
 
 app.config(function($mdIconProvider) {
@@ -42,8 +40,6 @@ app.controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet, $location
 	}, ];
 	$scope.listItemClick = function($index) {
 		var clickedItem = $scope.items[$index];
-		share(clickedItem.href,
-				clickedItem.name,580, 400);
 		$mdBottomSheet.hide(clickedItem);
 	};
 });
