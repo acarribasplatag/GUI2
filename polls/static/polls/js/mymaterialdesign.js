@@ -67,6 +67,12 @@ app.controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet, $location
 
 app.controller('AppCtrl', function($scope, $timeout, $mdBottomSheet) {
 	  $scope.alert = '';
+	  $scope.selectedIndex = 0;
+	  
+	  $scope.reload = function(tab) {
+		  angular.element('#myChart').highcharts().reflow();
+	  }
+	  
 	  $scope.showGridBottomSheet = function($event) {
 	    $scope.alert = '';
 	    $mdBottomSheet.show({

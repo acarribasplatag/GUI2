@@ -85,7 +85,7 @@
   				total += parseInt(votes);
   			}
   			options.series[0].data = dat;
-  			$('#myChart').highcharts(options);
+  			var chart = $('#myChart').highcharts(options);
   		});
 
   	});
@@ -163,6 +163,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 	  var height = $(window).height() - 200;
 	  $(this).find(".modal-body").css("max-height", height);
 	});
+	
 </script>
 {% endblock %}
 
@@ -173,8 +174,8 @@ $(".modal-wide").on("show.bs.modal", function() {
 {% load humanize %}
 {% load static from staticfiles %}
 <div ng-controller="AppCtrl" class="sample" layout="column">
-    <md-tabs md-selected="data.selectedIndex">
-      <md-tab id="tab1">
+    <md-tabs md-selected="selectedIndex"  md-stretch-tabs="auto">
+      <md-tab id="tab1" md-on-select="reload(tab)">
         <md-tab-label>View Votes</md-tab-label>
         <md-tab-template>
 
@@ -199,7 +200,7 @@ $(".modal-wide").on("show.bs.modal", function() {
                 </form>
               {% endif %}
               </br>
-              <div id="myChart" style="width: 100%;"></div>
+              <div id="myChart" style="width: 100%"></div>
 
             <md-button class="md-primary" ng-click="showGridBottomSheet($event)">
       			<span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share
