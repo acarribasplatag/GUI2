@@ -211,21 +211,22 @@ def change_vote(request):
     if c.id == c2.id:
         return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
     v.old = True
-    c2.votes = c2.votes - 1
-    c2.save()
-    c.votes = c.votes + 1
-    c.save()
     v.save()
-    v = Vote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
-    v.save()
-    v2  = NegativeVote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
+
+    v2 = Vote(poll=p, choice=c, user=request.user, pub_date=datetime.datetime.now())
     v2.save()
+    v3  = NegativeVote(poll=p, choice=c2, user=request.user, pub_date=datetime.datetime.now())
+    v3.save()
     clist = Comment.objects.filter(choice=c2, user=request.user)
     for co in clist:
         llist = Like.objects.filter(user=request.user, comment=co)
         for l in llist:
             l.delete()
         co.delete()
+    c2.votes = c2.votes - 1
+    c2.save()
+    c.votes = c.votes + 1
+    c.save()
 
     return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
 
@@ -236,8 +237,9 @@ def delete_vote(request):
     p = p[0]
     v = Vote.objects.filter(poll=p, user=request.user, old=False)
     v = v[0]
-    c.votes = c.votes - 1
-    c.save()
+    c2 = v.choice
+    if c.id != c2.id:
+        return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
 
     v.old = True
     v.save()
@@ -251,6 +253,9 @@ def delete_vote(request):
         for l in llist:
             l.delete()
         co.delete()
+        
+    c.votes = c.votes - 1
+    c.save()
 
     return HttpResponseRedirect("/"+str(p.category.id)+"/"+request.POST['qid']+"/")
 
