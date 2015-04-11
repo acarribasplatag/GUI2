@@ -178,7 +178,7 @@ def get_poll_timeline(request, poll_id):
         count_list = []
         for date in date_list2:
             tomorrow = date + datetime.timedelta( days=1 )
-            vote_list = Vote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, tomorrow), old=False)
+            vote_list = Vote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, tomorrow))
             neg_vote_list = NegativeVote.objects.filter(poll=p, choice=c, pub_date__range=(start_date, tomorrow))
             total_choice = 0
             total_neg = 0
