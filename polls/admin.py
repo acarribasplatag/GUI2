@@ -50,6 +50,7 @@ class VoteAdmin(admin.ModelAdmin):
         ('Belongs to Poll',  {'fields': ['poll']}),
         ('Belongs to Choice',  {'fields': ['choice']}),
         ('Belongs to User',  {'fields': ['user']}),
+        ('Old',  {'fields': ['old']}),
     ]
 
 admin.site.register(Vote, VoteAdmin)
