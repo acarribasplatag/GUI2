@@ -36,9 +36,9 @@ class UserProfilePicUploadForm(forms.Form):
 
 
 class UserProfileEditForm(forms.Form):
-    avatar = forms.FileField(label="Select New Profile Picture")
-    aboutMe = forms.CharField(widget=forms.Textarea, label="About Me")
-    interests = forms.CharField(widget=forms.Textarea, label="Interests")
+    avatar = forms.FileField(label="Select New Profile Picture", required=False)
+    aboutMe = forms.CharField(widget=forms.Textarea, label="About Me", required=False)
+    interests = forms.CharField(widget=forms.Textarea, label="Interests", required=False)
 
     class Meta:
          fields = ['avatar', 'aboutMe', 'interests']
