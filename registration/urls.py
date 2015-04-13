@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 
 from django.views.generic.edit import CreateView
 from django.contrib.auth import authenticate, login
@@ -6,7 +6,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from registration.forms import PollPortalUserCreationForm
 from registration import views
 
+
 urlpatterns = patterns('',
+
     # Login / logout /register
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
@@ -21,6 +23,10 @@ urlpatterns = patterns('',
         {'post_change_redirect' : '/myAccount/password_change/done/',
         'template_name': 'registration/password_change_form.html'},
         name="password_change"),
+
+    url('^', include('django.contrib.auth.urls')),
+
+
 
     # ex:localhost:8000/myAccount/password_change/done
     url(r'^myAccount/password_change/done/$',
