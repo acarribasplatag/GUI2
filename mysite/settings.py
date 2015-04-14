@@ -19,6 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '74&479nvpwd&#&+y&)*f*faf+tfe_@+pww%d#qgf11wcl+65@h'
 
+LOGIN_REDIRECT_URL = '/myAccount/home'
+
 DEBUG=False
 # DYNO will not be in os eviornment on local but will be on heroku
 if not 'DYNO' in os.environ:
@@ -32,6 +34,11 @@ ALLOWED_HOSTS = ['localhost', 'pollportal.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = (
+				
+				#my apps
+    'polls',
+    'registration',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,9 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'storages',
 
-    #my apps
-    'polls',
-    'registration',
+    
 )
 
 MIDDLEWARE_CLASSES = (
