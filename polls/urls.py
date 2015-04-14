@@ -6,6 +6,7 @@ urlpatterns = patterns('',
 
     # ex: localhost:8000/
     url(r'^$', views.home, name='home'),
+    url(r'^home/$', views.home, name='home'),
     
     url(r'^sheet/$', views.sheet, name='sheet'),
 
