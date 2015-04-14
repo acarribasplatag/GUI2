@@ -68,8 +68,9 @@ def public_profile_edit(request, user_id):
             
             prof.aboutMe = request.POST['aboutMe']
             prof.interests = request.POST['interests']
-            avatar = request.FILES['avatar']
-            prof.avatar = avatar
+            if 'avatar' in request.FILES:
+                avatar = request.FILES['avatar']
+                prof.avatar = avatar
 
             prof.save()
 
