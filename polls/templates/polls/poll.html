@@ -173,55 +173,49 @@ $(".modal-wide").on("show.bs.modal", function() {
 {% block content %}
 {% load humanize %}
 {% load static from staticfiles %}
+
+<div id="customcontrol">
+    <h1 id="poll-text">{{ poll.poll_text }}</h1>
+    <div id="control">
+    {% if user.is_authenticated %}
+      {% if voted == 0 %}
+      <div id="form">
+        <md-button id="btnVote" class="md-raised md-button" data-toggle="modal"
+          data-target="#myModal">Vote Now!</md-button>
+      </div>
+      {% else %}
+        <div id="form">
+          <md-button id="btnVote" class="md-raised" style="background: #4CAF50" data-toggle="modal"
+            data-target="#myModal">Voted</md-button>
+        </div>
+      {% endif %}
+    {% else %}
+      <form id="form" method="LINK" action="/login/">
+        <md-button id="btnVote" type="submit" class="md-raised md-button">Vote Now!</md-button>
+      </form>
+    {% endif %}
+    </br>
+    <div id="myChart" style="width: 100%"></div>
+
+    <div id="form">
+      <md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2">Timeline of Votes</md-button>
+    </div>
+    </br>
+    <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
+      <md-button id="btnVote" type="submit" class="md-raised md-button">PDF Report</md-button>
+    </form>
+    </br>
+    </br>
+    <md-button class="md-primary" ng-click="showGridBottomSheet($event)" style="float: right;">
+      <span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share
+    </md-button>
+    </br>
+  </div>
+</div>
+</br>
+
 <div ng-controller="AppCtrl" class="sample" layout="column">
     <md-tabs md-selected="selectedIndex"  md-stretch-tabs="auto">
-      <md-tab id="tab1">
-        <md-tab-label>View Votes</md-tab-label>
-        <md-tab-template>
-
-          <div id="customcontrol">
-              <h1 id="poll-text">{{ poll.poll_text }}</h1>
-              <div id="control">
-              {% if user.is_authenticated %}
-                {% if voted == 0 %}
-                <div id="form">
-                  <md-button id="btnVote" class="md-raised md-button" data-toggle="modal"
-                    data-target="#myModal">Vote Now!</md-button>
-                </div>
-                {% else %}
-                  <div id="form">
-                    <md-button id="btnVote" class="md-raised" style="background: #4CAF50" data-toggle="modal"
-                      data-target="#myModal">Voted</md-button>
-                  </div>
-                {% endif %}
-              {% else %}
-                <form id="form" method="LINK" action="/login/">
-                  <md-button id="btnVote" type="submit" class="md-raised md-button">Vote Now!</md-button>
-                </form>
-              {% endif %}
-              </br>
-              <div id="myChart" style="width: 100%"></div>
-
-            <md-button class="md-primary" ng-click="showGridBottomSheet($event)">
-      			<span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share
-    		</md-button>
-
-              <div id="form">
-                <md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2">Timeline of Votes</md-button>
-              </div>
-              </br>
-              <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
-                <md-button id="btnVote" type="submit" class="md-raised md-button">PDF Report</md-button>
-              </form>
-              </br>
-              </br>
-          </div>
-        </div>
-
-
-        </md-tab-template>
-      </md-tab>
-
       {% for c in choices %}
       <md-tab id="#{{ c.choice.id }}" ng-disabled="data.secondLocked">
         <md-tab-label>Comments: {{ c.choice.choice_text }}</md-tab-label>
@@ -418,4 +412,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 		</div>
 	</div>
 </div>
+
+</br>
+</br>
 {% endblock %}
