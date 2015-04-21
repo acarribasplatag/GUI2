@@ -20,6 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '74&479nvpwd&#&+y&)*f*faf+tfe_@+pww%d#qgf11wcl+65@h'
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login'
 
 DEBUG=False
 # DYNO will not be in os eviornment on local but will be on heroku

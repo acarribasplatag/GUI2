@@ -24,7 +24,17 @@ urlpatterns = patterns('',
         'template_name': 'registration/password_change_form.html'},
         name="password_change"),
 
-    url('^', include('django.contrib.auth.urls')),
+    url(r'^password_reset/$', 
+        'django.contrib.auth.views.password_reset', 
+        {'post_reset_redirect' : '/password_reset/done/'},
+        name="password_reset"),
+    (r'^password_reset/done/$',
+        'django.contrib.auth.views.password_reset_done'),
+    (r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', 
+     'django.contrib.auth.views.password_reset_confirm',
+     {'post_reset_redirect' : '/reset/done/'}),
+    (r'^reset/done/$', 
+        'django.contrib.auth.views.password_reset_complete'),
 
 
 
