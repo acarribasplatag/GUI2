@@ -11,7 +11,8 @@
 	<div class="user-div">
 	{% if user.is_authenticated and profile.user == user %}
 	<form id="editFrm" method="get" action="/user/edit/{{ profile.user.id }}/">
-		<md-button class="md-raised md-button" type="submit">Edit Profile</md-button>
+		<md-button class="md-raised md-button" type="submit">Edit This Page</md-button>
+		<md-button class="md-raised md-button" href="/myAccount">View Account</md-button>
 	</form>
 	{% endif %}
 		<div class="prof-thumbnail img-thumbnail">
