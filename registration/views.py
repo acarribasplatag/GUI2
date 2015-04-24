@@ -169,41 +169,47 @@ def view_pdf_report(request, poll_id):
         data.append(choice.votes)
         labels.append(choice.choice_text)
 
-    pie_chart = Drawing(200, 200)
-    pc = Pie()
-    pc.x = 0
-    pc.y = 0
-    pc.width = 200
-    pc.height = 200
-    pc.data = data
-    pc.labels = labels
-    
-    rightMargin=inch/4
-    leftMargin=inch/4
-    topMargin=inch/2
-    bottomMargin=inch/4
-
-    pie_chart.add(pc)
-    renderPDF.draw(pie_chart, c, 200, 475)
-    
-    dataT = [['Choice:', '# of votes:']]
-    
-    for choice in choices:
-        dataT.append([choice.choice_text, choice.votes])
+    if v_t > 0:
+        pie_chart = Drawing(200, 200)
+        pc = Pie()
+        pc.x = 0
+        pc.y = 0
+        pc.width = 200
+        pc.height = 200
+        pc.data = data
+        pc.labels = labels
         
-    t = Table(dataT, colWidths=200)
-    t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),
-                       ('ALIGN',(0,0),(-1,-1),'CENTER'),
-                       ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-                       ('BOX', (0,0), (-1,-1), 0.25, colors.black),
-                       ('BACKGROUND', (0, 0), (1, 0), colors.lightblue),
-                       ]))
-    w, h = t.wrapOn(c, width, height)
-    t.drawOn(c, 100, height - 400 - h, mm)
+        rightMargin=inch/4
+        leftMargin=inch/4
+        topMargin=inch/2
+        bottomMargin=inch/4
     
-    footer = Paragraph(datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S'), styleN)
-    w, h = footer.wrap(width, bottomMargin)
-    footer.drawOn(c, leftMargin, h)
+        pie_chart.add(pc)
+        renderPDF.draw(pie_chart, c, 200, 475)
+        
+        dataT = [['Choice:', '# of votes:']]
+        
+        for choice in choices:
+            dataT.append([choice.choice_text, choice.votes])
+            
+        t = Table(dataT, colWidths=200)
+        t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),
+                           ('ALIGN',(0,0),(-1,-1),'CENTER'),
+                           ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+                           ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+                           ('BACKGROUND', (0, 0), (1, 0), colors.lightblue),
+                           ]))
+        w, h = t.wrapOn(c, width, height)
+        t.drawOn(c, 100, height - 400 - h, mm)
+        
+        footer = Paragraph(datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S'), styleN)
+        w, h = footer.wrap(width, bottomMargin)
+        footer.drawOn(c, leftMargin, h)
+    else:
+        p = Paragraph('No Votes', styleH4)
+    
+        p.wrapOn(c, width, height)
+        p.drawOn(c, 100, height - 100, mm)
     # Close the PDF object cleanly, and we're done.
     c.showPage()
     c.save()
