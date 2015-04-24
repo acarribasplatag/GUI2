@@ -12,11 +12,40 @@ class CreatePollForm(forms.Form):
         list2.append((i, bar.category_text))
         i = i+1
     category = forms.ChoiceField(choices=list2, required=True, error_messages={'required': 'This field is required.'})
-    choices = forms.CharField(label= 'Choices (comma-separated)', widget=forms.Textarea, error_messages={'required': 'This field is required.'})
+    choices = forms.CharField(required=True, label= 'Choices (comma-separated)', widget=forms.Textarea, error_messages={'required': 'This field is required.'})
 
     def __init__(self, *args, **kwargs):
         super(CreatePollForm, self).__init__(*args, **kwargs)
         self.fields['category'].choices = self.getCats()
+        
+    def clean_choices(self):
+        print 'This method was called!'
+        data = self.cleaned_data['choices']
+        choices = [x.strip() for x in data.split(',')]
+        choices2 = []
+        for c in choices:
+            print c
+            strippedString = c.strip()
+            if not strippedString:
+                raise forms.ValidationError("Choices cannot be empty")
+            c2 = c.lower()
+            choices2.append(c2)
+            print c2
+        print self.has_duplicates(choices2)
+        if self.has_duplicates(choices2):
+            print 'Nonunique'
+            raise forms.ValidationError("All choices must be unique")
+
+        # Always return the cleaned data, whether you have changed it or
+        return data
+    
+    def has_duplicates(self, values):
+    # For each element, check all following elements for a duplicate.
+        for i in range(0, len(values)):
+            for x in range(i + 1, len(values)):
+                if values[i] == values[x]:
+                    return True
+        return False
 
     def save(self, request):
         data = self.cleaned_data
