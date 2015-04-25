@@ -4,16 +4,21 @@
 	 UMass Lowell, GUI II
 -->
 
-{% extends "polls/base.html" %} {% block content %}
+{% extends "polls/base.html" %} 
+
+<!-- Content to be inserted into body of base.html -->
+{% block content %}
 
 <div class="jumbotron">
 	{% load static from staticfiles %}
 	<div class="user-div">
 	{% if user.is_authenticated and profile.user == user %}
+	<!-- if you're logged in and viewing your own profile, show an edit button -->
 	<form id="editFrm" method="get" action="/user/edit/{{ profile.user.id }}/">
 		<md-button class="md-raised md-button" type="submit">Edit Profile</md-button>
 	</form>
 	{% endif %}
+		<!-- Show a profile picture -->
 		<div class="prof-thumbnail img-thumbnail">
 			{% if profile.avatar %}
 			<a href="{{ profile.avatar.url }}" class=".thumbnail">
@@ -31,15 +36,18 @@
 			</a>
 			{% endif %}
 		</div>
+		<!-- Username -->
 		<h1 class="username">{{ profile.user.username }}</h1>
 
 	</div>
 
 	<hr>
+	<!-- About Me -->
 	<div class="aboutMe">
 		<h2>About Me:</h2>
 		{% autoescape off %}{{ profile.aboutMe }}{% endautoescape %}
 	</div>
+	<!-- Interests -->
 	<div class="aboutMe">
 		<h2>Interests:</h2>
 		{% autoescape off %}{{ profile.interests }}{% endautoescape %}

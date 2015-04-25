@@ -21,6 +21,7 @@ $(document).ready(function(){
 <div class="jumbotron">
   <h1>Select a Poll</h1>
 
+  <!-- Create a poll works if user is logged in, else it redirects them to login -->
   <div class="row">
     {% if user.is_authenticated %}
     <form id="createFrm" method="LINK" action="/create_poll/">
@@ -63,6 +64,7 @@ $(document).ready(function(){
         <!-- These are the tabs for all the categories. -->
         {% for c in categories %}
         <div class="tab-pane" id="{{ c.category.category_text }}">
+        <!-- for each poll in that category-->
         	{% for poll in c.polls %}
           {% if c.category == poll.poll.category %}
           <div class="col-lg-4 col-sm-6 col-xs-12">

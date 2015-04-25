@@ -1,3 +1,5 @@
+# This file contains the urls for the site and the views loaded on navigation to those urls
+
 from django.conf.urls import patterns, url, include
 
 from django.views.generic.edit import CreateView
