@@ -10,12 +10,17 @@
 {% block scripts %}
 <!--  Load the pie chart using highcharts -->
 <script>
+	// get the second index of a value in a string
   	function SecondIndexOf(Val, Str) {
   		var Fst = Str.indexOf(Val);
   		var Snd = Str.indexOf(Val, Fst + 1)
   		return Snd
   	}
+	
+	
   	$(function() {
+  		
+  		// pie chart options variable
   		var options = {
   			chart : {
   				plotBackgroundColor : null,
@@ -57,6 +62,7 @@
   			},
   			series : [ {} ]
   		};
+  		// using AJAX, get the JSON from the URL
   		var req_url = document.location.origin;
   		req_url = req_url + "/get_chart/";
   		console.log({{ category }});
@@ -70,9 +76,13 @@
   		var input = document.getElementById("qid");
   		input.setAttribute("value", current);
   		req_url = req_url + current;
+  		// creating the chart from the JSON data
   		$.getJSON(req_url, function(data) {
+  			// set chart title to poll text
   			options.title.text = data['poll'][0]['question_text'];
+  			// set chart type
   			options.series[0].type = 'pie';
+  			// set chart data
   			var choices = data['choices'];
   			var total = 0;
   			var dat = [];
@@ -86,6 +96,7 @@
   				total += parseInt(votes);
   			}
   			options.series[0].data = dat;
+  			// create the chart
   			var chart = $('#myChart').highcharts(options);
   		});
 
@@ -93,6 +104,7 @@
   </script>
 <script>
 $(function () {
+	// timeline options variable
 	var options = {
   			chart : {
   				plotBackgroundColor : null,
@@ -123,6 +135,7 @@ $(function () {
   			},
   			series: []
   		};
+		// using AJAX, get the JSON from the URL
   		var req_url = document.location.origin;
   		req_url = req_url + "/get_timeline/";
   		console.log({{ category }});
@@ -136,9 +149,11 @@ $(function () {
   		current = current.substring(1);
   		current = current.substring(0, current.indexOf('/'));
   		req_url = req_url + current;
+  		// creating the timeline from the JSON data
   		$.getJSON(req_url, function(data) {
   			console.log("Bla");
   			console.log(data);
+  			// create a new data point for each vote 
   			var votes = data['votes'];
   			for (var i = 0 ; i < votes.length ; i++) {
   				var vote = votes[i];
@@ -154,12 +169,15 @@ $(function () {
   				};
   				options.series.push(s);
   			}
+  			
+  			// create timeline with HighStock
   			$('#myTimeline').highcharts('StockChart', options);
   		});
 
   	});
 </script>
 <script>
+// make modal dialog responsive
 $(".modal-wide").on("show.bs.modal", function() {
 	  var height = $(window).height() - 200;
 	  $(this).find(".modal-body").css("max-height", height);
@@ -175,6 +193,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 {% load humanize %}
 {% load static from staticfiles %}
 
+<!-- div for pie chart and vote button -->
 <div id="customcontrol">
     <h1 id="poll-text">{{ poll.poll_text }}</h1>
     <div id="control">
@@ -196,17 +215,21 @@ $(".modal-wide").on("show.bs.modal", function() {
       </form>
     {% endif %}
     </br>
+    <!-- Div for pie chart -->
     <div id="myChart" style="width: 100%"></div>
 
+	<!-- View Timeline -->
     <div id="form">
       <md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2">Timeline of Votes</md-button>
     </div>
     </br>
+    <!-- View PDF Summary -->
     <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
       <md-button id="btnVote" type="submit" class="md-raised md-button">PDF Report</md-button>
     </form>
     </br>
     </br>
+    <!-- View share bottom sheet -->
     <md-button class="md-primary" ng-click="showGridBottomSheet($event)" style="float: right;">
       <span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share
     </md-button>
@@ -215,6 +238,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 </div>
 </br>
 
+<!-- Tabs showing the comments for each choice of the poll -->
 <div ng-controller="AppCtrl" class="sample" layout="column">
     <md-tabs md-selected="selectedIndex"  md-stretch-tabs="auto">
       {% for c in choices %}
@@ -223,74 +247,74 @@ $(".modal-wide").on("show.bs.modal", function() {
         <md-tab-template>
           {% if not c.comments %}
 
-        <div class="well comment">
-          <p> No comments. </p>
-        </div>
-        {% else %}
+		        <div class="well comment">
+		          <p> No comments. </p>
+		        </div>
+        	{% else %}
 
-        {% for co in c.comments %}
-        <div class="well comment">
-        {% if user == co.comment.user %}
-          <form id="delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
-            <button type="submit" class="close"
-            aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </form>
-        {% endif %}
-          <div class="user-div">
-            <div class="prof-thumbnail img-thumbnail">
-              {% if co.userProfile.avatar %}
-              <a href="{{ co.userProfile.avatar.url }}" class=".thumbnail">
-                <img src="{{ co.userProfile.avatar.url }}"
-                alt="{{ co.comment.user.username }}'s profile picture"
-                class="img profile-pic">
-              </a>
-              {% else %}
-			<a href="" class=".thumbnail">
-				<img
-				src= "{% static 'polls/img/default_profile.jpg' %}"
-				alt="{{ co.comment.user.username }}'s profile picture"
-				class="img profile-pic">
-			</a>
-			{% endif %}
-            </div>
-            <p class=username><a href="/user/{{ co.comment.user.id }}/">{{ co.comment.user.username }}</a></p>
-            <p class="pub-date">{{ co.comment.pub_date|naturaltime|capfirst }}</p>
-          </div>
-          <div class="comment-content">
-            {% autoescape off %}{{ co.comment.comment_text }}{% endautoescape %}
-          </div>
-          {% if user.is_authenticated %}
-          {% if co.likedByUser == 0 %}
-          <form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
-            <md-button type="submit" class="md-primary">
-              <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
-            </md-button>
-          </form>
-          {% else %}
-          <form id="like_comment" method="GET" action="/unlike_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
-            <md-button type="submit" class="md-primary">
-              <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Unlike
-            </md-button>
-          </form>
-          {% endif %}
-          {% endif %}
-          {% if co.comment.likes == 0 %}
-          <p>No one liked this comment.</p>
-          {% elif co.comment.likes == 1 and co.likedByUser == 1 %}
-          <p>You liked this comment.</p>
-          {% elif co.comment.likes > 1 and co.likedByUser == 1 %}
-          <p>You and {{ co.comment.likes|add:'-1' }} other people liked this comment.</p>
-          {% elif co.comment.likes == 1 %}
-          <p>1 person liked this comment.</p>
-          {% else %}
-          <p>{{ co.comment.likes }} people liked this comment.</p>
-          {% endif %}
-        </div>
-        {% endfor %}
+		        {% for co in c.comments %}
+		        <div class="well comment">
+		        {% if user == co.comment.user %}
+		          <form id="delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
+		            <button type="submit" class="close"
+		            aria-label="Close">
+		              <span aria-hidden="true">&times;</span>
+		            </button>
+		          </form>
+		        {% endif %}
+		          <div class="user-div">
+		            <div class="prof-thumbnail img-thumbnail">
+		              {% if co.userProfile.avatar %}
+		              <a href="{{ co.userProfile.avatar.url }}" class=".thumbnail">
+		                <img src="{{ co.userProfile.avatar.url }}"
+		                alt="{{ co.comment.user.username }}'s profile picture"
+		                class="img profile-pic">
+		              </a>
+		              {% else %}
+					<a href="" class=".thumbnail">
+						<img
+						src= "{% static 'polls/img/default_profile.jpg' %}"
+						alt="{{ co.comment.user.username }}'s profile picture"
+						class="img profile-pic">
+					</a>
+					{% endif %}
+		            </div>
+		            <p class=username><a href="/user/{{ co.comment.user.id }}/">{{ co.comment.user.username }}</a></p>
+		            <p class="pub-date">{{ co.comment.pub_date|naturaltime|capfirst }}</p>
+		          </div>
+		          <div class="comment-content">
+		            {% autoescape off %}{{ co.comment.comment_text }}{% endautoescape %}
+		          </div>
+		          {% if user.is_authenticated %}
+		          {% if co.likedByUser == 0 %}
+		          <form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
+		            <md-button type="submit" class="md-primary">
+		              <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
+		            </md-button>
+		          </form>
+		          {% else %}
+		          <form id="like_comment" method="GET" action="/unlike_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
+		            <md-button type="submit" class="md-primary">
+		              <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Unlike
+		            </md-button>
+		          </form>
+		          {% endif %}
+		          {% endif %}
+		          {% if co.comment.likes == 0 %}
+		          <p>No one liked this comment.</p>
+		          {% elif co.comment.likes == 1 and co.likedByUser == 1 %}
+		          <p>You liked this comment.</p>
+		          {% elif co.comment.likes > 1 and co.likedByUser == 1 %}
+		          <p>You and {{ co.comment.likes|add:'-1' }} other people liked this comment.</p>
+		          {% elif co.comment.likes == 1 %}
+		          <p>1 person liked this comment.</p>
+		          {% else %}
+		          <p>{{ co.comment.likes }} people liked this comment.</p>
+		          {% endif %}
+		        </div>
+		        {% endfor %}
 
-        {% endif %}
+        	{% endif %}
 
         <!-- If user voted for this choice let them comment under it.  -->
         <!-- ckeditor -->
@@ -395,7 +419,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 	</div>
 </div>
 
-<!-- Modal Dialog for voting-->
+<!-- Modal Dialog for showing timeline-->
 <div class="modal modal-wide fade" id="myModal2" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">

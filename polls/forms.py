@@ -3,8 +3,11 @@ from django import forms
 from polls.models import Category, Poll, Choice, Feedback
 import datetime,json
 
+# form to create polls
 class CreatePollForm(forms.Form):
     poll_text = forms.CharField(label='Poll Text', max_length=300, error_messages={'required': 'This field is required.'})
+    
+    # get list of all category names
     latest_category_list = Category.objects.order_by('category_text')
     list2 = []
     i = 1
@@ -18,6 +21,7 @@ class CreatePollForm(forms.Form):
         super(CreatePollForm, self).__init__(*args, **kwargs)
         self.fields['category'].choices = self.getCats()
         
+    # run validation on choices
     def clean_choices(self):
         print 'This method was called!'
         data = self.cleaned_data['choices']
@@ -39,6 +43,7 @@ class CreatePollForm(forms.Form):
         # Always return the cleaned data, whether you have changed it or
         return data
     
+    # check if the list of choices has duplicates
     def has_duplicates(self, values):
     # For each element, check all following elements for a duplicate.
         for i in range(0, len(values)):
@@ -47,6 +52,7 @@ class CreatePollForm(forms.Form):
                     return True
         return False
 
+    # save the poll
     def save(self, request):
         data = self.cleaned_data
         cat = self.getCategoryWithName(data['category'])
@@ -60,14 +66,15 @@ class CreatePollForm(forms.Form):
             choice.save()
         return topic
 
+    # get a category given a name
     def getCategoryWithName(self, name):
         latest_category_list = Category.objects.order_by('category_text')
         i = 0
         for bar in latest_category_list:
             if int(name)-1==i:
                 return latest_category_list[i]
-            i = i+1
-
+            
+    # get categories
     def getCats(self):
         latest_category_list = Category.objects.order_by('category_text')
         list2 = []
@@ -77,7 +84,7 @@ class CreatePollForm(forms.Form):
             i = i+1
         return list2
 
-
+# form to contact us
 class ContactUsForm(forms.ModelForm):
     class Meta:
     	model = Feedback #this form will create a Feedback object

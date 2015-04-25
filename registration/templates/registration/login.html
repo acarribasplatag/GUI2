@@ -33,6 +33,7 @@
 <!-- This content is inserted into the base.html. -->
 {% block content %}
 
+<!-- If the form has errors, show them. -->
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -41,6 +42,7 @@
   {% csrf_token %}
 
 
+  <!-- This is the form -->
   <div class="jumbotron">
 
     <div class="row">
