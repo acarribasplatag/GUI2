@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.template import RequestContext, loader
 from polls.forms import CreatePollForm, ContactUsForm
 from django.shortcuts import render_to_response
@@ -29,7 +29,7 @@ def sheet(request):
     template = loader.get_template('polls/bottom-sheet-grid-template.html')
 
     context = RequestContext(request)
-    
+
     return HttpResponse(template.render(context))
 
 def polls(request):
@@ -157,11 +157,14 @@ def get_poll_timeline(request, poll_id):
 
     # Get a list of all the dates of all the votes
     date_list = Vote.objects.filter(poll=p).datetimes('pub_date', 'day')
+    if len(date_list) == 0:
+        return HttpResponseNotFound('<h1>Timeline is empty</h1>')
     date_list2 = []
     for date in date_list:
         date2 = date.date()
         date_list2.append(date2)
     votes = {'votes': []}
+
     start_date = date_list2[0]
     end_date = datetime.date.today()
 
