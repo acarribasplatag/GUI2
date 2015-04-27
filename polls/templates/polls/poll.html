@@ -169,12 +169,6 @@ $(".modal-wide").on("show.bs.modal", function() {
 {% block content %}
 {% load humanize %}
 {% load static from staticfiles %}
-<div ng-controller="AppCtrl" class="sample" layout="column">
-    <md-tabs md-selected="data.selectedIndex">
-      <md-tab id="tab1">
-        <md-tab-label>View Votes</md-tab-label>
-        <md-tab-template>
-
           <div id="customcontrol">
               <h1 id="poll-text">{{ poll.poll_text }}</h1>
               <div id="control">
@@ -202,12 +196,10 @@ $(".modal-wide").on("show.bs.modal", function() {
               </br>
               <div id="myChart" style="width: 100%;"></div>
 
-            <md-button class="md-primary" ng-click="showGridBottomSheet($event)">
-      			Share
-    		</md-button>
+              <md-button class="md-primary" ng-click="showGridBottomSheet($event)" style="float:right;">Share</md-button>
 
               <div id="form">
-                <md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2">Timeline of Votes</md-button>
+                <md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2" style="clear:right;">Timeline of Votes</md-button>
               </div>
               </br>
               <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
@@ -219,8 +211,8 @@ $(".modal-wide").on("show.bs.modal", function() {
         </div>
 
 
-        </md-tab-template>
-      </md-tab>
+      <div ng-controller="AppCtrl" class="sample" layout="column">
+          <md-tabs md-selected="data.selectedIndex">
 
       {% for c in choices %}
       <md-tab id="#{{ c.choice.id }}" ng-disabled="data.secondLocked">
