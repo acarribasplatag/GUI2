@@ -18,7 +18,7 @@ app.config(function($mdIconProvider) {
     .icon('email', 'http://upload.wikimedia.org/wikipedia/commons/b/b1/Email_Shiny_Icon.svg', 24);
 });
 
-app.controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet, $location) {
+app.controller('LeftCtrl', function ($scope, $timeout, $location, $mdSidenav, $log) {
 	var currentUrl = $location.absUrl();
 	var str = encodeURIComponent(currentUrl);
 	var template_F = 'https://www.facebook.com/dialog/share?app_id=690937737684299&display=popup&href=[URL]&redirect_uri=[REDIR_URL]';
@@ -59,28 +59,32 @@ app.controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet, $location
 		icon: 'email',
 		href: withUrl_email
 	} ];
-	$scope.listItemClick = function($index) {
-		var clickedItem = $scope.items[$index];
-		$mdBottomSheet.hide(clickedItem);
-	};
-});
+    $scope.close = function () {
+        $mdSidenav('left').close()
+          .then(function () {
+            $log.debug("close LEFT is done");
+          });
+      };
+    });
 
-app.controller('AppCtrl', function($scope, $timeout, $mdBottomSheet) {
+app.controller('AppCtrl', function($scope, $timeout, $mdSidenav, $mdUtil, $log) {
 	  $scope.alert = '';
 	  $scope.selectedIndex = 0;
+	  $scope.toggleLeft = buildToggler('left');
+	  
+	  function buildToggler(navID) {
+	      var debounceFn =  $mdUtil.debounce(function(){
+	            $mdSidenav(navID)
+	              .toggle()
+	              .then(function () {
+	                $log.debug("toggle " + navID + " is done");
+	              });
+	          },300);
+	      return debounceFn;
+	    }
 	  
 	  $scope.reload = function(tab) {
 		  angular.element('#myChart').highcharts().reflow();
-	  }
-	  
-	  $scope.showGridBottomSheet = function($event) {
-	    $scope.alert = '';
-	    $mdBottomSheet.show({
-	      templateUrl: '/sheet/',
-	      controller: 'GridBottomSheetCtrl',
-	      targetEvent: $event
-	    }).then(function(clickedItem) {
-	      $scope.alert = clickedItem.name + ' clicked!';
-	    });
 	  };
+	  
 	})

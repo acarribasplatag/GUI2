@@ -196,7 +196,9 @@ $(".modal-wide").on("show.bs.modal", function() {
               </br>
               <div id="myChart" style="width: 100%;"></div>
 
-              <md-button class="md-primary" ng-click="showGridBottomSheet($event)" style="float:right;">Share</md-button>
+              <md-button class="md-primary" ng-click="toggleLeft()" style="float:right;">
+              <span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share
+              </md-button>
 
               <div id="form">
                 <md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2" style="clear:right;">Timeline of Votes</md-button>
@@ -320,6 +322,23 @@ $(".modal-wide").on("show.bs.modal", function() {
       </md-tab>
       {% endfor %}
       </md-tabs>
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="false" flex>
+      <md-toolbar class="md-theme-blue">
+        <h1 class="md-toolbar-tools" id="share-top">Share</h1>
+      </md-toolbar>
+      <md-content layout-padding ng-controller="LeftCtrl">
+        <md-list id="poll-sheet">
+    		<md-item ng-repeat="item in items">
+      			<md-button ng-href="{% verbatim %}{{item.href}}{% endverbatim %}" 
+      						class="md-list-item-content">
+        			<md-icon md-svg-src="{% verbatim %}{{item.icon}}{% endverbatim %}"></md-icon>
+        			<span class="md-inline-list-icon-label"> {% verbatim %}{{ item.name }}{% endverbatim %} </span>
+      			</md-button>
+      			<br/>
+    		</md-item>
+  		</md-list>
+      </md-content>
+    </md-sidenav>
     </div>
 
 <!-- Modal Dialog for voting-->
@@ -410,4 +429,6 @@ $(".modal-wide").on("show.bs.modal", function() {
 		</div>
 	</div>
 </div>
+
+
 {% endblock %}

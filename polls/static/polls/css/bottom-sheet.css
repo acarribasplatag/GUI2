@@ -1,4 +1,11 @@
-#poll-sheet .md-grid-item-content md-icon {
+#poll-sheet .md-list-item-content md-icon {
   height: 48px;
   width: 48px; 
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+#share-top {
+    margin-top: 5px;
 }
