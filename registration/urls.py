@@ -8,7 +8,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from registration.forms import PollPortalUserCreationForm
 from registration import views
 
-
 urlpatterns = patterns('',
 
     # Login / logout /register
@@ -37,8 +36,6 @@ urlpatterns = patterns('',
      {'post_reset_redirect' : '/reset/done/'}),
     (r'^reset/done/$', 
         'django.contrib.auth.views.password_reset_complete'),
-
-
 
     # ex:localhost:8000/myAccount/password_change/done
     url(r'^myAccount/password_change/done/$',

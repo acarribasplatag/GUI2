@@ -2,6 +2,7 @@ from django.contrib import admin
 from polls.models import Poll, Category, Choice, Comment, Vote, Like, Feedback,\
     NegativeVote
 
+# This file determines what you can see on the admin page. (/admin)
 
 class CategoryAdmin(admin.ModelAdmin):
     fieldsets = [
