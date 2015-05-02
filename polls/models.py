@@ -20,6 +20,7 @@ class Poll(models.Model):
     category = models.ForeignKey(Category) # A poll belongs to a category.
     user = models.ForeignKey(User) # The poll keeps track of which user created it.
     frozen = models.BooleanField(default=False) # If it is frozen it will not accept votes.
+    pub_date = models.DateTimeField('date published')
     def __unicode__(self):               # __str__ on Python 3
         return self.poll_text
     # This method of a poll will tell us if it was published recently. 
