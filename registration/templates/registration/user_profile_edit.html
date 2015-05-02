@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <!-- Developed By: Virinchi Balabhadrapatruni
-	 Date:  3/7/2015
-	 UMass Lowell, GUI II
--->
+     Date:  3/7/2015
+     UMass Lowell, GUI II
+     
+     This is were the user edits his/her profile. 
+  -->
 
 {% extends "polls/base.html" %} {% block content %}
-
+<!-- Where the content of the page is -->
 <div class="jumbotron">
-	<h1>Edit Profile:</h1>
-	<hr>
-	<div id="editInfo">
-		<form action="/user/edit/{{ user.id }}/" method="post" enctype="multipart/form-data">
-			{% csrf_token %}
-			{% for field in form %}
-			{% if field.name == "avatar" %}
-			<div id="img-upload">
-				<p>{{ field.label }}:</p>
-				<input name="{{ field.name }}" id="id_{{ field.name }}" type="file">
-			</div>
-			{% else %}
-			<div id="textarea_{{ field.name }}">
-				<p>{{ field.label }}:</p>
-				<textarea name="{{ field.name }}" id="editor_{{ field.name }}" rows="10" cols="80"></textarea>
-				<script>
-					// Replace the <textarea id="editor1"> with a CKEditor
-					// instance, using default configuration.
-					CKEDITOR.replace('editor_{{ field.name }}');
-					CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV;
-				</script>
-			</div>
-			{% endif %}
-			<br>
-			{% endfor %}
-			<md-button class="md-raised md-primary" type="submit">Submit</button>
-		</form>
-	</div>
-	
+  <h1>Edit Profile:</h1>
+  <hr>
+  <!-- Edit information -->
+  <div id="editInfo">
+    <form action="/user/edit/{{ user.id }}/" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+      {% if field.name == "avatar" %}
+      <!-- User upload picture -->
+      <div id="img-upload">
+	<p>{{ field.label }}:</p>
+	<input name="{{ field.name }}" id="id_{{ field.name }}" type="file">
+      </div>
+      {% else %}
+      <div id="textarea_{{ field.name }}">
+	<p>{{ field.label }}:</p>
+	<textarea name="{{ field.name }}" id="editor_{{ field.name }}" rows="10" cols="80"></textarea>
+	<script>
+	  // Replace the <textarea id="editor1"> with a CKEditor
+	    // instance, using default configuration.
+	    CKEDITOR.replace('editor_{{ field.name }}');
+	    CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV;
+	</script>
+      </div>
+      {% endif %}
+      <br>
+      {% endfor %}
+      <!-- submit button -->
+      <md-button class="md-raised md-primary" type="submit">Submit</button>
+    </form>
 </div>
 {% endblock %}

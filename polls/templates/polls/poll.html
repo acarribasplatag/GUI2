@@ -1,7 +1,9 @@
 <!-- Developed By: Virinchi Balabhadrapatruni
 	 Date:  1/30/2015
 	 UMass Lowell, GUI II
--->
+
+	 This is the poll page. 
+  -->
 
 {% extends "polls/base.html" %}
 
@@ -10,264 +12,275 @@
 {% block scripts %}
 <!--  Load the pie chart using highcharts -->
 <script>
-  	function SecondIndexOf(Val, Str) {
-  		var Fst = Str.indexOf(Val);
-  		var Snd = Str.indexOf(Val, Fst + 1)
-  		return Snd
-  	}
-  	$(function() {
-  		var options = {
-  			chart : {
-  				plotBackgroundColor : null,
-  				plotBorderWidth : null,
-  				plotShadow : false,
-
-  			},
-  			title : {
-  				text : null
-  			},
-  			tooltip : {
-  				pointFormat : '{point.y} votes, {point.percentage:.1f}%'
-  			},
-  			exporting : {
-  				enabled : false
-  			},
-  			credits: {
-  			    enabled: false
-  			},
-  			plotOptions : {
-  				pie : {
-  					allowPointSelect : true,
-  					cursor : 'pointer',
-  					dataLabels : {
-  						enabled : false
-  					},
-  					showInLegend: true
-  				},
-  				series : {
-  					point : {
-  						events : {
-  							click : function() {
-  								// prepare the div for viewing first
-
-  							}
-  						}
-  					}
-  				}
-  			},
-  			series : [ {} ]
-  		};
-  		var req_url = document.location.origin;
-  		req_url = req_url + "/get_chart/";
-  		console.log({{ category }});
-  		var current = document.location.pathname
-  		current = current.substring(1);
-  		while (current.indexOf('/') != 0) {
-  			current = current.substring(1);
-  		}
-  		current = current.substring(1);
-  		current = current.substring(0, current.indexOf('/'));
-  		var input = document.getElementById("qid");
-  		input.setAttribute("value", current);
-  		req_url = req_url + current;
-  		$.getJSON(req_url, function(data) {
-  			options.title.text = data['poll'][0]['question_text'];
-  			options.series[0].type = 'pie';
-  			var choices = data['choices'];
-  			var total = 0;
-  			var dat = [];
-
-  			for (var i=0; i<choices.length; i++) {
-  				var r = JSON.parse(choices[i]);
-  				var text = r[0]['fields']['choice_text'];
-  				var votes = r[0]['fields']['votes'];
-  				var row = [text, parseInt(votes)];
-  				dat.push(row);
-  				total += parseInt(votes);
-  			}
-  			options.series[0].data = dat;
-  			$('#myChart').highcharts(options);
-  		});
-
-  	});
-  </script>
+  function SecondIndexOf(Val, Str) {
+  var Fst = Str.indexOf(Val);
+  var Snd = Str.indexOf(Val, Fst + 1)
+  return Snd
+  }
+  $(function() {
+  var options = {
+  chart : {
+  plotBackgroundColor : null,
+  plotBorderWidth : null,
+  plotShadow : false,
+  
+  },
+  title : {
+  text : null
+  },
+  tooltip : {
+  pointFormat : '{point.y} votes, {point.percentage:.1f}%'
+  },
+  exporting : {
+  enabled : false
+  },
+  credits: {
+  enabled: false
+  },
+  plotOptions : {
+  pie : {
+  allowPointSelect : true,
+  cursor : 'pointer',
+  dataLabels : {
+  enabled : false
+  },
+  showInLegend: true
+  },
+  series : {
+  point : {
+  events : {
+  click : function() {
+  // prepare the div for viewing first
+  
+  }
+  }
+  }
+  }
+  },
+  series : [ {} ]
+  };
+  var req_url = document.location.origin;
+  req_url = req_url + "/get_chart/";
+  console.log({{ category }});
+  var current = document.location.pathname
+  current = current.substring(1);
+  while (current.indexOf('/') != 0) {
+  current = current.substring(1);
+  }
+  current = current.substring(1);
+  current = current.substring(0, current.indexOf('/'));
+  var input = document.getElementById("qid");
+  input.setAttribute("value", current);
+  req_url = req_url + current;
+  $.getJSON(req_url, function(data) {
+  options.title.text = data['poll'][0]['question_text'];
+  options.series[0].type = 'pie';
+  var choices = data['choices'];
+  var total = 0;
+  var dat = [];
+  
+  for (var i=0; i<choices.length; i++) {
+  				  var r = JSON.parse(choices[i]);
+  				  var text = r[0]['fields']['choice_text'];
+  				  var votes = r[0]['fields']['votes'];
+  				  var row = [text, parseInt(votes)];
+  				  dat.push(row);
+  				  total += parseInt(votes);
+  				  }
+  				  options.series[0].data = dat;
+  				  $('#myChart').highcharts(options);
+  				  });
+				  
+  				  });
+				  </script>
 <script>
-$(function () {
-	var options = {
-  			chart : {
-  				plotBackgroundColor : null,
-  				plotBorderWidth : null,
-  				plotShadow : false,
-
+  $(function () {
+  var options = {
+  chart : {
+  plotBackgroundColor : null,
+  plotBorderWidth : null,
+  plotShadow : false,
+  
+  },
+  rangeSelector : {
+  enabled:true,
+  selected : 1
+  },
+  scrollBar:{
+  enabled:true
+  },
+  title : {
+  text : 'Timeline of Votes'
+  },
+  
+  tooltip: {
+  shared: true,
+  useHTML: true
+  },
+  exporting : {
+  enabled : false
+  },
+  credits: {
+  enabled: false
   			},
-  			rangeSelector : {
-  				enabled:true,
-                selected : 1
-            },
-  			scrollBar:{
-                enabled:true
-            },
-  			title : {
-  				text : 'Timeline of Votes'
-  			},
-
-  	        tooltip: {
-  	            shared: true,
-  	            useHTML: true
-  	        },
-  			exporting : {
-  				enabled : false
-  			},
-  			credits: {
-  			    enabled: false
-  			},
-  			series: []
-  		};
-  		var req_url = document.location.origin;
-  		req_url = req_url + "/get_timeline/";
-  		console.log({{ category }});
-  		var current = document.location.pathname
-  		current = current.substring(1);
-  		while (current.indexOf('/') != 0) {
-  			current = current.substring(1);
-  		}
-  		current = current.substring(1);
-  		current = current.substring(0, current.indexOf('/'));
-  		req_url = req_url + current;
-  		$.getJSON(req_url, function(data) {
-  			console.log(data);
-  			var votes = data['votes'];
-  			for (var i = 0 ; i < votes.length ; i++) {
-  				var vote = votes[i];
-  				var choice = JSON.parse(vote['choice']);
-  				var dat = vote['count_list'];
-  				console.log(dat);
-  				for (var j = 0 ; j < dat.length ; j++) {
-  					dat[j][0] =  dat[j][0] * 1000;
-  				}
-  				var s = {
-  					name: choice[0]['fields']['choice_text'],
-  					data: dat
-  				};
-  				options.series.push(s);
-  			}
-  			$('#myTimeline').highcharts('StockChart', options);
-  		});
-
-  	});
-</script>
+  series: []
+  };
+  var req_url = document.location.origin;
+  req_url = req_url + "/get_timeline/";
+  console.log({{ category }});
+  var current = document.location.pathname
+  current = current.substring(1);
+  while (current.indexOf('/') != 0) {
+  current = current.substring(1);
+  }
+  current = current.substring(1);
+  current = current.substring(0, current.indexOf('/'));
+  req_url = req_url + current;
+  $.getJSON(req_url, function(data) {
+  console.log(data);
+  var votes = data['votes'];
+  for (var i = 0 ; i < votes.length ; i++) {
+  		       var vote = votes[i];
+  		       var choice = JSON.parse(vote['choice']);
+  		       var dat = vote['count_list'];
+  		       console.log(dat);
+  		       for (var j = 0 ; j < dat.length ; j++) {
+  					    dat[j][0] =  dat[j][0] * 1000;
+  					    }
+  					    var s = {
+  					    name: choice[0]['fields']['choice_text'],
+  					    data: dat
+  					    };
+  					    options.series.push(s);
+  					    }
+  					    $('#myTimeline').highcharts('StockChart', options);
+  					    });
+					    
+  					    });
+					    </script>
 <script>
-$(".modal-wide").on("show.bs.modal", function() {
-	  var height = $(window).height() - 200;
-	  $(this).find(".modal-body").css("max-height", height);
-	});
+  $(".modal-wide").on("show.bs.modal", function() {
+  var height = $(window).height() - 200;
+  $(this).find(".modal-body").css("max-height", height);
+  });
 </script>
 {% endblock %}
-
-
-
+<!-- End of Pie Chart -->
 <!-- Content to be inserted into body of base.html -->
 {% block content %}
 {% load humanize %}
 {% load static from staticfiles %}
-          <div id="customcontrol">
-              <h1 id="poll-text">{{ poll.poll_text }}</h1>
-              <div id="control">
-              {% if poll.frozen%}
-                <div id="form">
-                  <md-button id="btnVote" class="md-raised md-primary">Voting is Frozen</md-button>
-                </div>
-              {% elif user.is_authenticated %}
-                {% if voted == 0 %}
-                <div id="form">
-                  <md-button id="btnVote" class="md-raised md-button" data-toggle="modal"
-                    data-target="#myModal">Vote Now!</md-button>
-                </div>
-                {% else %}
-                  <div id="form">
-                    <md-button id="btnVote" class="md-raised" style="background: #4CAF50" data-toggle="modal"
-                      data-target="#myModal">Voted</md-button>
-                  </div>
-                {% endif %}
-              {% else %}
-                <form id="form" method="LINK" action="/login/">
-                  <md-button id="btnVote" type="submit" class="md-raised md-button">Vote Now!</md-button>
-                </form>
-              {% endif %}
-              </br>
-              <div id="myChart" style="width: 100%;"></div>
+<!-- Div for control of poll -->
+<div id="customcontrol">
+  <h1 id="poll-text">{{ poll.poll_text }}</h1>
+  
+  <div id="control">
+    {% if poll.frozen%}
+    <!-- When the poll is frozen -->
+    <div id="form">
+      <md-button id="btnVote" class="md-raised md-primary">Voting is Frozen</md-button>
+    </div>
+    {% elif user.is_authenticated %}
+    {% if voted == 0 %}
+    <!-- Div starts for button "Vote Now" -->
+    <div id="form">
+      <md-button id="btnVote" class="md-raised md-button" data-toggle="modal"
+                 data-target="#myModal">Vote Now!</md-button>
+    </div>
+    {% else %}
+    <!-- This button changes once the user has voted to "Voted"-->
+    <div id="form">
+      <md-button id="btnVote" class="md-raised" style="background: #4CAF50" data-toggle="modal"
+                 data-target="#myModal">Voted</md-button>
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <form id="form" method="LINK" action="/login/">
+      <md-button id="btnVote" type="submit" class="md-raised md-button">Vote Now!</md-button>
+    </form>
+    {% endif %}
+    </br>
+    <div id="myChart" style="width: 100%;"></div>
+    <!-- Share option, on Facebook, Twitter, Google+, Tumblr, Linkedin, and Email -->
+    <md-button class="md-primary" ng-click="toggleLeft()" style="float:right;">
+      <span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share
+    </md-button>
+    <!-- Access the option to see the timeline of certain poll -->
+    <div id="form">
+      <md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2" style="clear:right;">Timeline of Votes</md-button>
+    </div>
+    </br>
+    <!-- Acess the option of PDF report -->
+    <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
+      <md-button id="btnVote" type="submit" class="md-raised md-button">PDF Report</md-button>
+    </form>
+    </br>
+    </br>
+  </div>
+</div>
 
-              <md-button class="md-primary" ng-click="toggleLeft()" style="float:right;">
-              <span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share
-              </md-button>
-
-              <div id="form">
-                <md-button id="btnTimeline" class="md-raised md-button" data-toggle="modal" data-target="#myModal2" style="clear:right;">Timeline of Votes</md-button>
-              </div>
-              </br>
-              <form id="form" method="LINK" action="/view_pdf_summary/{{poll.id}}">
-                <md-button id="btnVote" type="submit" class="md-raised md-button">PDF Report</md-button>
-              </form>
-              </br>
-              </br>
-          </div>
-        </div>
-
-
-      <div ng-controller="AppCtrl" class="sample" layout="column">
-          <md-tabs md-selected="data.selectedIndex">
-
-      {% for c in choices %}
-      <md-tab id="#{{ c.choice.id }}" ng-disabled="data.secondLocked">
-        <md-tab-label>Comments: {{ c.choice.choice_text }}</md-tab-label>
-        <md-tab-template>
-          {% if not c.comments %}
-
+<!-- AngularJS to access controlers -->
+<div ng-controller="AppCtrl" class="sample" layout="column">
+  <md-tabs md-selected="data.selectedIndex">
+    
+    {% for c in choices %}
+    <md-tab id="#{{ c.choice.id }}" ng-disabled="data.secondLocked">
+      <md-tab-label>Comments: {{ c.choice.choice_text }}</md-tab-label>
+      <md-tab-template>
+        {% if not c.comments %}
+	<!-- Div for comments -->
         <div class="well comment">
           <p> No comments. </p>
         </div>
         {% else %}
-
+	<!-- Delete comment -->
         {% for co in c.comments %}
         <div class="well comment">
-        {% if user == co.comment.user %}
+          {% if user == co.comment.user %}
           <form id="delete-comment" method="GET" action="/delete_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
             <button type="submit" class="close"
-            aria-label="Close">
+		    aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </form>
-        {% endif %}
+          {% endif %}
+	  <!-- User's picture -->
           <div class="user-div">
             <div class="prof-thumbnail img-thumbnail">
               {% if co.userProfile.avatar %}
               <a href="{{ co.userProfile.avatar.url }}" class=".thumbnail">
                 <img src="{{ co.userProfile.avatar.url }}"
-                alt="{{ co.comment.user.username }}'s profile picture"
-                class="img profile-pic">
+                     alt="{{ co.comment.user.username }}'s profile picture"
+                     class="img profile-pic">
               </a>
               {% else %}
-			<a href="" class=".thumbnail">
-				<img
-				src= "{% static 'polls/img/default_profile.jpg' %}"
-				alt="{{ co.comment.user.username }}'s profile picture"
-				class="img profile-pic">
-			</a>
-			{% endif %}
+	      <a href="" class=".thumbnail">
+		<img
+		   src= "{% static 'polls/img/default_profile.jpg' %}"
+		   alt="{{ co.comment.user.username }}'s profile picture"
+		   class="img profile-pic">
+	      </a>
+	      {% endif %}
             </div>
+	    <!-- Username on top of comment -->
             <p class=username><a href="/user/{{ co.comment.user.id }}/">{{ co.comment.user.username }}</a></p>
             <p class="pub-date">{{ co.comment.pub_date|naturaltime|capfirst }}</p>
           </div>
-          <div class="comment-content">
+          <!-- Comment content -->
+	  <div class="comment-content">
             {% autoescape off %}{{ co.comment.comment_text }}{% endautoescape %}
           </div>
+	  
           {% if user.is_authenticated %}
           {% if co.likedByUser == 0 %}
-          <form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
+          <!-- Like button -->
+	  <form id="like_comment" method="GET" action="/like_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
             <md-button type="submit" class="md-primary">
               <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
             </md-button>
           </form>
+	  <!-- Change from "LIKE" to "UNLIKE" -->
           {% else %}
           <form id="like_comment" method="GET" action="/unlike_comment/{{ poll.category.id }}/{{ poll.id }}/{{ co.comment.id }}">
             <md-button type="submit" class="md-primary">
@@ -277,158 +290,176 @@ $(".modal-wide").on("show.bs.modal", function() {
           {% endif %}
           {% endif %}
           {% if co.comment.likes == 0 %}
-          <p>No one liked this comment.</p>
+          <!-- Counts how many people have liked this comment -->
+	  <p>No one liked this comment.</p>
           {% elif co.comment.likes == 1 and co.likedByUser == 1 %}
           <p>You liked this comment.</p>
           {% elif co.comment.likes > 1 and co.likedByUser == 1 %}
           <p>You and {{ co.comment.likes|add:'-1' }} other people liked this comment.</p>
-          {% elif co.comment.likes == 1 %}
+	  {% elif co.comment.likes == 1 %}
           <p>1 person liked this comment.</p>
-          {% else %}
+	  {% else %}
           <p>{{ co.comment.likes }} people liked this comment.</p>
-          {% endif %}
-        </div>
-        {% endfor %}
+	  {% endif %}
+</div>
+{% endfor %}
 
-        {% endif %}
+{% endif %}
 
-        <!-- If user voted for this choice let them comment under it.  -->
-        <!-- ckeditor -->
+<!-- If user voted for this choice let them comment under it.  -->
+<!-- ckeditor -->
 
-        {% if voted == 1 and c.votedFor == 1  %}
-          <form id="commentform" action="/new_comment/" method="POST">
-            {% csrf_token %}<input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
-            <div id="textarea">
-              <label for="mycomment">New Comment:</label>
-              <textarea name="mycomment" id="editor1" rows="10" cols="80"></textarea>
-              <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
-                jQuery(document).ready(function() {
-                  if (CKEDITOR.instances['editor1'])
-                    CKEDITOR.instances['editor1'].destroy();
-                  CKEDITOR.replace("editor1")
-                  CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV;
-                 });
-              </script>
-            </div>
-            <div id="submit">
-              <md-button class="md-raised md-primary" type="submit"
-                style="float:right; margin-top: 10px;">Post Comment</md-button>
-            </div>
-          </form>
-        {% endif %}
+{% if voted == 1 and c.votedFor == 1  %}
+<form id="commentform" action="/new_comment/" method="POST">
+  {% csrf_token %}<input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
+  <div id="textarea">
+    <!-- Labell to add new comment -->
+    <label for="mycomment">New Comment:</label>
+    <textarea name="mycomment" id="editor1" rows="10" cols="80"></textarea>
+    <!-- Script to replace with what the user entered -->
+    <script>
+      // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        jQuery(document).ready(function() {
+        if (CKEDITOR.instances['editor1'])
+        CKEDITOR.instances['editor1'].destroy();
+        CKEDITOR.replace("editor1")
+        CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV;
+        });
+    </script>
+  </div>
+  <!-- Submit Comment -->
+  <div id="submit">
+    <md-button class="md-raised md-primary" type="submit"
+               style="float:right; margin-top: 10px;">Post Comment</md-button>
+  </div>
+</form>
+{% endif %}
 
-        </md-tab-template>
-      </md-tab>
-      {% endfor %}
-      </md-tabs>
-      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="false" flex>
-      <md-toolbar class="md-theme-blue">
-        <h1 class="md-toolbar-tools" id="share-top">Share</h1>
-      </md-toolbar>
-      <md-content layout-padding ng-controller="LeftCtrl">
-        <md-list id="poll-sheet">
-    		<md-item ng-repeat="item in items">
-      			<md-button ng-href="{% verbatim %}{{item.href}}{% endverbatim %}" 
-      						class="md-list-item-content">
-        			<md-icon md-svg-src="{% verbatim %}{{item.icon}}{% endverbatim %}"></md-icon>
-        			<span class="md-inline-list-icon-label"> {% verbatim %}{{ item.name }}{% endverbatim %} </span>
-      			</md-button>
-      			<br/>
-    		</md-item>
-  		</md-list>
-      </md-content>
-    </md-sidenav>
-    </div>
+</md-tab-template>
+</md-tab>
+{% endfor %}
+</md-tabs>
+<!-- Side bar to share in different social media networks -->
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="false" flex>
+  <md-toolbar class="md-theme-blue">
+    <h1 class="md-toolbar-tools" id="share-top">Share</h1>
+  </md-toolbar>
+  <md-content layout-padding ng-controller="LeftCtrl">
+    <md-list id="poll-sheet">
+      <md-item ng-repeat="item in items">
+      	<md-button ng-href="{% verbatim %}{{item.href}}{% endverbatim %}" 
+      		   class="md-list-item-content">
+          <md-icon md-svg-src="{% verbatim %}{{item.icon}}{% endverbatim %}"></md-icon>
+          <span class="md-inline-list-icon-label"> {% verbatim %}{{ item.name }}{% endverbatim %} </span>
+      	</md-button>
+      	<br/>
+      </md-item>
+    </md-list>
+  </md-content>
+</md-sidenav>
+</div>
 
 <!-- Modal Dialog for voting-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel">Vote Now!</h4>
-			</div>
-			<div class="modal-body">
-				{% if voted == 0 %}
-				<form action="/vote/" method="POST">
-				{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
-					{% for c in choices %}
-					{% if c.votedFor == 0 %}
-					<input type="radio" name="cid"
-						id="{{ c.choice.id }}" value="{{ c.choice.id }}"> <label
-						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
-					{% else %}
-					<input type="radio" name="cid"
-						id="{{ c.choice.id }}" value="{{ c.choice.id }}" checked> <label
-						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
-					{% endif %}
-					{% endfor %}
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Close"> <input type="submit" value="Vote"
-							class="btn btn-primary" />
-					</div>
-				</form>
-				{% else %}
-				<form action="/change_vote/" method="POST">
-					{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
-					{% for c in choices %}
-					{% if c.votedFor == 0 %}
-					<input type="radio" name="cid"
-						id="{{ c.choice.id }}" value="{{ c.choice.id }}"> <label
-						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
-					{% else %}
-					<input type="radio" name="cid"
-						id="{{ c.choice.id }}" value="{{ c.choice.id }}" checked> <label
-						for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
-					{% endif %}
-					{% endfor %}
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Close"> <input type="submit" value="Vote"
-							class="btn btn-primary" />
-					</div>
-				</form>
-				<form action="/delete_vote/" method="POST">
-					{% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
-					{% for c in choices %}
-					{% if c.votedFor == 1 %}
-					<input type="hidden" name="cid"
-						id="{{ c.choice.id }}" value="{{ c.choice.id }}">
-					{% endif %}
-					{% endfor %}
-					<input type="submit" value="Delete Vote"
-							class="btn btn-danger" />
-				</form>
-				{% endif %}
-			</div>
-		</div>
-	</div>
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal"
+		aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+	</button>
+	<!-- Vote Now! option -->
+	<h4 class="modal-title" id="myModalLabel">Vote Now!</h4>
+      </div>
+      <div class="modal-body">
+	{% if voted == 0 %}
+	<form action="/vote/" method="POST">
+	  {% csrf_token %} <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
+	  {% for c in choices %}
+	  {% if c.votedFor == 0 %}
+	  <input type="radio" name="cid"
+		 id="{{ c.choice.id }}" value="{{ c.choice.id }}"> 
+	  <label for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> 
+	  <br>
+	  {% else %}
+	  <input type="radio" name="cid"
+		 id="{{ c.choice.id }}" value="{{ c.choice.id }}" checked> 
+	  <label for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
+	  {% endif %}
+	  {% endfor %}
+	  <div class="modal-footer">
+	    <input type="button" class="btn btn-default" data-dismiss="modal"
+		   value="Close"> 
+	    <input type="submit" value="Vote"
+		   class="btn btn-primary" />
+	  </div>
+	</form>
+	{% else %}
+
+	<!-- Change vote -->
+	<form action="/change_vote/" method="POST">
+	  {% csrf_token %} 
+	  <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
+	  {% for c in choices %}
+	  {% if c.votedFor == 0 %}
+	  <input type="radio" name="cid"
+		 id="{{ c.choice.id }}" value="{{ c.choice.id }}"> 
+	  <label for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> 
+	  <br>
+	  {% else %}
+	  <input type="radio" name="cid"
+		 id="{{ c.choice.id }}" value="{{ c.choice.id }}" checked> 
+	  <label for="{{ c.choice.id }}">{{ c.choice.choice_text }}</label> <br>
+	  {% endif %}
+	  {% endfor %}
+	  <!-- Submit vote -->
+	  <div class="modal-footer">
+	    <input type="button" class="btn btn-default" data-dismiss="modal"
+		   value="Close"> 
+	    <input type="submit" value="Vote"
+		   class="btn btn-primary" />
+	  </div>
+	</form>
+	<!--- Delete vote -->
+	<form action="/delete_vote/" method="POST">
+	  {% csrf_token %} 
+	  <input id="qid" type="hidden" name="qid" value="{{ poll.id }}">
+	  {% for c in choices %}
+	  {% if c.votedFor == 1 %}
+	  <input type="hidden" name="cid"
+		 id="{{ c.choice.id }}" value="{{ c.choice.id }}">
+	  {% endif %}
+	  {% endfor %}
+	  <!-- Message when they want to delete vote -->
+	  <input type="submit" value="Delete Vote"
+		 class="btn btn-danger" />
+	</form>
+	{% endif %}
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Modal Dialog for voting-->
 <div class="modal modal-wide fade" id="myModal2" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel">Timeline of Votes</h4>
-			</div>
-			<div class="modal-body">
-				<div id="myTimeline" style="display: inline;"></div>
-			</div>
-		</div>
-	</div>
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal"
+		aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+	</button>
+	<!-- Timeline option -->
+	<h4 class="modal-title" id="myModalLabel">Timeline of Votes</h4>
+      </div>
+      <div class="modal-body">
+	<div id="myTimeline" style="display: inline;"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 

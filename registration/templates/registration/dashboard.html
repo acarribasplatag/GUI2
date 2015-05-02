@@ -2,122 +2,127 @@
 <!-- Developed By: Virinchi Balabhadrapatruni
 	 Date:  2/10/2015
 	 UMass Lowell, GUI II
+
+	 This is the dashboard page.
 -->
 
 {% extends "polls/base.html" %} 
 
 <!-- This will be inserted into base.html. -->
 {% block content %}
-
+<!-- Content of the page -->
 <div class="jumbotron">
-	<ol class="breadcrumb">
-	  <li><a href="/user/{{user.id}}">Profile</a></li>
-	  <li><a href="/myAccount">My Account</a></li>
-	</ol>
-
-	<h1>My Account</h1>
-	<!-- A user can also create a poll from his or her account dashboard. -->
-	<form id="createFrm" method="LINK" action="/create_poll/">
-		<md-button class="md-raised md-button" type="submit"> <span
-			class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
-		New Poll </md-button>
-	</form>
-
-	<!-- Account Dashboard tabs -->
-	<div ng-controller="AppCtrl" class="tabsdemoStaticTabs sample">
-		<md-tabs md-selected="2"> <!-- 1st tab: Polls the current user has created -->
-			<md-tab id="tab1"> 
-				<md-tab-label>My Polls</md-tab-label> 
-				<md-tab-template>
-					<!-- Table of polls -->
-					<div class="table">
-						<table class="table-striped" id="topics">
-							<tr>
-								<th>Poll</th>
-								<th>Date created</th>
-								<th class="change">Actions</th>
-							</tr>
-							{% for p in polls %}
-								<tr>
-									<td class="change"><a href="/{{ p.category.id }}/{{ p.id }}">{{ p.poll_text }}</a></td>
-									<td>{{ p.pub_date }}</td>
-									<td><md-button
-											href="/freeze_voting/{{ p.category.id }}/{{ p.id }}">Freeze
-										Voting</md-button> <md-button type="submit" href="/view_pdf_summary/{{p.id}}">Generate
-										PDF Summary</md-button> <md-button class="md-warn" type="submit"
-											href='/delete_poll/{{ p.category.id }}/{{ p.id }}'>Delete
-										Poll</md-button></td>
-								</tr>
-							{% endfor %}
-						</table>
-					</div>
-				</md-tab-template> 
-			</md-tab> 
-			<!-- Second tab for polls the current user has voted on --> 
-			<md-tab id="tab2" ng-disabled="data.secondLocked"> 
-				<md-tab-label>My Votes</md-tab-label> 
-				<md-tab-template>
-					<div class="table">
-						<table class="table-striped" id="topics">
-							<tr>
-								<th>Poll</th>
-								<th>Date created</th>
-								<th class="change">Owner</th>
-							</tr>
-							{% for p in polls_voted %}
-								<tr>
-									<td class="change"><a href="/{{ p.category.id }}/{{ p.id }}">{{ p.poll_text }}</a></td>
-									<td>{{ p.pub_date }}</td>
-									{% if p.user.username == user.username %}
-										<td><a href="/user/{{ p.user.id }}">Me</a></td> {% else %}
-										<td><a href="/user/{{ p.user.id }}">{{ p.user.username }}</a></td>
-									{% endif %}
-								</tr>
-							{% endfor %}
-						</table>
-					</div>
-				</md-tab-template> 
-			</md-tab> 
-			<!-- Third tab for current user's account information --> 
-			<md-tab id="tab3"> 
-				<md-tab-label>My Account</md-tab-label> 
-				<md-tab-template>
-					<form id="createFrm" method="LINK" action="/user/{{ user.id }}/close/">
-						<md-button class="md-warn" type="submit"> <span
-							class="glyphicon glyphicon-remove" aria-hidden="true"></span> Close
-						Account </md-button>
-					</form>
-					<div class="table-responsive">
-						<table class="table-striped" id="accountInfo">
-							<tr>
-								<th>Name:</th>
-								<td>{{ user.get_full_name }}</td>
-							</tr>
-							<tr>
-								<th>Username:</th>
-								<td><a href="/user/{{ user.id }}/">{{ user.username }}</a></td>
-							</tr>
-							<tr>
-								<th>Email Address:</th>
-								<td>{{ user.email }}</td>
-							</tr>
-							<tr>
-								<th>Password:</th>
-								<td>&#x25CF;&#x25CF;&#x25CF;&#x25CF;&#x25CF;&#x25CF;&#x25CF;
-									<form method="LINK" action="/myAccount/password_change/">
-										<md-button class="md-primary" id="changePass" type="submit">Change
-										Password</md-button>
-									</form>
-								</td>
-							</tr>
-							<tr>
-								<th>Date Joined:</th>
-								<td>{{ user.date_joined }}</td>
-							</tr>
-						</table>
-					</div>
-				</md-tab-template> 
-			</md-tab> 
-		</md-tabs>
-	</div>
-	{% endblock %}
+  <!-- Breadcrumb for profile and my account -->
+  <ol class="breadcrumb">
+    <li><a href="/user/{{user.id}}">Profile</a></li>
+    <li><a href="/myAccount">My Account</a></li>
+  </ol>
+  <!-- My accont title -->
+  <h1>My Account</h1>
+  <!-- A user can also create a poll from his or her account dashboard. -->
+  <form id="createFrm" method="LINK" action="/create_poll/">
+    <md-button class="md-raised md-button" type="submit"> 
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Poll </md-button>
+  </form>
+  
+  <!-- Account Dashboard tabs -->
+  <div ng-controller="AppCtrl" class="tabsdemoStaticTabs sample">
+    <md-tabs md-selected="2"> <!-- 1st tab: Polls the current user has created -->
+      <!-- Tabs -->
+      <md-tab id="tab1"> 
+	<md-tab-label>My Polls</md-tab-label> 
+	<md-tab-template>
+	  <!-- Table of polls -->
+	  <div class="table">
+	    <table class="table-striped" id="topics">
+	      <tr>
+		<th>Poll</th>
+		<th>Date created</th>
+		<th class="change">Actions</th>
+	      </tr>
+	      {% for p in polls %}
+	      <tr>
+		<!-- Details for each poll -->
+		<td class="change"><a href="/{{ p.category.id }}/{{ p.id }}">{{ p.poll_text }}</a></td>
+		<td>{{ p.pub_date }}</td>
+		<td>
+		  <!-- Different options for poll -->
+		  <md-button href="/freeze_voting/{{ p.category.id }}/{{ p.id }}">Freeze Voting</md-button> 
+		  <md-button type="submit" href="/view_pdf_summary/{{p.id}}">Generate PDF Summary</md-button> 
+		  <md-button class="md-warn" type="submit" href='/delete_poll/{{ p.category.id }}/{{ p.id }}'>Delete Poll</md-button>
+		</td>
+	      </tr>
+	      {% endfor %}
+	    </table>
+	  </div>
+	</md-tab-template> 
+      </md-tab> 
+      <!-- Second tab for polls the current user has voted on --> 
+      <md-tab id="tab2" ng-disabled="data.secondLocked"> 
+	<md-tab-label>My Votes</md-tab-label> 
+	<md-tab-template>
+	  <div class="table">
+	    <table class="table-striped" id="topics">
+	      <tr>
+		<th>Poll</th>
+		<th>Date created</th>
+		<th class="change">Owner</th>
+	      </tr>
+	      {% for p in polls_voted %}
+	      <tr>
+		<td class="change"><a href="/{{ p.category.id }}/{{ p.id }}">{{ p.poll_text }}</a></td>
+		<td>{{ p.pub_date }}</td>
+		{% if p.user.username == user.username %}
+		<td><a href="/user/{{ p.user.id }}">Me</a></td> {% else %}
+		<td><a href="/user/{{ p.user.id }}">{{ p.user.username }}</a></td>
+		{% endif %}
+	      </tr>
+	      {% endfor %}
+	    </table>
+	  </div>
+	</md-tab-template> 
+      </md-tab> 
+      <!-- Third tab for current user's account information --> 
+      <md-tab id="tab3"> 
+	<!-- Options for account -->
+	<md-tab-label>My Account</md-tab-label> 
+	<md-tab-template>
+	  <form id="createFrm" method="LINK" action="/user/{{ user.id }}/close/">
+	    <md-button class="md-warn" type="submit"> 
+	      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Close Account </md-button>
+	  </form>
+	  <!-- Username and password -->
+	  <div class="table-responsive">
+	    <table class="table-striped" id="accountInfo">
+	      <tr>
+		<th>Name:</th>
+		<td>{{ user.get_full_name }}</td>
+	      </tr>
+	      <tr>
+		<th>Username:</th>
+		<td><a href="/user/{{ user.id }}/">{{ user.username }}</a></td>
+	      </tr>
+	      <tr>
+		<th>Email Address:</th>
+		<td>{{ user.email }}</td>
+	      </tr>
+	      <tr>
+		<th>Password:</th>
+		<td>&#x25CF;&#x25CF;&#x25CF;&#x25CF;&#x25CF;&#x25CF;&#x25CF;
+		  <form method="LINK" action="/myAccount/password_change/">
+		    <md-button class="md-primary" id="changePass" type="submit">Change
+		      Password</md-button>
+		  </form>
+		</td>
+	      </tr>
+	      <tr>
+		<th>Date Joined:</th>
+		<td>{{ user.date_joined }}</td>
+	      </tr>
+	    </table>
+	  </div>
+	</md-tab-template> 
+      </md-tab> 
+    </md-tabs>
+  </div>
+  {% endblock %}

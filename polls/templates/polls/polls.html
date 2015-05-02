@@ -1,42 +1,49 @@
-<!-- Developed By: Ana Arribasplata
+<!-- 
+     Developed By: Ana Arribasplata
      Date:  2/20/2015
      UMass Lowell, GUI II
+     
+     This is the polls page.
   -->
 {% extends "polls/base.html" %}
 
 {% block scripts %}
 
 <script>
-$(document).ready(function(){
+  $(document).ready(function(){
   if(window.location.hash != "") {
-      $('a[href="' + window.location.hash + '"]').click()
+  $('a[href="' + window.location.hash + '"]').click()
   }
-});
+  });
 </script>
 
 {% endblock %}
 
 <!-- This block of content will be inserted into base.html. -->
 {% block content %}
+<!-- Div for the content of the page -->
 <div class="jumbotron">
+  <!-- Title of the page -->
   <h1>Select a Poll</h1>
-
+  
   <!-- Create a poll works if user is logged in, else it redirects them to login -->
   <div class="row">
     {% if user.is_authenticated %}
+    <!-- Create poll -->
     <form id="createFrm" method="LINK" action="/create_poll/">
       <md-button class="md-raised md-button" type="submit">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Poll
       </md-button>
     </form>
     {% else %}
+    <!-- Redirecting to login -->
     <form id="createFrm" method="LINK" action="/login/">
       <md-button class="md-raised md-button" type="submit" >
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Poll
       </md-button>
     </form>
     {% endif %}
-
+    
     <div id="content">
       <!-- Drop Down Menu For Categories -->
       <ul id="tabs" class="nav nav-pills">
@@ -48,46 +55,47 @@ $(document).ready(function(){
             {% endfor %}
           </ul>
         </li>
-
+	<!-- Option to choose between recent polls and popular polls -->
         <li class="active"><a href="#Recent" data-toggle="tab">Recent</a></li>
-
+	
         <li>
           <a href="#Popular" data-toggle="tab">Popular</a>
         </li>
       </ul>
       </br>
-
+      
       <!-- Tabs for each category. -->
       <div class="tab-content">
         <!-- fill each category with questions that are in that category -->
-
+	
         <!-- These are the tabs for all the categories. -->
         {% for c in categories %}
         <div class="tab-pane" id="{{ c.category.category_text }}">
-        <!-- for each poll in that category-->
-        	{% for poll in c.polls %}
+          <!-- for each poll in that category-->
+          {% for poll in c.polls %}
           {% if c.category == poll.poll.category %}
           <div class="col-lg-4 col-sm-6 col-xs-12">
             <div  class="panel panel-primary">
               <div class="panel-heading">
               	<a href="/{{ c.category.id }}/{{ poll.poll.id }}" >{{ poll.poll.poll_text }}</a>
               </div>
-            	<div class="panel-body">
+              <div class="panel-body">
                 Created by: <a href="/user/{{ poll.poll.user.id }}">{{ poll.poll.user }}</a><br>
                 on {{ poll.poll.pub_date }}
               </div>
+	      <!-- Details of each poll which includes number of choices, number of votes, and number of comments -->
               <div class="poll-panel-footer">
-            		<span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>
-            		<span class="glyphicon glyphicon-check label label-default" data-toggle="tooltip" data-placement="top" title="Votes"> {{ poll.numVotes }}</span>
-            		<span class="glyphicon glyphicon-edit label label-default" data-toggle="tooltip" data-placement="top" title="Comments"> {{ poll.numComments }}</span>
-            	</div>
+            	<span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>
+            	<span class="glyphicon glyphicon-check label label-default" data-toggle="tooltip" data-placement="top" title="Votes"> {{ poll.numVotes }}</span>
+            	<span class="glyphicon glyphicon-edit label label-default" data-toggle="tooltip" data-placement="top" title="Comments"> {{ poll.numComments }}</span>
+              </div>
             </div>
           </div>
           {% endif %}
           {% endfor %}
         </div>
         {% endfor %}
-
+	
         <!-- This is the tab with the most recent polls. -->
         <div class="tab-pane active" id="Recent">
           {% for poll in recent %}
@@ -109,7 +117,7 @@ $(document).ready(function(){
           </div>
           {% endfor %}
         </div>
-
+	
         <!-- This is the tab with the most popular polls. -->
         <div class="tab-pane" id="Popular">
           {% for poll in popular %}
@@ -123,15 +131,15 @@ $(document).ready(function(){
                 on {{ poll.poll.pub_date }}
               </div>
               <div class="poll-panel-footer">
-                  <span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>
-                  <span class="glyphicon glyphicon-check label label-default" data-toggle="tooltip" data-placement="top" title="Votes"> {{ poll.numVotes }}</span>
-                  <span class="glyphicon glyphicon-edit label label-default" data-toggle="tooltip" data-placement="top" title="Comments"> {{ poll.numComments }}</span>
+                <span class="glyphicon glyphicon-list-alt label label-default" data-toggle="tooltip" data-placement="top" title="Choices"> {{ poll.numChoices }}</span>
+                <span class="glyphicon glyphicon-check label label-default" data-toggle="tooltip" data-placement="top" title="Votes"> {{ poll.numVotes }}</span>
+                <span class="glyphicon glyphicon-edit label label-default" data-toggle="tooltip" data-placement="top" title="Comments"> {{ poll.numComments }}</span>
               </div>
             </div>
           </div>
           {% endfor %}
         </div>
-
+	
       </div>
     </div>
   </div>

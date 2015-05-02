@@ -2,56 +2,58 @@
 <!-- Developed By: Virinchi Balabhadrapatruni
 	 Date:  3/7/2015
 	 UMass Lowell, GUI II
+	 
+	 This is the user_public page
 -->
 
 {% extends "polls/base.html" %} 
 
 <!-- Content to be inserted into body of base.html -->
 {% block content %}
-
+<!-- Where the content is -->
 <div class="jumbotron">
-	{% load static from staticfiles %}
-	<div class="user-div">
-	{% if user.is_authenticated and profile.user == user %}
-	<!-- if you're logged in and viewing your own profile, show an edit button -->
-	<form id="editFrm" method="get" action="/user/edit/{{ profile.user.id }}/">
-		<md-button class="md-raised md-button" type="submit">Edit This Page</md-button>
-		<md-button class="md-raised md-button" href="/myAccount">View Account</md-button>
-	</form>
-	{% endif %}
-		<!-- Show a profile picture -->
-		<div class="prof-thumbnail img-thumbnail">
-			{% if profile.avatar %}
-			<a href="{{ profile.avatar.url }}" class=".thumbnail">
-				<img
-				src="{{ profile.avatar.url }}"
-				alt="{{ profile.user.username }}'s profile picture"
-				class="img profile-pic">
-			</a>
-			{% else %}
-			<a href="" class=".thumbnail">
-				<img
-				src= "{% static 'polls/img/default_profile.jpg' %}"
-				alt="{{ profile.user.username }}'s profile picture"
-				class="img profile-pic">
-			</a>
-			{% endif %}
-		</div>
-		<!-- Username -->
-		<h1 class="username">{{ profile.user.username }}</h1>
-
-	</div>
-
-	<hr>
-	<!-- About Me -->
-	<div class="aboutMe">
-		<h2>About Me:</h2>
-		{% autoescape off %}{{ profile.aboutMe }}{% endautoescape %}
-	</div>
-	<!-- Interests -->
-	<div class="aboutMe">
-		<h2>Interests:</h2>
-		{% autoescape off %}{{ profile.interests }}{% endautoescape %}
-	</div>
+  {% load static from staticfiles %}
+  <div class="user-div">
+    {% if user.is_authenticated and profile.user == user %}
+    <!-- if you're logged in and viewing your own profile, show an edit button -->
+    <form id="editFrm" method="get" action="/user/edit/{{ profile.user.id }}/">
+      <md-button class="md-raised md-button" type="submit">Edit This Page</md-button>
+      <md-button class="md-raised md-button" href="/myAccount">View Account</md-button>
+    </form>
+    {% endif %}
+    <!-- Show a profile picture -->
+    <div class="prof-thumbnail img-thumbnail">
+      {% if profile.avatar %}
+      <a href="{{ profile.avatar.url }}" class=".thumbnail">
+	<img
+	   src="{{ profile.avatar.url }}"
+	   alt="{{ profile.user.username }}'s profile picture"
+	   class="img profile-pic">
+      </a>
+      {% else %}
+      <a href="" class=".thumbnail">
+	<img
+	   src= "{% static 'polls/img/default_profile.jpg' %}"
+	   alt="{{ profile.user.username }}'s profile picture"
+	   class="img profile-pic">
+      </a>
+      {% endif %}
+    </div>
+    <!-- Username -->
+    <h1 class="username">{{ profile.user.username }}</h1>
+    
+  </div>
+  
+  <hr>
+  <!-- About Me -->
+  <div class="aboutMe">
+    <h2>About Me:</h2>
+    {% autoescape off %}{{ profile.aboutMe }}{% endautoescape %}
+  </div>
+  <!-- Interests -->
+  <div class="aboutMe">
+    <h2>Interests:</h2>
+    {% autoescape off %}{{ profile.interests }}{% endautoescape %}
+  </div>
 </div>
 {% endblock %}

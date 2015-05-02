@@ -2,52 +2,56 @@
 <!-- Developed By: Virinchi Balabhadrapatruni
 	 Date:  2/12/2015
 	 UMass Lowell, GUI II
+
+	 This is the page the user sees when creating a poll. 
 -->
 
 {% extends "polls/base.html" %}
 
 <!-- Content to be inserted into body of base.html -->
 {% block content %}
-  <div class="jumbotron">
-    <h1>Create New Poll</h1>
-    <form method="post" action="/create_poll/">
-    	{% csrf_token %} 
-    	<!-- if the form has errors -->
-    	{% if form.errors %} 
-    	
- 		<!-- for each field in the form -->
-    	{% for field in form %}
-    	
-    	<!-- if this field has errors -->
-    	{% if field.errors %}
-    	
-    	<!-- for each error for this field -->
-    	{% for error in field.errors %}
-    	<div class="alert alert-danger">
-    		<button type="button" class="close" data-dismiss="alert">×</button>
-    		<span class="glyphicon glyphicon-exclamation-sign"
-    			aria-hidden="true"></span> <span class="sr-only">Error:</span>
-    		
-    			<span>{{ field.label }}: {{ error|striptags }}</span>
-    		
-
-    	</div>
-    	{% endfor %} {% endif %}
-      	{% endfor %} {% endif %}
-
-		<!-- form fields -->
-      	{% for field in form %}
-      		<p class="fieldWrapper">
-        			{{ field.label_tag }}<br>
-        			{{ field }}
-      		</p>
-      	{% endfor %}
-
-		<!-- Submit button -->
-        <md-button class="md-raised md-primary" type="submit">Create</md-button>
-
-      </form>
+<!-- Div used for the content of the page -->
+<div class="jumbotron">
+  <!-- Title -->
+  <h1>Create New Poll</h1>
+  <form method="post" action="/create_poll/">
+    {% csrf_token %} 
+    <!-- if the form has errors -->
+    {% if form.errors %} 
+    
+    <!-- for each field in the form -->
+    {% for field in form %}
+    
+    <!-- if this field has errors -->
+    {% if field.errors %}
+    
+    <!-- for each error for this field -->
+    {% for error in field.errors %}
+    <!-- Div with error message -->
+    <div class="alert alert-danger">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <span class="glyphicon glyphicon-exclamation-sign"
+    	    aria-hidden="true"></span> 
+      <span class="sr-only">Error:</span>
+      <span>{{ field.label }}: {{ error|striptags }}</span>
     </div>
-  </div>
+    
+    {% endfor %} {% endif %}
+    {% endfor %} {% endif %}
+    
+    <!-- form fields -->
+    {% for field in form %}
+    <p class="fieldWrapper">
+      {{ field.label_tag }}<br>
+      {{ field }}
+    </p>
+    {% endfor %}
+    
+    <!-- Submit button -->
+    <md-button class="md-raised md-primary" type="submit">Create</md-button>
+    
+  </form>
+</div>
+</div>
 
 {% endblock %}

@@ -1,67 +1,67 @@
 {% extends "polls/base.html" %}
 
 {% block title %}Categories{% endblock %}
-
-<!-- This script will be inserted into base.html. -->
+<!-- This is the home page -->
+<!-- This script will be inserted into base.html -->
 {% block scripts %}
 
-  {% load staticfiles %}
-	<!-- Important Owl stylesheet -->
-  <link rel="stylesheet" href={%static 'polls/css/owl-carousel/owl.carousel.css' %}>
+{% load staticfiles %}
 
-	<!-- Default Theme -->
-  <link rel="stylesheet" href={%static 'polls/css/owl-carousel/owl.theme.css' %}>
+<!-- Important Owl stylesheet -->
+<link rel="stylesheet" href={%static 'polls/css/owl-carousel/owl.carousel.css' %}>
 
+<!-- Default Theme -->
+<link rel="stylesheet" href={%static 'polls/css/owl-carousel/owl.theme.css' %}>
 
-	<!--  jQuery  -->
-	<script src="{% static 'polls/js/jquery-2.1.3.min.js' %}"></script>
+<!--  jQuery  -->
+<script src="{% static 'polls/js/jquery-2.1.3.min.js' %}"></script>
 
-	<!-- Include js plugin -->
-	<script src="{% static 'polls/js/owl.carousel.min.js' %}"></script>
+<!-- Include js plugin -->
+<script src="{% static 'polls/js/owl.carousel.min.js' %}"></script>
 
-	<!-- Carousel Script-->
-	<script>
-
-	$(document).ready(function() {
- 		$("#myCarousel").owlCarousel({
-      autoPlay: 5000, //Set AutoPlay to 5 seconds
-      navigation : true,
-      scrollPerPage : true,
-      itemsScaleUp : true,
-      pagination : true,
-      responsiveRefreshRate : 1,
-      stopOnHover : true
-  	});
+<!-- Carousel Script-->
+<script>
+  
+  $(document).ready(function() {
+  $("#myCarousel").owlCarousel({
+  autoPlay: 5000, //Set AutoPlay to 5 seconds
+  navigation : true,
+  scrollPerPage : true,
+  itemsScaleUp : true,
+  pagination : true,
+  responsiveRefreshRate : 1,
+  stopOnHover : true
   });
-
-	</script>
-
+  });
+  
+</script>
+<!-- Carousel Script ends -->
 {% endblock %}
 
 <!-- This block of code will be inserted into base.html. -->
 {% block content %}
-	<div class="jumbotron">
-
-	<h2 id="subtitle">Select a category</h2>
-
-    <!-- Own Carousel -->
-    <div id="myCarousel" class="owl-carousel">
-    	{% for c in categories %}
-    	{% if c.image %}
-		<div class="item">
-			<a href="/polls/#{{c.category_text}}" class="thumbnail"> <img class="img-rounded"
-				src="{{c.image.url}}"
-				alt="{{c.category_text}} img">
-				<center>
-					<p>{{c.category_text}}</p>
-				</center>
-			</a>
-		</div>
-		{% endif %}
-		{% endfor %}
-    </div>  <!-- End of owl carousel -->
-
-	</div>
+<div class="jumbotron">
+  <h2 id="subtitle">Select a category</h2>
+  
+  <!-- Own Carousel -->
+  <div id="myCarousel" class="owl-carousel">
+    {% for c in categories %}
+    {% if c.image %}
+    <!-- Items of the Carousel -->
+    <div class="item">
+      <a href="/polls/#{{c.category_text}}" class="thumbnail"> 
+	<img class="img-rounded" src="{{c.image.url}}" alt="{{c.category_text}} img">
+	<center>
+	  <p>{{c.category_text}}</p>
+	</center>
+      </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>  
+  <!-- End of owl carousel -->
+  
+</div>
 {% endblock %}
 
 

@@ -2,73 +2,81 @@
 <!-- Developed By: Virinchi Balabhadrapatruni
 	 Date:  2/1/2015
 	 UMass Lowell, GUI II
+
+	 This is the about page. 
 -->
 
 {% extends "polls/base.html" %}
 
 <!-- This will be inserted into base.html. -->
 {% block content %}
-	<div class="jumbotron">
-		<h1>About</h1>
-
-	{% load staticfiles %}
-	<img src= "{% static 'polls/img/about_us.jpg' %}"
-					class="img-rounded img-responsive" alt="Team Picture">
-	<!-- About Us -->
-	<div id="aboutTeam">
-		<h2>Team Members:</h2>
-		<!-- Accordion that pops out panels about each of the developers -->
-		<div class="panel-group" id="accordion" role="tablist"
-			aria-multiselectable="true">
-			<div class="panel panel-default">
-				<div class="panel-heading" role="tab" id="headingOne">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion"
-							href="#collapseOne" aria-expanded="true"
-							aria-controls="collapseOne"> Ana Arribasplata </a>
-					</h4>
-				</div>
-				<div id="collapseOne" class="panel-collapse collapse"
-					role="tabpanel" aria-labelledby="headingOne">
-					<div class="panel-body">Senior in Computer Science at University of Massachusetts, Lowell. Ana is graduating in May (2015).</div>
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading" role="tab" id="headingTwo">
-					<h4 class="panel-title">
-						<a class="collapsed" data-toggle="collapse"
-							data-parent="#accordion" href="#collapseTwo"
-							aria-expanded="false" aria-controls="collapseTwo"> Virinchi
-							Balabhadrapatruni </a>
-					</h4>
-				</div>
-				<div id="collapseTwo" class="panel-collapse collapse"
-					role="tabpanel" aria-labelledby="headingTwo">
-					<div class="panel-body">Junior in Computer Science and Electrical Engineering at University of Massachusetts, Lowell.</div>
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading" role="tab" id="headingThree">
-					<h4 class="panel-title">
-						<a class="collapsed" data-toggle="collapse"
-							data-parent="#accordion" href="#collapseThree"
-							aria-expanded="false" aria-controls="collapseThree"> Bobby
-							Donald </a>
-					</h4>
-				</div>
-				<div id="collapseThree" class="panel-collapse collapse"
-					role="tabpanel" aria-labelledby="headingThree">
-					<div class="panel-body">Junior in Computer Science at Univeristy of Massachusetts, Lowell.</div>
-				</div>
-			</div>
-		</div>
+<!-- A divition for the content -->
+<div class="jumbotron">
+  <!-- Title of the page -->
+  <h1>About</h1>
+  <!-- Loading static files -->
+  {% load staticfiles %}
+  <!-- Lovely picture of us -->
+  <img src= "{% static 'polls/img/about_us.jpg' %}"
+       class="img-rounded img-responsive" alt="Team Picture">
+  <!-- About Us -->
+  <div id="aboutTeam">
+    <h2>Team Members:</h2>
+    <!-- Accordion that pops out panels about each of the developers -->
+    <div class="panel-group" id="accordion" role="tablist"
+	 aria-multiselectable="true">
+      <div class="panel panel-default">
+	<div class="panel-heading" role="tab" id="headingOne">
+	  <!-- About Ana Arribasplata -->
+	  <h4 class="panel-title">
+	    <a data-toggle="collapse" data-parent="#accordion"
+	       href="#collapseOne" aria-expanded="true"
+	       aria-controls="collapseOne"> Ana Arribasplata </a>
+	  </h4>
 	</div>
-	<!-- Div about Poll Portal -->
-	<div id="aboutPollPortal">
-		<h2>About Poll Portal:</h2>
-		<p>Poll Portal is a web-based application that will allow users to vote on different polls in various categories 
-		and add comments to justify their choices, so as to create an easy-to-use medium for debate on all kinds of polls.</p>
+	<div id="collapseOne" class="panel-collapse collapse"
+	     role="tabpanel" aria-labelledby="headingOne">
+	  <div class="panel-body">Senior in Computer Science at University of Massachusetts, Lowell. Ana is graduating in May (2015).</div>
 	</div>
+      </div>
+      <div class="panel panel-default">
+	<div class="panel-heading" role="tab" id="headingTwo">
+	  <!-- About Virinchi Balabhadrapatruni -->
+	  <h4 class="panel-title">
+	    <a class="collapsed" data-toggle="collapse"
+	       data-parent="#accordion" href="#collapseTwo"
+	       aria-expanded="false" aria-controls="collapseTwo"> Virinchi
+	      Balabhadrapatruni </a>
+	  </h4>
+	</div>
+	<div id="collapseTwo" class="panel-collapse collapse"
+	     role="tabpanel" aria-labelledby="headingTwo">
+	  <div class="panel-body">Junior in Computer Science and Electrical Engineering at University of Massachusetts, Lowell.</div>
+	</div>
+      </div>
+      <div class="panel panel-default">
+	<div class="panel-heading" role="tab" id="headingThree">
+	  <!-- About Bobby Donald-->
+	  <h4 class="panel-title">
+	    <a class="collapsed" data-toggle="collapse"
+	       data-parent="#accordion" href="#collapseThree"
+	       aria-expanded="false" aria-controls="collapseThree"> Bobby
+	      Donald </a>
+	  </h4>
+	</div>
+	<div id="collapseThree" class="panel-collapse collapse"
+	     role="tabpanel" aria-labelledby="headingThree">
+	  <div class="panel-body">Junior in Computer Science at Univeristy of Massachusetts, Lowell.</div>
+	</div>
+      </div>
+    </div>
+  </div>
+  <!-- Div about Poll Portal -->
+  <div id="aboutPollPortal">
+    <h2>About Poll Portal:</h2>
+    <p>Poll Portal is a web-based application that will allow users to vote on different polls in various categories 
+      and add comments to justify their choices, so as to create an easy-to-use medium for debate on all kinds of polls.</p>
+  </div>
 </div>
 
 

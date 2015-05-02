@@ -1,3 +1,5 @@
+<!-- This is the page for login -->
+
 <!-- This page inherits from base.html in GUI2/polls/templates/polls -->
 {% extends "polls/base.html" %}
 
@@ -8,23 +10,23 @@
 <!-- start scripts block to be inserted to base.html -->
 {% block scripts %}
 
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '1406884859614262',
-        xfbml      : true,
-        version    : 'v2.2'
-      });
-    };
-
-    (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "//connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
-  </script>
+<script>
+  window.fbAsyncInit = function() {
+  FB.init({
+  appId      : '1406884859614262',
+  xfbml      : true,
+  version    : 'v2.2'
+  });
+  };
+  
+  (function(d, s, id){
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
 
 {% endblock %}
 <!-- end scripts block -->
@@ -40,31 +42,32 @@
 
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
   {% csrf_token %}
-
-
+  
+  
   <!-- This is the form -->
   <div class="jumbotron">
-
+    
     <div class="row">
       <div class="col-xs-12 col-md-6">
-    	  <form id="loginForm">
-    	    <!-- Username -->
+    	<form id="loginForm">
+    	  <!-- Username -->
           <div class="row">
       	    <label for="username" class="col-xs-3 control-label">Username:</label>
       	    <input type="text" class="col-xs-9 form-control" id="username" name="username" placeholder="Username" title="Please enter your username">
           </div>
           </br>
-    	    <!-- Password -->
+    	  <!-- Password -->
           <div class="row">
       	    <label for="password" class="col-xs-3 control-label">Password:</label>
       	    <input type="password" class="col-xs-9 form-control" id="password" name="password" placeholder="Password" title="Please enter your password">
           </div>
           </br>
+	  <!-- Buttons for login or forgot password -->
           <md-button class="md-raised col-xs-6" href="/password_reset/">Forgot password?</md-button>
-    	    <md-button class="col-xs-6 md-raised md-primary" type="submit">Login</md-button>
+    	  <md-button class="col-xs-6 md-raised md-primary" type="submit">Login</md-button>
         </form>
-      <input type="hidden" name="next" value="" />
-    </div>
+	<input type="hidden" name="next" value="" />
+      </div>
     </div>
   </div>
 </form>

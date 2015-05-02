@@ -1,28 +1,32 @@
+/*
+  Styling Sheet for Poll.
+  */
+/* Tabs */
 .md-tab-content, .md-tabs-content, md-tabs {
     overflow-x: hidden;
     width: 100%;
 }
-
+/* Form */
 #editFrm {
     float: right;
 }
 
 .modal-wide .modal-body {
-  overflow-y: auto;
+    overflow-y: auto;
 }
-
+/* Dialog */
 .modal.modal-wide .modal-dialog {
     width: 50%;
 }
-
+/* Where users enter comments */
 #textarea2 {
     margin-top: 10px;
 }
-
+/* Select poll */
 .poll-select {
     display: inline-block;
 }
-
+/* Create poll */
 #createFrm {
     margin-bottom: 20px;
 }
@@ -34,15 +38,15 @@
 #pills {
     margin-bottom: 30px;
 }
-
+/* Change password */
 #changePass {
     margin-top: 10px;
 }
-
+/* Dropdown menu */
 .dropdown-menu li a{
     height: 30px;
 }
-
+/* User's information */
 .prof-thumbnail {
     width: 100px;
     height: 100px;
@@ -53,6 +57,7 @@
     margin-top: -30px; 
     
 }
+/* User's picture */
 .profile-pic {
     position: absolute;
     top: -9999px;
@@ -61,15 +66,15 @@
     right: -9999px;
     margin: auto;
 }
-
+/* Username */
 .username {
-   margin-top: 30px;
+    margin-top: 30px;
 }
-
+/* About me */
 .aboutMe {
     margin-top: 30px;
 }
-
+/* Where the comments are */
 .comment-content {
     margin-top: 60px;
     margin-bottom: 20px;
@@ -80,14 +85,14 @@
     font-size: 90%;
     color: #9197A3;
 }
-
+/* Text of poll */
 #poll-text {
     width: 100%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
-
+/* Tabs for comments */
 #comment-tabs, .comment {
     margin-left: auto;
     margin-right: auto;
@@ -95,7 +100,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
+/* Comments */
 #commentform {
     margin-left: auto;
     margin-right: auto;
@@ -103,42 +108,45 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
+/* Button Vote */
 #form #btnVote, #form #btnTimeline {
     margin-left: auto;
     margin-right: auto;
     display: block;
 }
-
+/* Body */
 body {
     padding-bottom: 10px;
 }
+/* Pie Charts */
 #myChart {
     margin-left: auto;
     margin-right: auto;
 }
+/* Tabs and account information */
 #topics, #accountInfo, #accountTabs {
     width: 100%;
 }
-
+/* Commets */
 #comments {
     margin-top: 10px;
 }
-
+/* Labels */
 label {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 label[for=mycomment] {
     margin-top: 10px;
 }
-
+/* Carousel */
 .carousel-indicators li {
-  border-color: black;
-  background: none;
+    border-color: black;
+    background: none;
 }
+
 .carousel-indicators .active {
-  background-color: black;
+    background-color: black;
 }
 
 .panel-heading {
@@ -162,22 +170,20 @@ label[for=mycomment] {
     text-overflow: ellipsis;
 }
 
-
 .poll-panel-footer {
     bottom:0;
     padding: 5px;
 }
 
 #myCarousel .item{
-  margin: 3px;
+    margin: 3px;
 }
 
 #myCarousel .item img{
-  display: block;
-  width: 100%;
-  height: 200px;
+    display: block;
+    width: 100%;
+    height: 200px;
 }
-
 
 input[type=text], input[type=password], input[type=email], input[type=number], textarea {
     margin-left: 5px;
@@ -187,7 +193,7 @@ input[type=text], input[type=password], input[type=email], input[type=number], t
 h1 {
     margin-bottom: 10px;
 }
-
+/* Tables */
 table tr td, th{
     padding: 10px;
 }
@@ -195,6 +201,7 @@ table tr td, th{
 table tr th {
     border-right: 2px solid black;
 }
+
 table tr td {
     border-left: 2px solid black;
 }
@@ -205,12 +212,12 @@ table tr td {
 }
 
 /* custom inclusion of right, left and below tabs
-This CSS is from the following site: http://www.bootply.com/74926 */
+   This CSS is from the following site: http://www.bootply.com/74926 */
 
 .tabs-below > .nav-tabs,
 .tabs-right > .nav-tabs,
 .tabs-left > .nav-tabs {
-  border-bottom: 0;
+    border-bottom: 0;
 }
 
 .tabs-left {
@@ -219,132 +226,134 @@ This CSS is from the following site: http://www.bootply.com/74926 */
 
 .tab-content > .tab-pane,
 .pill-content > .pill-pane {
-  display: none;
+    display: none;
 }
 
 .tab-content > .active,
 .pill-content > .active {
-  display: block;
+    display: block;
 }
 
 .tabs-below > .nav-tabs {
-  border-top: 1px solid #ddd;
+    border-top: 1px solid #ddd;
 }
 
 .tabs-below > .nav-tabs > li {
-  margin-top: -1px;
-  margin-bottom: 0;
+    margin-top: -1px;
+    margin-bottom: 0;
 }
 
 .tabs-below > .nav-tabs > li > a {
-  -webkit-border-radius: 0 0 4px 4px;
-     -moz-border-radius: 0 0 4px 4px;
-          border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
 }
 
 .tabs-below > .nav-tabs > li > a:hover,
 .tabs-below > .nav-tabs > li > a:focus {
-  border-top-color: #ddd;
-  border-bottom-color: transparent;
+    border-top-color: #ddd;
+    border-bottom-color: transparent;
 }
 
 .tabs-below > .nav-tabs > .active > a,
 .tabs-below > .nav-tabs > .active > a:hover,
 .tabs-below > .nav-tabs > .active > a:focus {
-  border-color: transparent #ddd #ddd #ddd;
+    border-color: transparent #ddd #ddd #ddd;
 }
 
 .tabs-left > .nav-tabs > li,
 .tabs-right > .nav-tabs > li {
-  float: none;
+    float: none;
 }
 
 .tabs-left > .nav-tabs > li > a,
 .tabs-right > .nav-tabs > li > a {
-  min-width: 74px;
-  margin-right: 0;
-  margin-bottom: 3px;
+    min-width: 74px;
+    margin-right: 0;
+    margin-bottom: 3px;
 }
 
 .tabs-left > .nav-tabs {
-  float: left;
-  margin-right: 19px;
-  border-right: 1px solid #ddd;
+    float: left;
+    margin-right: 19px;
+    border-right: 1px solid #ddd;
 }
 
 .tabs-left > .nav-tabs > li > a {
-  margin-right: -1px;
-  -webkit-border-radius: 4px 0 0 4px;
-     -moz-border-radius: 4px 0 0 4px;
-          border-radius: 4px 0 0 4px;
+    margin-right: -1px;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
 }
 
 .tabs-left > .nav-tabs > li > a:hover,
 .tabs-left > .nav-tabs > li > a:focus {
-  border-color: #eeeeee #dddddd #eeeeee #eeeeee;
+    border-color: #eeeeee #dddddd #eeeeee #eeeeee;
 }
 
 .tabs-left > .nav-tabs .active > a,
 .tabs-left > .nav-tabs .active > a:hover,
 .tabs-left > .nav-tabs .active > a:focus {
-  border-color: #ddd transparent #ddd #ddd;
-  *border-right-color: #ffffff;
+    border-color: #ddd transparent #ddd #ddd;
+    *border-right-color: #ffffff;
 }
 
 .tabs-right > .nav-tabs {
-  float: right;
-  margin-left: 19px;
-  border-left: 1px solid #ddd;
+    float: right;
+    margin-left: 19px;
+    border-left: 1px solid #ddd;
 }
 
 .tabs-right > .nav-tabs > li > a {
-  margin-left: -1px;
-  -webkit-border-radius: 0 4px 4px 0;
-     -moz-border-radius: 0 4px 4px 0;
-          border-radius: 0 4px 4px 0;
+    margin-left: -1px;
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
 }
 
 .tabs-right > .nav-tabs > li > a:hover,
 .tabs-right > .nav-tabs > li > a:focus {
-  border-color: #eeeeee #eeeeee #eeeeee #dddddd;
+    border-color: #eeeeee #eeeeee #eeeeee #dddddd;
 }
 
 .tabs-right > .nav-tabs .active > a,
 .tabs-right > .nav-tabs .active > a:hover,
 .tabs-right > .nav-tabs .active > a:focus {
-  border-color: #ddd #ddd #ddd transparent;
-  *border-left-color: #ffffff;
+    border-color: #ddd #ddd #ddd transparent;
+    *border-left-color: #ffffff;
 }
 
 /* Ana adding categories css */
-
+/* navigation bar */
 .nav-stacked{
     width:150px;
 }
 
 .nav-stacked:hover{
     color: red;
-/*#6D6E70;*/
 }
-
+/* Facebook */
 .fb-like {
-  padding-bottom: 5px;
+    padding-bottom: 5px;
+}
+/* Twitter */
+.twitter-share-button {
+    width: 150px;
 }
 
-.twitter-share-button {
-  width: 150px;
-}
 
 .tabsdemoStaticTabs .sample {
-  height: 450px;
+    height: 450px;
 }
+
 .tabsdemoStaticTabs .sample md-tab-content {
-  padding: 25px;
+    padding: 25px;
 }
+
 .md-tab-label {
-  background-color: #42A5F5;
+    background-color: #42A5F5;
 }
 
 .dropdown-backdrop{
-  position: static;
+    position: static;
 }

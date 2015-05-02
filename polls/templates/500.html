@@ -1,16 +1,19 @@
-
+<!--
+    500 page. 
+-->
 <html>
-<head>
-</head>
-
-<body>
-  {% load static from staticfiles %}
-
-  <img src="{% static 'polls/img/error.png' %}" style="
-  display: block;
-  margin-left: auto;
-  margin-right: auto">
- <p style="text-align: center;">Internal Server Error</p>
-</body>
-
+  <head>
+  </head>
+  
+  <body>
+    <!-- Loading static files -->
+    {% load static from staticfiles %}
+    
+    <img src="{% static 'polls/img/error.png' %}" style="
+							 display: block;
+							 margin-left: auto;
+							 margin-right: auto">
+    <p style="text-align: center;">Internal Server Error</p>
+  </body>
+  
 </html>

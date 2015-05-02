@@ -1,12 +1,18 @@
-<!-- This is the template for the bottom sheet grid for sharing -->
+<!-- 
+     This page contains the template for the bottom sheet grid for sharing and it
+     also contains some styled features. 
+  -->
 
 <md-bottom-sheet style="position:fixed" class="md-grid">
   <md-list id="poll-sheet">
     <md-item ng-repeat="item in items">
       <md-button ng-href="{% verbatim %}{{item.href}}{% endverbatim %}" 
-      class="md-grid-item-content" ng-click="listItemClick($index)">
-        <md-icon md-svg-src="{% verbatim %}{{item.icon}}{% endverbatim %}"></md-icon>
-        <div class="md-grid-text"> {% verbatim %}{{ item.name }}{% endverbatim %} </div>
+		 class="md-grid-item-content" ng-click="listItemClick($index)">
+        <md-icon md-svg-src="{% verbatim %}{{item.icon}}{% endverbatim %}">
+	</md-icon>
+        <div class="md-grid-text"> 
+	  {% verbatim %}{{ item.name }}{% endverbatim %} 
+	</div>
       </md-button>
     </md-item>
   </md-list>
