@@ -3,25 +3,28 @@ from django import forms
 from polls.models import Category, Poll, Choice, Feedback
 import datetime,json
 
-# form to create polls
+# This is where the data for the form that creates a poll is processed.
 class CreatePollForm(forms.Form):
+    # This gets the poll_text (title) of the poll, it is a charfield with a max length of 300.
     poll_text = forms.CharField(label='Poll Text', max_length=300, error_messages={'required': 'This field is required.'})
     
-    # get list of all category names
+    # This gets the category list to give to the form.
     latest_category_list = Category.objects.order_by('category_text')
     list2 = []
     i = 1
     for bar in latest_category_list:
         list2.append((i, bar.category_text))
         i = i+1
+
+    # Set the category that the poll belongs to and the choices of the poll.
     category = forms.ChoiceField(choices=list2, required=True, error_messages={'required': 'This field is required.'})
     choices = forms.CharField(required=True, label= 'Choices (comma-separated)', widget=forms.Textarea, error_messages={'required': 'This field is required.'})
 
     def __init__(self, *args, **kwargs):
         super(CreatePollForm, self).__init__(*args, **kwargs)
         self.fields['category'].choices = self.getCats()
-        
-    # run validation on choices
+
+    # Run a validation on the choices.
     def clean_choices(self):
         print 'This method was called!'
         data = self.cleaned_data['choices']
@@ -40,10 +43,10 @@ class CreatePollForm(forms.Form):
             print 'Nonunique'
             raise forms.ValidationError("All choices must be unique")
 
-        # Always return the cleaned data, whether you have changed it or
+        # Always return the cleaned data, whether you have changed it or not.
         return data
     
-    # check if the list of choices has duplicates
+    # Check if their are any duplicates.
     def has_duplicates(self, values):
     # For each element, check all following elements for a duplicate.
         for i in range(0, len(values)):
@@ -52,29 +55,31 @@ class CreatePollForm(forms.Form):
                     return True
         return False
 
-    # save the poll
+    # This method save the poll.
     def save(self, request):
         data = self.cleaned_data
         cat = self.getCategoryWithName(data['category'])
         topic = Poll(poll_text=data['poll_text'], category = cat, user=request.user, pub_date=datetime.datetime.now())
         topic.save()
         d = data['choices']
+        # Get the choices by splitting on the ",".
         choices = [x.strip() for x in d.split(',')]
 
+        # Save all the choices of the poll.
         for c in choices:
             choice = Choice(poll=topic, choice_text=c, votes=0, user=request.user, pub_date=datetime.datetime.now())
             choice.save()
         return topic
 
-    # get a category given a name
+    # Get a category object given the name of the category.
     def getCategoryWithName(self, name):
         latest_category_list = Category.objects.order_by('category_text')
         i = 0
         for bar in latest_category_list:
             if int(name)-1==i:
                 return latest_category_list[i]
-            
-    # get categories
+
+    # Get all the categories.
     def getCats(self):
         latest_category_list = Category.objects.order_by('category_text')
         list2 = []
@@ -84,7 +89,7 @@ class CreatePollForm(forms.Form):
             i = i+1
         return list2
 
-# form to contact us
+# This is for the Contact us form.
 class ContactUsForm(forms.ModelForm):
     class Meta:
     	model = Feedback #this form will create a Feedback object
