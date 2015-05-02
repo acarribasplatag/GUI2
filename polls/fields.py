@@ -15,4 +15,4 @@ def __init__(self, *args, **kwargs):
                    fields.CharField(max_length=31),
                    fields.CharField(max_length=31),
                    fields.CharField(max_length=31)]
-    super(VotingChoicesField, self).__init__(list_fields, *args, **kwargs) 
+super(VotingChoicesField, self).__init__(list_fields, *args, **kwargs) 
